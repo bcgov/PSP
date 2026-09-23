@@ -272,6 +272,15 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(p => p.Pin == pin) ?? throw new KeyNotFoundException();
         }
 
+        public PimsProperty Add(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+            this.User.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            Context.PimsProperties.Add(property);
+            return property;
+        }
+
         /// <summary>
         /// Get the properties that dont hace PIN or PID but have a plan#.
         /// </summary>

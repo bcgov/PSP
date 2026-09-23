@@ -50,5 +50,9 @@ namespace Pims.Api.Services
         bool DeleteConsultation(long consultationId);
 
         IEnumerable<PimsLeaseLicenseTeam> GetTeamMembers();
+
+        PimsLease GetLeaseAssociations(long leaseId);
+
+        bool CanEdit(PimsLease lease);
     }
 }

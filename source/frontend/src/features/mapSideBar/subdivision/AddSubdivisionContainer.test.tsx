@@ -148,7 +148,9 @@ describe('Add Subdivision Container component', () => {
   it('Calls onSuccess when the submit operation completes successfully when the response contains a viable property to navigate', async () => {
     await setup({});
 
-    mockAddPropertyOperation.execute.mockResolvedValue([{}]);
+    mockAddPropertyOperation.execute.mockResolvedValue([
+      { sourcePropertyId: 1 } as ApiGen_Concepts_PropertyOperation,
+    ]);
     const model = new SubdivisionFormModel();
     model.destinationProperties = [{} as ApiGen_Concepts_Property];
     model.sourceProperty = { id: 1 } as ApiGen_Concepts_Property;

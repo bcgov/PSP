@@ -11,6 +11,7 @@ import Claims from '@/constants/claims';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { ApiGen_CodeTypes_ConsultationOutcomeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationOutcomeTypes';
+import { ApiGen_CodeTypes_ConsultationTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationTypeTypes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 const history = createMemoryHistory();
@@ -53,6 +54,7 @@ describe('ConsultationListView component', () => {
 
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<IConsultationListViewProps> },
+    canEdit = true,
   ) => {
     const utils = render(
       <ConsultationListView
@@ -62,6 +64,7 @@ describe('ConsultationListView component', () => {
         onAdd={onAdd}
         onDelete={onDelete}
         onEdit={onEdit}
+        canEdit={canEdit}
       />,
       {
         ...renderOptions,
@@ -128,6 +131,66 @@ describe('ConsultationListView component', () => {
     const { getByText } = setup({ props: { consultations } });
 
     expect(getByText('Approval Denied')).toBeVisible();
+  });
+
+  it('displays the reminder button for a First Nation consultation with a requested date', () => {
+    const consultations = [
+      {
+        ...getMockApiConsultation(),
+        id: 1,
+        consultationTypeCode: {
+          ...getMockApiConsultation().consultationTypeCode,
+          id: ApiGen_CodeTypes_ConsultationTypeTypes.FIRSTNATION,
+        },
+        requestedOn: '2024-01-01',
+      },
+    ];
+    const { getByRole } = setup({ props: { consultations } });
+
+    expect(
+      getByRole('button', { name: 'Reminder for Lease First Nation Consultation' }),
+    ).toBeVisible();
+  });
+
+  it('does not display the reminder button for a First Nation consultation without a requested date', () => {
+    const consultation = {
+      ...getMockApiConsultation(),
+      id: 1,
+      consultationTypeCode: {
+        ...getMockApiConsultation().consultationTypeCode,
+        id: ApiGen_CodeTypes_ConsultationTypeTypes.FIRSTNATION,
+      },
+    };
+    const { queryByRole, rerender } = setup({
+      props: { consultations: [{ ...consultation, requestedOn: null }] },
+    });
+
+    expect(
+      queryByRole('button', { name: 'Reminder for Lease First Nation Consultation' }),
+    ).toBeNull();
+
+    rerender(
+      <ConsultationListView
+        loading={false}
+        consultations={[{ ...consultation, requestedOn: '' }]}
+        onAdd={onAdd}
+        onDelete={onDelete}
+        onEdit={onEdit}
+      />,
+    );
+
+    expect(
+      queryByRole('button', { name: 'Reminder for Lease First Nation Consultation' }),
+    ).toBeNull();
+  });
+
+  it('does not display the reminder button for consultation types other than First Nation', () => {
+    const consultations = [{ ...getMockApiConsultation(), id: 1, requestedOn: '2024-01-01' }];
+    const { queryByRole } = setup({ props: { consultations } });
+
+    expect(
+      queryByRole('button', { name: 'Reminder for Lease First Nation Consultation' }),
+    ).toBeNull();
   });
 
   it('calls onEdit when clicked', async () => {

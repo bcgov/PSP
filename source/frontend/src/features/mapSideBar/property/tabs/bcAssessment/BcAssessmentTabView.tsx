@@ -61,6 +61,33 @@ export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewPr
         </FormSection>
       ) : !loading && !exists(summaryData) ? (
         <FormSection>
+          {exists(property) && (
+            <Section
+              header={
+                <Row>
+                  <Col md="10">Net Book</Col>
+                  <Col md="2" className="d-flex align-items-center justify-content-end pr-0">
+                    <StyledEditWrapper>
+                      {hasClaim(Claims.DISPOSITION_EDIT) && (
+                        <EditButton
+                          title="Edit net book value"
+                          onClick={() => {
+                            query.set('edit', 'true');
+                            history.push({ search: query.toString() });
+                          }}
+                        />
+                      )}
+                    </StyledEditWrapper>
+                  </Col>
+                </Row>
+              }
+            >
+              <SectionField label="Net book value">
+                {formatMoney(property.netBookAmount)}
+              </SectionField>
+              <SectionField label="Notes">{property.netBookNote}</SectionField>
+            </Section>
+          )}
           <b>
             Failed to load data from BC Assessment.
             <br />

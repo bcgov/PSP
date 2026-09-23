@@ -127,14 +127,14 @@ exports[`LtsaOwnershipInformationForm component > renders ownership information 
           <label
             class="c3"
           >
-            Owner name:
+            Owner name(s):
           </label>
         </div>
         <div
           class="c4 text-left col"
         >
           <p>
-            MORRIS GRAVES BAYKEY 
+            MORRIS GRAVES BAYKEY, KATHLEEN LOIS BAYKEY, ROCK TYLER BAYKEY, PATRICIA GAIL BAYKEY, CLIFFORD LIETZ, LEILAH MARIA LIETZ
           </p>
         </div>
       </div>
@@ -236,26 +236,6 @@ exports[`LtsaOwnershipInformationForm component > renders ownership information 
     <div
       class="c5"
     >
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Owner name:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <p>
-            KATHLEEN LOIS BAYKEY 
-          </p>
-        </div>
-      </div>
       <div
         class="pb-2 row"
       >
@@ -383,26 +363,6 @@ exports[`LtsaOwnershipInformationForm component > renders ownership information 
           <label
             class="c3"
           >
-            Owner name:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <p>
-            ROCK TYLER BAYKEY 
-          </p>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
             Incorporation number:
           </label>
         </div>
@@ -492,26 +452,6 @@ exports[`LtsaOwnershipInformationForm component > renders ownership information 
     <div
       class="c5"
     >
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Owner name:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <p>
-            PATRICIA GAIL BAYKEY 
-          </p>
-        </div>
-      </div>
       <div
         class="pb-2 row"
       >
@@ -639,26 +579,6 @@ exports[`LtsaOwnershipInformationForm component > renders ownership information 
           <label
             class="c3"
           >
-            Owner name:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <p>
-            CLIFFORD LIETZ 
-          </p>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
             Incorporation number:
           </label>
         </div>
@@ -748,26 +668,6 @@ exports[`LtsaOwnershipInformationForm component > renders ownership information 
     <div
       class="c5"
     >
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Owner name:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <p>
-            LEILAH MARIA LIETZ 
-          </p>
-        </div>
-      </div>
       <div
         class="pb-2 row"
       >

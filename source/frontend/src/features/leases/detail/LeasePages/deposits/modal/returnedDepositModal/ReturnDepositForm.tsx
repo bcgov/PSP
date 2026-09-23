@@ -7,7 +7,6 @@ import { FastCurrencyInput, FastDatePicker } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import { formatMoney } from '@/utils';
 
 import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
@@ -107,7 +106,6 @@ export const ReturnDepositForm: React.FunctionComponent<
               <ContactInputContainer
                 field="contactHolder"
                 View={ContactInputView}
-                restrictContactType={RestrictContactType.ALL}
                 displayErrorAsTooltip={false}
                 required={true}
               />

@@ -16,6 +16,8 @@ export interface ApiGen_Concepts_ContactSummary {
   surname: string | null;
   firstName: string | null;
   middleNames: string | null;
+  businessIdentifierValue: string | null;
+  userTypeCode: string | null;
   organizationName: string | null;
   email: string | null;
   mailingAddress: string | null;

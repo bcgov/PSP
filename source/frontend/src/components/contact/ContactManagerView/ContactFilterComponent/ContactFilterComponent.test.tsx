@@ -1,25 +1,35 @@
 import userEvent from '@testing-library/user-event';
-
 import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
-
 import {
   ContactFilterComponent,
   defaultFilter,
   IContactFilterComponentProps,
 } from './ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 
 const setFilter = vi.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions & IContactFilterComponentProps = { setFilter }) => {
-  const { filter, setFilter: setFilterFn, ...rest } = renderOptions;
+  const {
+    filter,
+    setFilter: setFilterFn,
+    restrictContactType,
+    showActiveSelector = true,
+    ...rest
+  } = renderOptions;
   const utils = render(
-    <ContactFilterComponent filter={filter} setFilter={setFilterFn} showActiveSelector />,
+    <ContactFilterComponent
+      filter={filter}
+      setFilter={setFilterFn}
+      restrictContactType={restrictContactType}
+      showActiveSelector={showActiveSelector}
+    />,
     {
       ...rest,
     },
   );
-  const searchButton = utils.getByTestId('search');
+  const searchButton = utils.getByTestId('contact-filter-search');
   const resetButton = utils.getByTestId('reset-button');
   return { searchButton, resetButton, setFilter: setFilterFn, ...utils };
 };
@@ -60,40 +70,58 @@ describe('ContactFilterComponent', () => {
 
   it('searches all by default', async () => {
     const { container, searchButton } = setup();
-    const allButton = container.querySelector(`#input-all`);
-    await act(async () => {
-      allButton && userEvent.click(allButton);
-    });
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: 'all' }),
+      expect.objectContaining({
+        ...defaultFilter,
+        searchBy: ['pimsusers', 'persons', 'organizations'],
+      }),
     );
   });
 
-  it('searches organizations if radio option selected', async () => {
+  it('searches organizations if other options are de-selected', async () => {
     const { container, searchButton } = setup();
-    const organizationsButton = container.querySelector(`#input-organizations`);
+    const individualsButton = container.querySelector(`#input-searchBy-persons`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
     await act(async () => {
-      organizationsButton && userEvent.click(organizationsButton);
+      individualsButton && userEvent.click(individualsButton);
+      pimsUsersButton && userEvent.click(pimsUsersButton);
     });
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: 'organizations' }),
+      expect.objectContaining({ ...defaultFilter, searchBy: ['organizations'] }),
     );
   });
 
-  it('searches persons if radio option selected', async () => {
+  it('searches persons only if other options are de-selected', async () => {
     const { container, searchButton } = setup();
-    const personButton = container.querySelector(`#input-persons`);
+    const prganizationButton = container.querySelector(`#input-searchBy-organizations`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
     await act(async () => {
-      personButton && userEvent.click(personButton);
+      prganizationButton && userEvent.click(prganizationButton);
+      pimsUsersButton && userEvent.click(pimsUsersButton);
     });
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: 'persons' }),
+      expect.objectContaining({ ...defaultFilter, searchBy: ['persons'] }),
+    );
+  });
+
+  it('searches pims users only if other options are de-selected', async () => {
+    const { container, searchButton } = setup();
+    const prganizationButton = container.querySelector(`#input-searchBy-organizations`);
+    const pimsPersonsButton = container.querySelector(`#input-searchBy-persons`);
+    await act(async () => {
+      prganizationButton && userEvent.click(prganizationButton);
+      pimsPersonsButton && userEvent.click(pimsPersonsButton);
+    });
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({ ...defaultFilter, searchBy: ['pimsusers'] }),
     );
   });
 
@@ -105,10 +133,12 @@ describe('ContactFilterComponent', () => {
   });
 
   it('searches for inactive contacts if checkbox unchecked', async () => {
-    const { container } = setup();
+    const { container, searchButton } = setup();
+
     const activeCheck = container.querySelector(`#input-activeContactsOnly`);
     expect(activeCheck).not.toBeNull();
     await act(async () => userEvent.click(activeCheck as Element));
+    await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({ ...defaultFilter, activeContactsOnly: false }),
@@ -134,7 +164,61 @@ describe('ContactFilterComponent', () => {
     await act(async () => userEvent.click(resetButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: 'persons' }),
+      expect.objectContaining({
+        ...defaultFilter,
+        searchBy: ['pimsusers', 'persons', 'organizations'],
+      }),
     );
+  });
+
+  it('shows all contact types when restrictContactType is empty', () => {
+    const { container } = setup({
+      setFilter,
+      restrictContactType: [],
+    });
+
+    expect(container.querySelector('#input-searchBy-persons')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-organizations')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-pimsusers')).not.toBeNull();
+  });
+
+  it('searches all contact types when restrictContactType is empty', async () => {
+    const { searchButton } = setup({
+      setFilter,
+      restrictContactType: [],
+    });
+
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        searchBy: ['pimsusers', 'persons', 'organizations'],
+      }),
+    );
+  });
+
+  it('shows only individuals when restricted to individuals', () => {
+    const { container } = setup({
+      setFilter,
+      restrictContactType: [RestrictContactType.ONLY_INDIVIDUALS],
+    });
+
+    expect(container.querySelector('#input-searchBy-persons')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-organizations')).toBeNull();
+    expect(container.querySelector('#input-searchBy-pimsusers')).toBeNull();
+  });
+
+  it('shows multiple allowed contact types', () => {
+    const { container } = setup({
+      setFilter,
+      restrictContactType: [
+        RestrictContactType.ONLY_INDIVIDUALS,
+        RestrictContactType.ONLY_PIMSUSERS,
+      ],
+    });
+
+    expect(container.querySelector('#input-searchBy-persons')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-pimsusers')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-organizations')).toBeNull();
   });
 });

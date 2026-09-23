@@ -72,7 +72,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
           queryObject['PIN'] = pin;
         }
         const pimsProperty = await loadProperties(queryObject);
-        if (pimsProperty.features.length > 0) {
+        if (pimsProperty?.features?.length > 0) {
           // TODO: Might need updates to work with multiple properties
           property.pimsFeature = pimsProperty.features[0];
         }

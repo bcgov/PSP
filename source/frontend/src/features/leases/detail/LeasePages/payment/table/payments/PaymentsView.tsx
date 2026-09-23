@@ -28,6 +28,7 @@ export interface IPaymentsViewProps {
   periodId?: number;
   period: FormLeasePeriod | undefined;
   isFileFinalStatus?: boolean;
+  canEdit?: boolean;
 }
 
 export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaymentsViewProps>> = ({
@@ -39,6 +40,7 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
   isReceivable,
   period,
   isFileFinalStatus,
+  canEdit,
 }) => {
   const variablePaymentColumns = getLeaseVariablePeriodColumns();
   const variablePaymentData: LeasePeriodByCategoryProjection[] = [
@@ -54,10 +56,20 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
         isReceivable,
         isGstEligible,
         isFileFinalStatus,
+        canEdit,
         onSave,
         payments: period?.payments ?? [],
       }),
-    [onEdit, onDelete, isReceivable, isGstEligible, isFileFinalStatus, onSave, period?.payments],
+    [
+      onEdit,
+      onDelete,
+      isReceivable,
+      isGstEligible,
+      isFileFinalStatus,
+      canEdit,
+      onSave,
+      period?.payments,
+    ],
   );
 
   return (

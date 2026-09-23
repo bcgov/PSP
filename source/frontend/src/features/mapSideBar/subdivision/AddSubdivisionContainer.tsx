@@ -104,12 +104,12 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
         message: (
           <>
             <p>
-              You are subdividing a property into two or more properties. The old parent property
-              record will be retired, and the new child properties will be created
+              You are subdividing a property into two or more properties. The old source parcel
+              record will be retired, and the subdivided parcels will be created
             </p>
             <p>
-              If you proceed, you will be redirected to the old parent property record, where you
-              can view changes and make updates to the new properties. Do you want to proceed?
+              If you proceed, you will be redirected to the old source parcel record, where you can
+              view changes and make updates to the new properties. Do you want to proceed?
             </p>
           </>
         ),
@@ -136,7 +136,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
       const response = await addPropertyOperation(propertyOperations, userOverrideCodes);
 
       if (response?.length) {
-        handleSuccess(propertyOperations);
+        handleSuccess(response);
       }
     } finally {
       mapMachine.processCreation();
@@ -146,10 +146,13 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
 
   const handleSuccess = async (subdivisions: ApiGen_Concepts_PropertyOperation[]) => {
     mapMachine.refreshMapProperties();
-    if (subdivisions.length === 0 || !subdivisions[0].sourceProperty) {
+    const sourcePropertyId =
+      subdivisions?.[0]?.sourcePropertyId ?? subdivisions?.[0]?.sourceProperty?.id ?? undefined;
+
+    if (!sourcePropertyId) {
       onSuccess(undefined);
     } else {
-      onSuccess(subdivisions[0].sourceProperty?.id ?? undefined);
+      onSuccess(sourcePropertyId);
     }
   };
 

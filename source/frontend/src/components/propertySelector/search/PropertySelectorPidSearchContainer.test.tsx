@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
-import { createAxiosError, renderAsync, RenderOptions, screen } from '@/utils/test-utils';
+import { act, createAxiosError, renderAsync, RenderOptions, screen } from '@/utils/test-utils';
 import PropertySelectorPidSearchContainer, {
   PropertySelectorPidSearchContainerProps,
 } from './PropertySelectorPidSearchContainer';
@@ -34,7 +34,7 @@ const setSelectProperty = vi.fn();
 vi.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
   usePimsPropertyRepository: () => {
     return {
-      getPropertyByPidWrapper: mockGetByPidWrapper,
+      getPropertyByPidLookupWrapper: mockGetByPidWrapper,
     };
   },
 }));
@@ -76,10 +76,13 @@ describe('PropertySearchPidSelector component', () => {
   });
 
   it('calls setSelectedProperty when onSearch', async () => {
+    mockGetByPidWrapper.execute.mockResolvedValue({ property: { id: 1 } });
+
     await setup();
 
-    viewProps?.onSearch({ pid: '111-111-111' });
-    mockGetByPidWrapper.execute.mockResolvedValue({ id: 1 });
+    await act(async () => {
+      await viewProps?.onSearch({ pid: '111-111-111' });
+    });
 
     expect(mockGetByPidWrapper.execute).toHaveBeenCalledWith('111-111-111');
   });

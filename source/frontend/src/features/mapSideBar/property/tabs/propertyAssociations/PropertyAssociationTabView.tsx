@@ -9,9 +9,7 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
-import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
+import { ApiGen_Concepts_LeaseAssociation } from '@/models/api/generated/ApiGen_Concepts_LeaseAssociation';
 import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 
 import AssociationContent from './AssociationContent';
@@ -21,9 +19,7 @@ import { LeaseAssociationContent } from './LeaseAssociationContent';
 export interface IPropertyAssociationTabViewProps {
   isLoading: boolean;
   associations?: ApiGen_Concepts_PropertyAssociations;
-  associatedLeases: ApiGen_Concepts_Lease[];
-  associatedLeaseStakeholders: ApiGen_Concepts_LeaseStakeholder[];
-  associatedLeaseRenewals: ApiGen_Concepts_LeaseRenewal[];
+  leaseAssociations: ApiGen_Concepts_LeaseAssociation[];
 }
 
 const PropertyAssociationTabView: React.FunctionComponent<
@@ -93,9 +89,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
           associationName="lease"
           associations={leaseAssociations}
           linkUrlMask="/mapview/sidebar/lease/|id|"
-          stakeholders={props.associatedLeaseStakeholders}
-          renewals={props.associatedLeaseRenewals}
-          leases={props.associatedLeases}
+          leaseAssociations={props.leaseAssociations}
           disable={!hasClaim(Claims.LEASE_VIEW)}
         />
       </Section>

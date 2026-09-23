@@ -27,6 +27,7 @@ const InsuranceDetailsView: React.FunctionComponent<
         : [],
     [insuranceList, insuranceTypes],
   );
+
   return sortedInsuranceList.length > 0 ? (
     <div data-testid="insurance-section">
       <Section header="Required insurance">

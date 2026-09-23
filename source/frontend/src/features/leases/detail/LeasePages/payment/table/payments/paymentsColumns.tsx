@@ -21,12 +21,13 @@ import { FormLeasePayment } from '../../models';
 
 const actualsActions = (
   isFileFinalStatus: boolean,
+  canEdit: boolean,
   onEdit: (values: FormLeasePayment) => void,
   onDelete: (values: FormLeasePayment) => void,
 ) => {
   return function ({ row: { original, index } }: CellProps<FormLeasePayment, unknown>) {
     const { hasClaim } = useKeycloakWrapper();
-    if (isFileFinalStatus) {
+    if (isFileFinalStatus && !canEdit) {
       return (
         <TooltipIcon
           toolTipId={`payments-actions-cannot-edit-tooltip`}
@@ -75,6 +76,7 @@ export interface IPaymentColumnProps {
   isGstEligible?: boolean;
   payments: FormLeasePayment[];
   isFileFinalStatus?: boolean;
+  canEdit?: boolean;
 }
 
 export const getActualsColumns = ({
@@ -84,6 +86,7 @@ export const getActualsColumns = ({
   isReceivable,
   isGstEligible,
   isFileFinalStatus,
+  canEdit,
 }: IPaymentColumnProps): ColumnWithProps<
   FormLeasePayment,
   { properties: ApiGen_Concepts_Payment[] }
@@ -222,7 +225,7 @@ export const getActualsColumns = ({
       Header: 'Actions',
       align: 'right',
       maxWidth: 30,
-      Cell: actualsActions(isFileFinalStatus, onEdit, onDelete),
+      Cell: actualsActions(isFileFinalStatus, canEdit, onEdit, onDelete),
     },
   ];
 };

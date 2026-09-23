@@ -304,14 +304,14 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyInvalidConsolidationChildMessage()
         {
             WaitUntilVisible(subconErrorHeader);
-            Assert.Equal("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.", sharedModals.ModalContent());
+            Assert.Equal("Consolidated parcel may not be in the PIMS inventory unless also in the source parcel list.", sharedModals.ModalContent());
             sharedModals.ModalClickOKBttn();
         }
 
         public void VerifyInvalidConsolidationRepeatedParentMessage()
         {
             WaitUntilVisible(subconErrorHeader);
-            Assert.Equal("Consolidations must contain at least two different parent properties.", sharedModals.ModalContent());
+            Assert.Equal("Consolidations must contain at least two source parcels.", sharedModals.ModalContent());
             sharedModals.ModalClickOKBttn();
         }
 

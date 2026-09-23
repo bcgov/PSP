@@ -17,15 +17,17 @@ import { useAddFileConfirmation } from '@/hooks/useAddFileConfirmation';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
+import { useLtsa } from '@/hooks/useLtsa';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, firstOrNull, formatGuid, isValidId } from '@/utils';
+import { exists, firstOrNull, formatGuid, isValidId, isValidString, normalizePid } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { StyledFormWrapper } from '../../shared/styles';
+import { AcquisitionOwnerFormModel } from '../common/models';
 import { AddAcquisitionFileYupSchema } from './AddAcquisitionFileYupSchema';
 import { IAddAcquisitionFormProps } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
@@ -77,8 +79,28 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   }, [getAcquisitionFile, parentAcquisitionFile, parentId]);
 
   const mapMachine = useMapStateMachine();
+  const pid =
+    firstOrNull(mapMachine.selectedFeatures)?.parcelFeature?.properties?.PID ??
+    firstOrNull(mapMachine.mapLocationFeatureDataset?.parcelFeatures)?.properties?.PID ??
+    null;
 
   const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
+  const { ltsaRequestWrapper } = useLtsa();
+  const [ltsaOwners, setLtsaOwners] = useState<AcquisitionOwnerFormModel[]>([]);
+  const executeLtsa = ltsaRequestWrapper.execute;
+
+  const selectedPropertyPidKey = useMemo(
+    () =>
+      (featuresWithAddresses ?? [])
+        .map(
+          featureWithAddress =>
+            PropertyForm.fromFeatureDataset(featureWithAddress.feature).pid ?? '',
+        )
+        .filter(isValidString)
+        .sort()
+        .join('|'),
+    [featuresWithAddresses],
+  );
 
   useEffect(() => {
     if (featuresWithAddresses?.length > 0 && !isSubFile && !formikRef?.current?.values?.region) {
@@ -100,6 +122,102 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   useEffect(() => {
     formattedGuid && retrieveUserInfo(formattedGuid);
   }, [formattedGuid, retrieveUserInfo]);
+
+  useEffect(() => {
+    if (!isValidString(pid)) {
+      // Avoid state-update loops when PID is absent.
+      setLtsaOwners(previous => (previous.length === 0 ? previous : []));
+      return;
+    }
+
+    const formProperties = formikRef.current?.values?.properties ?? [];
+    const selectedPid = normalizePid(pid);
+    const hasSelectedPidInForm = formProperties.some(
+      property => normalizePid(property.pid) === selectedPid,
+    );
+
+    if (!hasSelectedPidInForm) {
+      return;
+    }
+
+    let isCancelled = false;
+
+    executeLtsa(pid).then(ltsaOrders => {
+      if (isCancelled) {
+        return;
+      }
+
+      const titleOwners =
+        ltsaOrders?.titleOrders
+          ?.flatMap(x => x?.orderedProduct?.fieldedData?.ownershipGroups)
+          ?.flatMap(x => x?.titleOwners)
+          ?.filter(exists) ?? [];
+
+      const owners = titleOwners.map((ownerData, index) => {
+        const owner = new AcquisitionOwnerFormModel();
+        owner.isPrimaryContact = index === 0 ? 'true' : 'false';
+        owner.isOrganization = isValidString(ownerData.givenName) ? 'false' : 'true';
+        owner.givenName = ownerData.givenName ?? '';
+        owner.lastNameAndCorpName = ownerData.lastNameOrCorpName1 ?? '';
+        owner.incorporationNumber = ownerData.incorporationNumber ?? '';
+        owner.isFromLtsa = true;
+        owner.ltsaPid = pid;
+        owner.ltsaSourcedDate = new Date().toISOString().slice(0, 10);
+        return owner;
+      });
+
+      setLtsaOwners(owners);
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [executeLtsa, pid, selectedPropertyPidKey]);
+
+  useEffect(() => {
+    if (ltsaOwners.length === 0) {
+      return;
+    }
+
+    const formik = formikRef.current;
+    if (!formik) {
+      return;
+    }
+
+    if ((formik.values.properties?.length ?? 0) === 0) {
+      return;
+    }
+
+    const existingOwners = formik.values.owners ?? [];
+
+    const ownerKey = (owner: AcquisitionOwnerFormModel) =>
+      [
+        owner.isOrganization,
+        owner.givenName.trim(),
+        owner.lastNameAndCorpName.trim(),
+        owner.incorporationNumber.trim(),
+      ].join('|');
+
+    const existingKeys = new Set(existingOwners.map(ownerKey));
+    const hasPrimaryContact = existingOwners.some(owner => owner.isPrimaryContact === 'true');
+
+    const ownersToAdd = ltsaOwners
+      .filter(owner => !existingKeys.has(ownerKey(owner)))
+      .map(owner => {
+        const formOwner = new AcquisitionOwnerFormModel();
+        Object.assign(formOwner, owner);
+
+        if (hasPrimaryContact) {
+          formOwner.isPrimaryContact = 'false';
+        }
+
+        return formOwner;
+      });
+
+    if (ownersToAdd.length > 0) {
+      formik.setFieldValue('owners', [...existingOwners, ...ownersToAdd], false);
+    }
+  }, [ltsaOwners]);
 
   const initialForm = useMemo(() => {
     return exists(parentAcquisitionFile)

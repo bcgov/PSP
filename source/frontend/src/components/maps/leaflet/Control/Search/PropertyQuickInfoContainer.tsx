@@ -198,50 +198,35 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     worklistAdd(worklistDataSet);
   }, [selectedFeatureDataset, worklistAdd]);
 
+  const onCreateFile = useCallback(
+    (fileType: 'research' | 'acquisition' | 'disposition' | 'lease' | 'management') => {
+      setIntent({
+        action: () => prepareForCreation([selectedFeatureDataset]),
+      });
+      pathGenerator.newFile(fileType);
+    },
+    [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent],
+  );
+
   const onCreateResearchFile = useCallback(() => {
-    setIntent({
-      action: () => prepareForCreation([selectedFeatureDataset]),
-    });
-    setTimeout(() => {
-      pathGenerator.newFile('research');
-    }, 0);
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
+    onCreateFile('research');
+  }, [onCreateFile]);
 
   const onCreateAcquisitionFile = useCallback(() => {
-    setIntent({
-      action: () => prepareForCreation([selectedFeatureDataset]),
-    });
-    setTimeout(() => {
-      pathGenerator.newFile('acquisition');
-    }, 0);
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
+    onCreateFile('acquisition');
+  }, [onCreateFile]);
 
   const onCreateDispositionFile = useCallback(() => {
-    setIntent({
-      action: () => prepareForCreation([selectedFeatureDataset]),
-    });
-    setTimeout(() => {
-      pathGenerator.newFile('disposition');
-    }, 0);
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
+    onCreateFile('disposition');
+  }, [onCreateFile]);
 
   const onCreateLeaseFile = useCallback(() => {
-    setIntent({
-      action: () => prepareForCreation([selectedFeatureDataset]),
-    });
-    setTimeout(() => {
-      pathGenerator.newFile('lease');
-    }, 0);
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
+    onCreateFile('lease');
+  }, [onCreateFile]);
 
   const onCreateManagementFile = useCallback(() => {
-    setIntent({
-      action: () => prepareForCreation([selectedFeatureDataset]),
-    });
-    setTimeout(() => {
-      pathGenerator.newFile('management');
-    }, 0);
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
+    onCreateFile('management');
+  }, [onCreateFile]);
 
   const onAddToOpenFile = useCallback(() => {
     // If in edit properties mode, prepare the parcel for addition to an open file

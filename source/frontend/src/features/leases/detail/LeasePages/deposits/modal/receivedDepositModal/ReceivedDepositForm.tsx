@@ -6,7 +6,6 @@ import { ContactInputContainer } from '@/components/common/form/ContactInput/Con
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { InlineInput } from '@/components/common/form/styles';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_CodeTypes_LeaseSecurityDepositTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseSecurityDepositTypes';
@@ -106,7 +105,6 @@ export const ReceivedDepositForm: React.FunctionComponent<
             <ContactInputContainer
               field="contactHolder"
               View={ContactInputView}
-              restrictContactType={RestrictContactType.ALL}
               displayErrorAsTooltip={false}
               required={true}
             />

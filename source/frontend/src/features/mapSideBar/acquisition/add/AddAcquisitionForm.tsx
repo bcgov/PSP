@@ -18,8 +18,8 @@ import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSe
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSectionParagraph } from '@/components/common/styles';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
+import { RestrictContactType } from '@/constants/contacts';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
@@ -489,12 +489,12 @@ const AddAcquisitionDetailSubForm: React.FC<{
             <ContactInputContainer
               field="ownerRepresentative.contact"
               View={ContactInputView}
-              restrictContactType={RestrictContactType.ONLY_INDIVIDUALS}
+              restrictContactType={[RestrictContactType.ONLY_INDIVIDUALS]}
             ></ContactInputContainer>
           </SectionField>
           <SectionField label="Comment">
             <TextArea
-              field="ownerRepresentative.comment"
+              field="ownerRepComment"
               placeholder="Remarks or additional representative(s)"
             ></TextArea>
           </SectionField>

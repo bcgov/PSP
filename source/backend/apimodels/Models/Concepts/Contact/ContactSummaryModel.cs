@@ -1,3 +1,4 @@
+using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Organization;
 using Pims.Api.Models.Concepts.Person;
 
@@ -47,6 +48,16 @@ namespace Pims.Api.Models.Concepts.Contact
         public string MiddleNames { get; set; }
 
         /// <summary>
+        /// get/set - The user's unique identity.
+        /// </summary>
+        public string BusinessIdentifierValue { get; set; }
+
+        /// <summary>
+        /// get/set - The User type code.
+        /// </summary>
+        public string UserTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The organization.
         /// </summary>
         public string OrganizationName { get; set; }
@@ -76,5 +87,6 @@ namespace Pims.Api.Models.Concepts.Contact
         /// </summary>
         public bool IsDisabled { get; set; }
         #endregion
+
     }
 }

@@ -6,7 +6,7 @@ import { LinkButton, RemoveButton } from '@/components/common/buttons';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { ModalSize } from '@/components/common/GenericModal';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 import { useModalContext } from '@/hooks/useModalContext';
 
 import { ProjectForm, ProjectTeamForm } from '../models';
@@ -28,7 +28,7 @@ const AddProjectTeamSubForm: React.FunctionComponent = () => {
                     field={`projectTeam.${index}.contact`}
                     View={ContactInputView}
                     displayErrorAsTooltip={false}
-                    restrictContactType={RestrictContactType.ONLY_INDIVIDUALS}
+                    restrictContactType={[RestrictContactType.ONLY_PIMSUSERS]}
                     placeholder="Select from Management Team..."
                   ></ContactInputContainer>
                 </Col>

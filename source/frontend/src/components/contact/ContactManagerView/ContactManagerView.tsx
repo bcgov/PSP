@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
+import { RestrictContactType } from '@/constants/contacts';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useSearch } from '@/hooks/useSearch';
 import { fromContactSummary, IContactSearchResult } from '@/interfaces';
@@ -10,7 +11,6 @@ import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Co
 import {
   ContactFilterComponent,
   defaultFilter,
-  RestrictContactType,
 } from './ContactFilterComponent/ContactFilterComponent';
 import { ContactResultComponent } from './ContactResultComponent/ContactResultComponent';
 import { IContactFilter } from './IContactFilter';
@@ -24,7 +24,10 @@ interface IContactManagerViewProps {
   className?: string;
   showActiveSelector?: boolean;
   isSingleSelect?: boolean;
-  restrictContactType?: RestrictContactType;
+  restrictContactType?: RestrictContactType[];
+  createdContact?: IContactSearchResult;
+  initialSearchFilter?: IContactFilter;
+  onFilterChanged?: (filter: IContactFilter) => void;
 }
 
 /**
@@ -40,12 +43,14 @@ const ContactManagerView = ({
   showActiveSelector,
   isSingleSelect,
   restrictContactType,
+  createdContact,
+  initialSearchFilter,
+  onFilterChanged,
 }: IContactManagerViewProps) => {
   const { getContacts } = useApiContacts();
 
-  const initialFilter: IContactFilter = (
-    noInitialSearch ? undefined : defaultFilter
-  ) as IContactFilter;
+  const initialFilter: IContactFilter = (initialSearchFilter ??
+    (noInitialSearch ? undefined : defaultFilter)) as IContactFilter;
 
   const {
     results,
@@ -76,13 +81,23 @@ const ContactManagerView = ({
     }
   }, [error]);
 
+  const mappedResults = results.map(fromContactSummary);
+
+  const contactResults =
+    createdContact && !mappedResults.some(result => result.id === createdContact.id)
+      ? [createdContact, ...mappedResults]
+      : mappedResults;
+
   return (
     <div className={className}>
       <Row>
         <Col>
           <ContactFilterComponent
             filter={filter}
-            setFilter={setFilter}
+            setFilter={value => {
+              setFilter(value);
+              onFilterChanged?.(value);
+            }}
             showActiveSelector={showActiveSelector}
             restrictContactType={restrictContactType}
           />
@@ -91,11 +106,11 @@ const ContactManagerView = ({
       <div>
         <ContactResultComponent
           loading={loading}
-          results={results.map(fromContactSummary)}
+          results={contactResults}
           sort={sort}
           pageSize={pageSize}
           pageIndex={currentPage}
-          totalItems={totalItems}
+          totalItems={totalItems + (createdContact ? 1 : 0)}
           setSort={setSort}
           setPageSize={setPageSize}
           setPageIndex={setCurrentPage}

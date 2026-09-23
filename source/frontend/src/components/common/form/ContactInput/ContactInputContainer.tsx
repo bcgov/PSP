@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 
 import { IContactInputViewProps } from './ContactInputView';
@@ -9,7 +9,7 @@ import { IContactInputViewProps } from './ContactInputView';
 export type IContactInputContainerProps = {
   field: string;
   label?: string;
-  restrictContactType?: RestrictContactType;
+  restrictContactType?: RestrictContactType[];
   displayErrorAsTooltip?: boolean;
   onContactSelected?: (contact: IContactSearchResult) => void;
   placeholder?: string;
@@ -38,16 +38,27 @@ export const ContactInputContainer: React.FC<
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>([]);
   const { setFieldValue, setFieldTouched } = useFormikContext<any>();
 
-  const handleContactManagerOk = () => {
-    setFieldValue(field, selectedContacts[0]);
+  const handleContactManagerOk = async () => {
+    const selectedContact = selectedContacts[0];
+
+    await setFieldValue(field, selectedContact, false);
+    await setFieldTouched(field, true, true);
+
     setShowContactManager(false);
     setSelectedContacts([]);
-    if (onContactSelected !== undefined) {
-      onContactSelected(selectedContacts[0]);
-    }
+
+    onContactSelected?.(selectedContact);
   };
 
   const editEnabled = canEditDetails ?? true;
+
+  const restrictedContactTypes = restrictContactType?.length
+    ? restrictContactType
+    : [
+        RestrictContactType.ONLY_PIMSUSERS,
+        RestrictContactType.ONLY_INDIVIDUALS,
+        RestrictContactType.ONLY_ORGANIZATIONS,
+      ];
 
   return (
     <View
@@ -73,7 +84,7 @@ export const ContactInputContainer: React.FC<
           setSelectedContacts([]);
         },
         showActiveSelector: true,
-        restrictContactType: restrictContactType,
+        restrictContactType: restrictedContactTypes,
       }}
       placeholder={placeholder}
       canEditDetails={editEnabled}

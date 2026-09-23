@@ -313,52 +313,30 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   text-decoration: none;
 }
 
-.c14.form-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 0;
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
-.c14.form-group .radio-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  row-gap: unset;
-  -webkit-column-gap: 0.4rem;
-  column-gap: 0.4rem;
+.c4 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
-.c14.form-group .radio-group .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
-.c14.form-group .radio-group .form-check .form-check-input {
-  margin-left: 0;
-}
-
-.c14.form-group .radio-group .form-check-label {
-  margin-left: 1rem;
-}
-
-.c14 .form-label {
-  margin-bottom: unset;
+.c2 {
+  font-weight: bold;
 }
 
 .c8 {
@@ -406,30 +384,52 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   opacity: unset;
 }
 
-.c1 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
+.c14.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
 }
 
-.c4 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
+.c14.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
 }
 
-.c3.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
+.c14.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
-.c2 {
-  font-weight: bold;
+.c14.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c14.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c14 .form-label {
+  margin-bottom: unset;
 }
 
 .c18 {
@@ -1876,6 +1876,13 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-KEYCNTCT"
+                  value="KEYCNTCT"
+                >
+                  Key Contact
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-EXPRAGENT"
                   value="EXPRAGENT"
                 >
@@ -2064,6 +2071,13 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                   value=""
                 >
                   Select profile...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-KEYCNTCT"
+                  value="KEYCNTCT"
+                >
+                  Key Contact
                 </option>
                 <option
                   class="option"
@@ -4051,14 +4065,12 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             >
               <textarea
                 class="form-control"
-                id="input-ownerRepresentatives.0.comment"
-                name="ownerRepresentatives.0.comment"
+                id="input-ownerRepComment"
+                name="ownerRepComment"
                 placeholder="Remarks or additional representative(s)"
                 style="word-break: break-all;"
-                title="test representative comment"
-              >
-                test representative comment
-              </textarea>
+                title=""
+              />
             </div>
           </div>
         </div>

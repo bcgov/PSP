@@ -1,6 +1,7 @@
 import { Claims } from '@/constants';
 import { getMockExpropriationEvent } from '@/mocks/expropriationEvents.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_ExpropiationOwnerHistoryType } from '@/models/api/generated/ApiGen_CodeTypes_ExpropiationOwnerHistoryType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
@@ -118,5 +119,54 @@ describe('ExpropriationEventHistoryView', () => {
     await act(async () => userEvent.click(deleteButton));
 
     expect(onDelete).toHaveBeenCalled();
+  });
+
+  it('displays the reminder button when the event type is Appraisal effective date and an event date is set', async () => {
+    const apiEvent = {
+      ...getMockExpropriationEvent(),
+      eventType: {
+        ...getMockExpropriationEvent().eventType,
+        id: ApiGen_CodeTypes_ExpropiationOwnerHistoryType.APPEFFCTVDT,
+      },
+      eventDate: '2025-01-21',
+    };
+    setup({
+      props: { eventRows: [ExpropriationEventRow.fromApi(apiEvent)] },
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(
+      await screen.findByRole('button', { name: 'Reminder for Appraisal effective date' }),
+    ).toBeVisible();
+  });
+
+  it('does not display the reminder button when the event type is not Appraisal effective date', async () => {
+    setup({
+      props: { eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())] },
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(
+      screen.queryByRole('button', { name: 'Reminder for Appraisal effective date' }),
+    ).toBeNull();
+  });
+
+  it('does not display the reminder button when the event type is Appraisal effective date but there is no event date', async () => {
+    const apiEvent = {
+      ...getMockExpropriationEvent(),
+      eventType: {
+        ...getMockExpropriationEvent().eventType,
+        id: ApiGen_CodeTypes_ExpropiationOwnerHistoryType.APPEFFCTVDT,
+      },
+      eventDate: null,
+    };
+    setup({
+      props: { eventRows: [ExpropriationEventRow.fromApi(apiEvent)] },
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(
+      screen.queryByRole('button', { name: 'Reminder for Appraisal effective date' }),
+    ).toBeNull();
   });
 });

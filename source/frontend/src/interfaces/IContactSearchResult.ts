@@ -8,7 +8,12 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 interface PersonContactSummary
   extends Omit<
     ApiGen_Concepts_ContactSummary,
-    'organizationId' | 'organization' | 'primaryOrgContact' | 'primaryOrgContactId'
+    | 'organizationId'
+    | 'organization'
+    | 'primaryOrgContact'
+    | 'primaryOrgContactId'
+    | 'businessIdentifierValue'
+    | 'userTypeCode'
   > {
   organizationId?: never;
   organization?: never;
@@ -16,16 +21,46 @@ interface PersonContactSummary
   primaryOrgContactId?: never;
 }
 
+interface PIMSUserContactSummary extends PersonContactSummary {
+  userTypeCode: string;
+  businessIdentifierValue: string;
+}
+
 interface OrganizationContactSummary
   extends Omit<
     ApiGen_Concepts_ContactSummary,
-    'personId' | 'person' | 'surname' | 'firstName' | 'middleNames'
+    | 'personId'
+    | 'person'
+    | 'surname'
+    | 'firstName'
+    | 'middleNames'
+    | 'businessIdentifierValue'
+    | 'userTypeCode'
   > {
   personId?: never;
   person?: never;
   surname?: never;
   firstName?: never;
   middleNames?: never;
+}
+
+export function isPIMSUserSummary(
+  contactResult: IContactSearchResult,
+): contactResult is PIMSUserContactSummary {
+  if (!exists(contactResult)) {
+    return false;
+  }
+  if (!('userTypeCode' in contactResult) || !('businessIdentifierValue' in contactResult)) {
+    return false;
+  }
+  return (
+    'userTypeCode' in contactResult &&
+    'businessIdentifierValue' in contactResult &&
+    exists(contactResult.personId) &&
+    contactResult.id.startsWith('P') &&
+    exists(contactResult.userTypeCode) &&
+    exists(contactResult.businessIdentifierValue)
+  );
 }
 
 export function isPersonSummary(
@@ -44,7 +79,10 @@ export function isOrganizationSummary(
   return contactResult.id.startsWith('O');
 }
 
-export type IContactSearchResult = PersonContactSummary | OrganizationContactSummary;
+export type IContactSearchResult =
+  | PersonContactSummary
+  | OrganizationContactSummary
+  | PIMSUserContactSummary;
 
 export function fromContactSummary(
   baseModel: ApiGen_Concepts_ContactSummary,
@@ -62,7 +100,7 @@ export function fromContactSummary(
   };
 
   if (baseModel?.id?.startsWith('P') === true) {
-    return {
+    const person = {
       ...common,
       person: baseModel.person,
       personId: baseModel.personId,
@@ -70,13 +108,23 @@ export function fromContactSummary(
       firstName: baseModel.firstName,
       middleNames: baseModel.middleNames,
     };
-  } else {
-    return {
-      ...common,
-      organization: baseModel.organization,
-      organizationId: baseModel.organizationId,
-    };
+
+    if (exists(baseModel.userTypeCode) && exists(baseModel.businessIdentifierValue)) {
+      return {
+        ...person,
+        userTypeCode: baseModel.userTypeCode,
+        businessIdentifierValue: baseModel.businessIdentifierValue,
+      };
+    }
+
+    return person;
   }
+
+  return {
+    ...common,
+    organization: baseModel.organization,
+    organizationId: baseModel.organizationId,
+  };
 }
 
 export function fromContact(baseModel: ApiGen_Concepts_Contact): IContactSearchResult {

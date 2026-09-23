@@ -10,7 +10,6 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
@@ -77,7 +76,6 @@ export const PropertyManagementUpdateForm = React.forwardRef<
                 <ContactInputContainer
                   field="responsiblePayer"
                   View={ContactInputView}
-                  restrictContactType={RestrictContactType.ALL}
                   displayErrorAsTooltip={false}
                   required={false}
                 />

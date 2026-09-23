@@ -28,6 +28,7 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWit
   deliveryDate: UtcIsoDate | null;
   estimatedCompletionDate: UtcIsoDate | null;
   possessionDate: UtcIsoDate | null;
+  ownerRepComment: string | null;
   acquisitionFileProgressStatuses: ApiGen_Concepts_AcquisitionFileProgressStatuses[] | null;
   acquisitionFileAppraisalStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   acquisitionFileLegalSurveyStatusTypeCode: ApiGen_Base_CodeType<string> | null;

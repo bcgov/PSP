@@ -3,7 +3,7 @@ import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/claims';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { IContactSearchResult } from '@/interfaces';
+import { RestrictContactType } from '@/constants/contacts';
 import {
   act,
   fillInput,
@@ -16,8 +16,6 @@ import {
 
 import { defaultFilter } from './ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView';
-import { MockedFunction } from 'vitest';
-import { MaybeMocked } from '@vitest/spy';
 import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
 import { getEmptyContactSummary } from '@/mocks/contacts.mock';
 
@@ -30,19 +28,25 @@ vi.mocked(useApiContacts).mockReturnValue({
 } as unknown as ReturnType<typeof useApiContacts>);
 
 // render component under test
-const setup = (renderOptions: RenderOptions = {}) => {
+const setup = (
+  props: Partial<React.ComponentProps<typeof ContactManagerView>> = {},
+  renderOptions: RenderOptions = {},
+) => {
   const utils = render(
     <ContactManagerView
       selectedRows={[]}
       setSelectedRows={noop}
       showActiveSelector
       showSelectedRowCount
+      {...props}
     />,
     {
       ...renderOptions,
     },
   );
-  const searchButton = utils.getByTestId('search');
+
+  const searchButton = utils.getByTestId('contact-filter-search');
+
   return { searchButton, ...utils };
 };
 
@@ -128,47 +132,67 @@ describe('ContactManagerView', () => {
   it('searches all by default', async () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
-    const allButton = container.querySelector(`#input-all`);
-    allButton && (await act(async () => userEvent.click(allButton)));
     await act(async () => userEvent.click(searchButton));
 
-    expect(getContacts).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultPagedFilter, searchBy: 'all' }),
-    );
-
-    expect(allButton).toBeChecked();
+    expect(getContacts).toHaveBeenCalledWith(expect.objectContaining({ ...defaultPagedFilter }));
   });
 
-  it('searches organizations if radio option selected', async () => {
+  it('searches organizations only if other options are de-selected', async () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
-    const organizationsButton = container.querySelector(`#input-organizations`);
+    const individualsButton = container.querySelector(`#input-searchBy-persons`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
+    const organizationsButton = container.querySelector(`#input-searchBy-organizations`);
+
     await act(async () => {
-      organizationsButton && userEvent.click(organizationsButton);
+      individualsButton && userEvent.click(individualsButton);
+      pimsUsersButton && userEvent.click(pimsUsersButton);
     });
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultPagedFilter, searchBy: 'organizations' }),
+      expect.objectContaining({ ...defaultPagedFilter, searchBy: ['organizations'] }),
     );
 
     expect(organizationsButton).toBeChecked();
   });
 
-  it('searches persons if radio option selected', async () => {
+  it('searches persons only if other options are de-selected', async () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
-    const personButton = container.querySelector(`#input-persons`);
+    const personButton = container.querySelector(`#input-searchBy-persons`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
+    const organizationsButton = container.querySelector(`#input-searchBy-organizations`);
     await act(async () => {
-      personButton && userEvent.click(personButton);
+      pimsUsersButton && userEvent.click(pimsUsersButton);
+      organizationsButton && userEvent.click(organizationsButton);
     });
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultPagedFilter, searchBy: 'persons' }),
+      expect.objectContaining({ ...defaultPagedFilter, searchBy: ['persons'] }),
     );
 
     expect(personButton).toBeChecked();
+  });
+
+  it('searches pims users only if other options are de-selected', async () => {
+    setupMockSearch([defaultPersonSearchResult]);
+    const { container, searchButton } = setup({});
+    const personButton = container.querySelector(`#input-searchBy-persons`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
+    const organizationsButton = container.querySelector(`#input-searchBy-organizations`);
+    await act(async () => {
+      personButton && userEvent.click(personButton);
+      organizationsButton && userEvent.click(organizationsButton);
+    });
+    await act(async () => userEvent.click(searchButton));
+
+    expect(getContacts).toHaveBeenCalledWith(
+      expect.objectContaining({ ...defaultPagedFilter, searchBy: ['pimsusers'] }),
+    );
+
+    expect(pimsUsersButton).toBeChecked();
   });
 
   it('searches for active contacts by default', async () => {
@@ -184,10 +208,11 @@ describe('ContactManagerView', () => {
 
   it('searches for inactive contacts if checkbox unchecked', async () => {
     setupMockSearch([defaultPersonSearchResult]);
-    const { container } = setup({});
+    const { container, searchButton } = setup({});
     const activeCheck = container.querySelector(`#input-activeContactsOnly`);
     expect(activeCheck).not.toBeNull();
     await act(async () => userEvent.click(activeCheck as Element));
+    await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
       expect.objectContaining({ ...defaultPagedFilter, activeContactsOnly: false }),
@@ -226,5 +251,19 @@ describe('ContactManagerView', () => {
     );
     const toasts = await findAllByText('network error');
     expect(toasts[0]).toBeVisible();
+  });
+
+  it('displays only the restricted contact types', async () => {
+    const { container } = await setup({
+      noInitialSearch: true,
+      restrictContactType: [
+        RestrictContactType.ONLY_INDIVIDUALS,
+        RestrictContactType.ONLY_PIMSUSERS,
+      ],
+    });
+
+    expect(container.querySelector('#input-searchBy-persons')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-pimsusers')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-organizations')).toBeNull();
   });
 });

@@ -5,6 +5,7 @@ using FluentAssertions;
 using Moq;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -31,7 +32,30 @@ namespace Pims.Api.Test.Services
         private PropertyOperationService CreateDispositionServiceWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
-            return this._helper.Create<PropertyOperationService>(user);
+            var service = this._helper.Create<PropertyOperationService>(user);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository?.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>
+            {
+                new PimsRegion { RegionCode = 1, IsDisabled = false },
+            });
+            lookupRepository?.Setup(x => x.GetAllDistricts()).Returns(new List<PimsDistrict>
+            {
+                new PimsDistrict { DistrictCode = 1, RegionCode = 1, IsDisabled = false },
+            });
+
+            return service;
+        }
+
+        private static void SetValidRegionDistrict(PimsProperty property)
+        {
+            if (property == null)
+            {
+                return;
+            }
+
+            property.RegionCode = 1;
+            property.DistrictCode = 1;
         }
 
         #region Subdivide
@@ -89,7 +113,10 @@ namespace Pims.Api.Test.Services
             operationOne.PropertyOperationNo = -1;
             operationOne.SourceProperty = property;
             operationOne.SourcePropertyId = property.PropertyId;
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourceProperty = property;
+            operationTwo.SourcePropertyId = property.PropertyId;
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             // Act
             Action act = () => service.SubdivideProperty(operations);
@@ -113,7 +140,10 @@ namespace Pims.Api.Test.Services
             operationOne.PropertyOperationTypeCode = PropertyOperationTypes.CONSOLIDATE.ToString();
             operationOne.SourceProperty = property;
             operationOne.SourcePropertyId = property.PropertyId;
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourceProperty = property;
+            operationTwo.SourcePropertyId = property.PropertyId;
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             // Act
             Action act = () => service.SubdivideProperty(operations);
@@ -134,17 +164,18 @@ namespace Pims.Api.Test.Services
             propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
-            operationOne.SourcePropertyId = 2;
             operationOne.SourceProperty = property;
             operationOne.SourcePropertyId = property.PropertyId;
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourcePropertyId = property.PropertyId + 1;
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             // Act
             Action act = () => service.SubdivideProperty(operations);
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("All property operations must have the same PIMS parent property.");
+            exception.WithMessage("All property operations must have the same PIMS source parcel.");
         }
 
         [Fact]
@@ -217,10 +248,12 @@ namespace Pims.Api.Test.Services
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.SourceProperty = sameProperty;
             operationOne.SourcePropertyId = sameProperty.PropertyId;
+            SetValidRegionDistrict(operationOne.DestinationProperty);
 
             var operationTwo = EntityHelper.CreatePropertyOperation();
             operationTwo.SourceProperty = sameProperty;
             operationTwo.SourcePropertyId = sameProperty.PropertyId;
+            SetValidRegionDistrict(operationTwo.DestinationProperty);
 
             var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
@@ -228,7 +261,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
 
             // Act
-            var response = service.SubdivideProperty(operations);
+            service.SubdivideProperty(operations);
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
@@ -253,18 +286,107 @@ namespace Pims.Api.Test.Services
             operationWithSameDestSource.DestinationPropertyId = 0;
             operationWithSameDestSource.SourceProperty = sameProperty;
             operationWithSameDestSource.SourcePropertyId = sameProperty.PropertyId;
+            SetValidRegionDistrict(operationWithSameDestSource.DestinationProperty);
             var operations = new List<PimsPropertyOperation>() { operationWithSameDestSource, operationWithSameDestSource };
 
             var repository = this._helper.GetService<Mock<IPropertyOperationRepository>>();
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
 
             // Act
-            var response = service.SubdivideProperty(operations);
+            service.SubdivideProperty(operations);
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
             propertyService.Verify(x => x.RetireProperty(It.IsAny<PimsProperty>(), false), Times.Once);
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false), Times.Exactly(2));
+        }
+
+        [Fact]
+        public void Subdivide_Should_Fail_MissingSourcePid_WhenSourceIdMissing()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
+
+            var operationOne = EntityHelper.CreatePropertyOperation();
+            operationOne.SourcePropertyId = 0;
+            operationOne.SourceProperty.PropertyId = 0;
+            operationOne.SourceProperty.Pid = null;
+
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourcePropertyId = 0;
+            operationTwo.SourceProperty.PropertyId = 0;
+            operationTwo.SourceProperty.Pid = null;
+
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
+
+            // Act
+            Action act = () => service.SubdivideProperty(operations);
+
+            // Assert
+            var exception = act.Should().Throw<BadRequestException>();
+            exception.WithMessage("A valid source property with PID is required.");
+        }
+
+        [Fact]
+        public void Subdivide_Success_CreateSourceFromLookup_WhenSourceIdMissing()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
+            var lookupSourceProperty = EntityHelper.CreateProperty(901);
+            lookupSourceProperty.PropertyId = 0;
+            lookupSourceProperty.IsOwned = false;
+            lookupSourceProperty.RegionCode = 0;
+            lookupSourceProperty.DistrictCode = 0;
+
+            var createdSourceProperty = EntityHelper.CreateProperty(901, isCoreInventory: true);
+            createdSourceProperty.PropertyId = 901;
+            createdSourceProperty.IsOwned = true;
+
+            propertyService.Setup(x => x.GetByPid(lookupSourceProperty.Pid.ToString())).Throws(new KeyNotFoundException());
+            propertyService.Setup(x => x.GetByPid(It.Is<string>(pid => pid != lookupSourceProperty.Pid.ToString()))).Throws(new KeyNotFoundException());
+
+            propertyService
+                .Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false))
+                .Returns((PimsProperty property, bool _, bool __) =>
+                {
+                    if (property.Pid == lookupSourceProperty.Pid)
+                    {
+                        return createdSourceProperty;
+                    }
+
+                    property.PropertyId = 0;
+                    return property;
+                });
+            propertyService.Setup(x => x.Add(It.IsAny<PimsProperty>(), false)).Returns(createdSourceProperty);
+
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty property, bool _) => property);
+
+            var operationOne = EntityHelper.CreatePropertyOperation();
+            operationOne.SourcePropertyId = 0;
+            operationOne.SourceProperty = lookupSourceProperty;
+            SetValidRegionDistrict(operationOne.DestinationProperty);
+
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourcePropertyId = 0;
+            operationTwo.SourceProperty = lookupSourceProperty;
+            operationTwo.DestinationProperty.Pid = 902;
+            SetValidRegionDistrict(operationTwo.DestinationProperty);
+
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
+
+            var repository = this._helper.GetService<Mock<IPropertyOperationRepository>>();
+            repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
+
+            // Act
+            service.SubdivideProperty(operations);
+
+            // Assert
+            repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
+            propertyService.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
+            propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false), Times.Exactly(3));
+            operations.TrueForAll(op => op.SourcePropertyId == createdSourceProperty.PropertyId).Should().BeTrue();
         }
 
         #endregion
@@ -292,7 +414,7 @@ namespace Pims.Api.Test.Services
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property });
+            propertyService.Setup(x => x.GetById(property.PropertyId)).Returns(property);
 
             var operation = EntityHelper.CreatePropertyOperation();
             operation.SourceProperty = property;
@@ -304,7 +426,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("Consolidations must contain at least two different parent properties.");
+            exception.WithMessage("Consolidations must contain at least two source parcels.");
         }
 
         [Fact]
@@ -316,7 +438,7 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var retiredProperty = EntityHelper.CreateProperty(3, isCoreInventory: true);
             retiredProperty.IsRetired = true;
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { retiredProperty });
+            propertyService.Setup(x => x.GetById(retiredProperty.PropertyId)).Returns(retiredProperty);
 
             var operation = EntityHelper.CreatePropertyOperation();
             operation.SourceProperty = retiredProperty;
@@ -340,7 +462,8 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
             var propertyTwo = EntityHelper.CreateProperty(4, isCoreInventory: true);
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
+            propertyService.Setup(x => x.GetById(property.PropertyId)).Returns(property);
+            propertyService.Setup(x => x.GetById(propertyTwo.PropertyId)).Returns(propertyTwo);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.PropertyOperationNo = -1;
@@ -367,7 +490,8 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
             var propertyTwo = EntityHelper.CreateProperty(4, isCoreInventory: true);
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
+            propertyService.Setup(x => x.GetById(property.PropertyId)).Returns(property);
+            propertyService.Setup(x => x.GetById(propertyTwo.PropertyId)).Returns(propertyTwo);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.PropertyOperationTypeCode = PropertyOperationTypes.CONSOLIDATE.ToString();
@@ -394,7 +518,8 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
             var propertyTwo = EntityHelper.CreateProperty(4, isCoreInventory: true);
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
+            propertyService.Setup(x => x.GetById(property.PropertyId)).Returns(property);
+            propertyService.Setup(x => x.GetById(propertyTwo.PropertyId)).Returns(propertyTwo);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty.Pid = -1;
@@ -410,7 +535,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("All property operations must have the same child property with the same PID.");
+            exception.WithMessage("All property operations must have the same consolidated parcel with the same PID.");
         }
 
         [Fact]
@@ -421,7 +546,8 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
             var propertyTwo = EntityHelper.CreateProperty(4, isCoreInventory: true);
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
+            propertyService.Setup(x => x.GetById(property.PropertyId)).Returns(property);
+            propertyService.Setup(x => x.GetById(propertyTwo.PropertyId)).Returns(propertyTwo);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty = null;
@@ -449,7 +575,8 @@ namespace Pims.Api.Test.Services
             propertyTwo.Pid = 3;
             var propertyThree = EntityHelper.CreateProperty(5, isCoreInventory: true);
             propertyThree.Pid = 4;
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
+            propertyService.Setup(x => x.GetById(property.PropertyId)).Returns(property);
+            propertyService.Setup(x => x.GetById(propertyTwo.PropertyId)).Returns(propertyTwo);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(propertyThree);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
@@ -471,7 +598,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.");
+            exception.WithMessage("Consolidated parcel may not be in the PIMS inventory unless also in the source parcel list.");
         }
 
         [Fact]
@@ -482,22 +609,26 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var sameProperty = EntityHelper.CreateProperty(3);
             var otherProperty = EntityHelper.CreateProperty(4);
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
+            propertyService.Setup(x => x.GetById(sameProperty.PropertyId)).Returns(sameProperty);
+            propertyService.Setup(x => x.GetById(otherProperty.PropertyId)).Returns(otherProperty);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Throws(new KeyNotFoundException());
             propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty.PropertyId = 0;
-            operationOne.SourceProperty = sameProperty;
+            operationOne.SourceProperty = EntityHelper.CreateProperty((int)sameProperty.PropertyId);
+            operationOne.SourceProperty.IsOwned = true;
             operationOne.SourcePropertyId = sameProperty.PropertyId;
             sameProperty.IsOwned = false;
+            SetValidRegionDistrict(operationOne.DestinationProperty);
 
             var operationTwo = EntityHelper.CreatePropertyOperation();
             operationTwo.DestinationProperty.PropertyId = 0;
             operationTwo.SourceProperty = otherProperty;
             operationTwo.SourcePropertyId = otherProperty.PropertyId;
             sameProperty.IsOwned = false;
+            SetValidRegionDistrict(operationTwo.DestinationProperty);
 
             var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
@@ -508,8 +639,8 @@ namespace Pims.Api.Test.Services
             Action act = () => service.ConsolidateProperty(operations);
 
             // Assert
-            var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("All source properties must be owned.");
+            // Not longer valid All source properties must be owned.
+            act.Should().NotThrow();
         }
 
         [Fact]
@@ -520,7 +651,8 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var sameProperty = EntityHelper.CreateProperty(3, isCoreInventory: true);
             var otherProperty = EntityHelper.CreateProperty(4, isCoreInventory: true);
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
+            propertyService.Setup(x => x.GetById(sameProperty.PropertyId)).Returns(sameProperty);
+            propertyService.Setup(x => x.GetById(otherProperty.PropertyId)).Returns(otherProperty);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Throws(new KeyNotFoundException());
             propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
@@ -529,11 +661,13 @@ namespace Pims.Api.Test.Services
             operationOne.DestinationProperty.PropertyId = 0;
             operationOne.SourceProperty = sameProperty;
             operationOne.SourcePropertyId = sameProperty.PropertyId;
+            SetValidRegionDistrict(operationOne.DestinationProperty);
 
             var operationTwo = EntityHelper.CreatePropertyOperation();
             operationTwo.DestinationProperty.PropertyId = 0;
             operationTwo.SourceProperty = otherProperty;
             operationTwo.SourcePropertyId = otherProperty.PropertyId;
+            SetValidRegionDistrict(operationTwo.DestinationProperty);
 
             var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
@@ -541,7 +675,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
 
             // Act
-            var response = service.ConsolidateProperty(operations);
+            service.ConsolidateProperty(operations);
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
@@ -557,7 +691,8 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var sameProperty = EntityHelper.CreateProperty(3, isCoreInventory: true);
             var otherProperty = EntityHelper.CreateProperty(4, isCoreInventory: true);
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
+            propertyService.Setup(x => x.GetById(sameProperty.PropertyId)).Returns(sameProperty);
+            propertyService.Setup(x => x.GetById(otherProperty.PropertyId)).Returns(otherProperty);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(sameProperty);
             propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
@@ -566,18 +701,20 @@ namespace Pims.Api.Test.Services
             operationWithSameDestSource.DestinationProperty = sameProperty;
             operationWithSameDestSource.SourceProperty = sameProperty;
             operationWithSameDestSource.SourcePropertyId = sameProperty.PropertyId;
+            SetValidRegionDistrict(operationWithSameDestSource.DestinationProperty);
 
             var operationWithSameDestSourceTwo = EntityHelper.CreatePropertyOperation();
             operationWithSameDestSourceTwo.DestinationProperty = sameProperty;
             operationWithSameDestSourceTwo.SourceProperty = otherProperty;
             operationWithSameDestSourceTwo.SourcePropertyId = otherProperty.PropertyId;
+            SetValidRegionDistrict(operationWithSameDestSourceTwo.DestinationProperty);
             var operations = new List<PimsPropertyOperation>() { operationWithSameDestSource, operationWithSameDestSourceTwo };
 
             var repository = this._helper.GetService<Mock<IPropertyOperationRepository>>();
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
 
             // Act
-            var response = service.ConsolidateProperty(operations);
+            service.ConsolidateProperty(operations);
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);

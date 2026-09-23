@@ -6,6 +6,7 @@ import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseAssociation } from '@/models/api/generated/ApiGen_Concepts_LeaseAssociation';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -32,6 +33,7 @@ export const useLeaseRepository = () => {
     getLeaseStakeholderTypes,
     getAllLeaseFileTeamMembers,
     getLeaseAtTime,
+    getLeaseAssociations,
   } = useApiLeases();
 
   const getLastUpdatedBy = useApiRequestWrapper<
@@ -145,6 +147,18 @@ export const useLeaseRepository = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Lease historical information'),
   });
 
+  const getLeaseAssociationsApi = useApiRequestWrapper<
+    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_LeaseAssociation, any>>
+  >({
+    requestFunction: useCallback(
+      async (leaseId: number) => await getLeaseAssociations(leaseId),
+      [getLeaseAssociations],
+    ),
+    requestName: 'getLeaseAssociations',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve Lease Associations'),
+  });
+
   return useMemo(
     () => ({
       getLastUpdatedBy: getLastUpdatedBy,
@@ -156,6 +170,7 @@ export const useLeaseRepository = () => {
       getLeaseStakeholderTypes: getLeaseStakeholderTypesApi,
       getAllLeaseTeamMembers: getAllLeaseTeamApi,
       getLeaseAtTime: getLeaseAtTimeApi,
+      getLeaseAssociations: getLeaseAssociationsApi,
     }),
     [
       getLastUpdatedBy,
@@ -167,6 +182,7 @@ export const useLeaseRepository = () => {
       getLeaseStakeholderTypesApi,
       getAllLeaseTeamApi,
       getLeaseAtTimeApi,
+      getLeaseAssociationsApi,
     ],
   );
 };

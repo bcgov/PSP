@@ -18,12 +18,9 @@ import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
-import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
+import { ApiGen_Concepts_LeaseAssociation } from '@/models/api/generated/ApiGen_Concepts_LeaseAssociation';
 import { exists, firstOrNull, isPlanNumberSPCP, isValidId } from '@/utils';
 
 import { LayerTabCollapsedView } from '../layer/LayerTabCollapsedView';
@@ -42,38 +39,30 @@ export interface IPropertyContainerProps {
 }
 
 export interface LeaseAssociationInfo {
-  leaseDetails: ApiGen_Concepts_Lease[];
-  leaseStakeholders: ApiGen_Concepts_LeaseStakeholder[];
-  leaseRenewals: ApiGen_Concepts_LeaseRenewal[];
+  leaseAssociations: ApiGen_Concepts_LeaseAssociation[];
   loading: boolean;
 }
 
 export const getLeaseInfo = async (
   leasesAssociations: ApiGen_Concepts_Association[],
-  getLease: (leaseId: number) => Promise<ApiGen_Concepts_Lease>,
-  getLeaseStakeholders: (leaseId: number) => Promise<ApiGen_Concepts_LeaseStakeholder[]>,
-  getLeaseRenewals: (leaseId: number) => Promise<ApiGen_Concepts_LeaseRenewal[]>,
-  setLeaseAssociationInfo: (info) => void,
+  getLeaseAssociation: (leaseId: number) => Promise<ApiGen_Concepts_LeaseAssociation>,
+  setLeaseAssociationInfo: (info: LeaseAssociationInfo) => void,
 ) => {
   if (!leasesAssociations) return;
-  setLeaseAssociationInfo({ leaseDetails: [], leaseStakeholders: [], loading: true });
-  const leaseDetailPromises = leasesAssociations?.map(leaseAssociation =>
-    getLease(leaseAssociation.id),
-  );
-  const leaseStakeholderPromises = leasesAssociations?.map(leaseAssociation =>
-    getLeaseStakeholders(leaseAssociation.id),
-  );
-  const leaseRenewalPromises = leasesAssociations?.map(leaseAssociation =>
-    getLeaseRenewals(leaseAssociation.id),
+
+  setLeaseAssociationInfo({
+    leaseAssociations: [],
+    loading: true,
+  });
+
+  const leaseAssociationsPromises = leasesAssociations?.map(leaseAssociation =>
+    getLeaseAssociation(leaseAssociation.id),
   );
 
-  const leaseDetails = (await Promise.all(leaseDetailPromises)).flat();
-  const leaseStakeholders = (await Promise.all(leaseStakeholderPromises)).flat();
-  const leaseRenewals = (await Promise.all(leaseRenewalPromises)).flat();
+  const leaseAssociations = (await Promise.all(leaseAssociationsPromises)).flat();
+
   setLeaseAssociationInfo({
-    leaseDetails: leaseDetails,
-    leaseStakeholders: leaseStakeholders,
-    leaseRenewals: leaseRenewals,
+    leaseAssociations: leaseAssociations,
     loading: false,
   });
 };
@@ -89,13 +78,9 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
 
   const showPropertyInfoTab = isValidId(composedPropertyState?.id);
   const { hasClaim } = useKeycloakWrapper();
-  const { getLease } = useLeaseRepository();
-  const { getLeaseStakeholders } = useLeaseStakeholderRepository();
-  const { getLeaseRenewals } = useLeaseRepository();
+  const { getLeaseAssociations } = useLeaseRepository();
   const [LeaseAssociationInfo, setLeaseAssociationInfo] = useState<LeaseAssociationInfo>({
-    leaseDetails: [],
-    leaseStakeholders: [],
-    leaseRenewals: [],
+    leaseAssociations: [],
     loading: false,
   });
 
@@ -105,21 +90,9 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
   useMemo(
     () =>
       hasClaim(Claims.LEASE_VIEW)
-        ? getLeaseInfo(
-            leaseAssociations,
-            getLease.execute,
-            getLeaseStakeholders.execute,
-            getLeaseRenewals.execute,
-            setLeaseAssociationInfo,
-          )
+        ? getLeaseInfo(leaseAssociations, getLeaseAssociations.execute, setLeaseAssociationInfo)
         : null,
-    [
-      hasClaim,
-      leaseAssociations,
-      getLease.execute,
-      getLeaseStakeholders.execute,
-      getLeaseRenewals.execute,
-    ],
+    [hasClaim, leaseAssociations, getLeaseAssociations.execute],
   );
 
   const retrievedPid =
@@ -212,9 +185,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
         <PropertyAssociationTabView
           isLoading={composedPropertyState.propertyAssociationWrapper!.loading}
           associations={composedPropertyState.propertyAssociationWrapper?.response}
-          associatedLeases={LeaseAssociationInfo?.leaseDetails ?? []}
-          associatedLeaseStakeholders={LeaseAssociationInfo?.leaseStakeholders ?? []}
-          associatedLeaseRenewals={LeaseAssociationInfo?.leaseRenewals ?? []}
+          leaseAssociations={LeaseAssociationInfo?.leaseAssociations ?? []}
         />
       ),
       key: InventoryTabNames.pims,

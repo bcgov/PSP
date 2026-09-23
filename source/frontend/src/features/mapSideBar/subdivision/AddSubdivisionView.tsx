@@ -2,7 +2,6 @@ import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
 import noop from 'lodash/noop';
 import { useCallback } from 'react';
 import { Col, Row, Tab } from 'react-bootstrap';
-import { FaInfoCircle } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -14,7 +13,6 @@ import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { H2 } from '@/components/common/styles';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { StyledTabView } from '@/components/propertySelector/PropertySelectorTabsView';
@@ -40,7 +38,7 @@ export const AddSubdivisionYupSchema = Yup.object().shape({
     message: 'You must select at least two child properties',
     test: arr => !!arr?.length && arr.length >= 2,
   }),
-  sourceProperty: Yup.object().nullable().required('You must select a parent property'),
+  sourceProperty: Yup.object().nullable().required('You must select a source parcel'),
 });
 
 export interface IAddSubdivisionViewProps {
@@ -116,19 +114,11 @@ const AddSubdivisionView: React.FunctionComponent<
           {({ values, setFieldValue, errors }) => (
             <Form>
               <Section>
-                <H2>
-                  Properties in Subdivision &nbsp;
-                  <TooltipWrapper
-                    tooltipId="pims-only-subdivision-tooltip"
-                    tooltip="Only a property that is in the PIMS inventory can be subdivided"
-                  >
-                    <FaInfoCircle className="tooltip-icon h-20" size="1rem" />
-                  </TooltipWrapper>
-                </H2>
+                <H2>Properties in Subdivision &nbsp;</H2>
                 <AddSubdivisionMarkerSynchronizer values={values} />
-                <p>Select the parent property that was subdivided:</p>
+                <p>Select the source parcel that was subdivided:</p>
                 <StyledTabView activeKey="parent-property">
-                  <Tab eventKey="parent-property" title="Parent Property Search">
+                  <Tab eventKey="parent-property" title="Source Parcel Search">
                     <PropertySelectorPidSearchComponent
                       setSelectProperty={selectedProperty =>
                         setFieldValue('sourceProperty', selectedProperty)
@@ -153,7 +143,7 @@ const AddSubdivisionView: React.FunctionComponent<
                 </Section>
               </Section>
               <Section>
-                <p>Select the child properties to which parent property was subdivided:</p>
+                <p>Select the subdivided parcels to which source parcel was subdivided:</p>
                 <MapSelectorComponent
                   addSelectedProperties={async properties => {
                     const allProperties = [...values.destinationProperties];

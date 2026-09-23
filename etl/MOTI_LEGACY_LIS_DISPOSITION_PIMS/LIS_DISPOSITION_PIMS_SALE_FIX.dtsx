@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="LIS_DISPOSITION_PIMS_SALE_FIX"
   DTS:PackageType="5"
-  DTS:VersionBuild="114"
-  DTS:VersionGUID="{1FF95883-AC69-48C0-9F69-C85F290B70FA}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="115"
+  DTS:VersionGUID="{0379B39D-000B-4858-98FE-1F0D4A98BE37}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>

@@ -20,7 +20,6 @@ import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -66,13 +65,9 @@ export const PropertyFileContainer: React.FunctionComponent<
     propertyTypes: propertyFileTabData,
   });
 
-  const { getLease } = useLeaseRepository();
-  const { getLeaseStakeholders } = useLeaseStakeholderRepository();
-  const { getLeaseRenewals } = useLeaseRepository();
+  const { getLeaseAssociations } = useLeaseRepository();
   const [LeaseAssociationInfo, setLeaseAssociationInfo] = useState<LeaseAssociationInfo>({
-    leaseDetails: [],
-    leaseStakeholders: [],
-    leaseRenewals: [],
+    leaseAssociations: [],
     loading: false,
   });
 
@@ -82,21 +77,9 @@ export const PropertyFileContainer: React.FunctionComponent<
   useMemo(
     () =>
       hasClaim(Claims.LEASE_VIEW)
-        ? getLeaseInfo(
-            leaseAssociations,
-            getLease.execute,
-            getLeaseStakeholders.execute,
-            getLeaseRenewals.execute,
-            setLeaseAssociationInfo,
-          )
+        ? getLeaseInfo(leaseAssociations, getLeaseAssociations.execute, setLeaseAssociationInfo)
         : null,
-    [
-      leaseAssociations,
-      getLease.execute,
-      getLeaseStakeholders.execute,
-      getLeaseRenewals.execute,
-      hasClaim,
-    ],
+    [hasClaim, leaseAssociations, getLeaseAssociations.execute],
   );
 
   const tabViews: TabInventoryView[] = [];
@@ -208,9 +191,7 @@ export const PropertyFileContainer: React.FunctionComponent<
             false
           }
           associations={composedProperties.propertyAssociationWrapper?.response}
-          associatedLeaseStakeholders={LeaseAssociationInfo.leaseStakeholders}
-          associatedLeaseRenewals={LeaseAssociationInfo.leaseRenewals}
-          associatedLeases={LeaseAssociationInfo.leaseDetails}
+          leaseAssociations={LeaseAssociationInfo.leaseAssociations}
         />
       ),
       key: InventoryTabNames.pims,

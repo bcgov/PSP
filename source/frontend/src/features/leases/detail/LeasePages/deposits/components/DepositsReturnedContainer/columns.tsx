@@ -70,12 +70,13 @@ function renderHolder({
 
 function depositActions(
   isFileFinalStatus: boolean,
+  canEdit: boolean,
   onEdit: (id: number) => void,
   onDelete: (id: number) => void,
 ) {
   return function ({ row: { original, index } }: CellProps<ReturnListEntry, string>) {
     const { hasClaim } = useKeycloakWrapper();
-    if (isFileFinalStatus) {
+    if (isFileFinalStatus && !canEdit) {
       return (
         <TooltipIcon
           toolTipId={`deposit-returned-actions-cannot-edit-tooltip`}
@@ -85,10 +86,10 @@ function depositActions(
     }
     return (
       <StyledIcons>
-        {hasClaim(Claims.LEASE_EDIT) && (
+        {hasClaim(Claims.LEASE_EDIT) && canEdit && (
           <EditButton title="edit deposit return" onClick={() => onEdit(original.id)} />
         )}
-        {hasClaim(Claims.LEASE_EDIT) && (
+        {hasClaim(Claims.LEASE_EDIT) && canEdit && (
           <RemoveIconButton
             title="delete deposit return"
             id={`delete-deposit-${index}`}
@@ -102,12 +103,14 @@ function depositActions(
 
 export interface IPaymentColumnProps {
   isFileFinalStatus?: boolean;
+  canEdit?: boolean;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
 
 export const getColumns = ({
   isFileFinalStatus,
+  canEdit,
   onEdit,
   onDelete,
 }: IPaymentColumnProps): ColumnWithProps<ReturnListEntry>[] => {
@@ -172,7 +175,7 @@ export const getColumns = ({
       align: 'right',
       minWidth: 30,
       maxWidth: 30,
-      Cell: depositActions(isFileFinalStatus, onEdit, onDelete),
+      Cell: depositActions(isFileFinalStatus, canEdit, onEdit, onDelete),
     },
   ];
 };

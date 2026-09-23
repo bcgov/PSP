@@ -261,52 +261,35 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   flex-wrap: nowrap;
 }
 
-.c17.form-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 0;
+.c0 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
 }
 
-.c17.form-group .radio-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  row-gap: 0.4rem;
-  -webkit-column-gap: unset;
-  column-gap: unset;
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
-.c17.form-group .radio-group .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
-.c17.form-group .radio-group .form-check .form-check-input {
-  margin-left: 0;
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
-.c17.form-group .radio-group .form-check-label {
-  margin-left: 1rem;
-}
-
-.c17 .form-label {
-  margin-bottom: unset;
+.c3 {
+  font-weight: bold;
 }
 
 .c15 {
@@ -354,35 +337,52 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   opacity: unset;
 }
 
-.c0 {
-  background-color: #f2f2f2;
-  padding-top: 1rem;
+.c17.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
 }
 
-.c1 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
+.c17.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  row-gap: 0.4rem;
+  -webkit-column-gap: unset;
+  column-gap: unset;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
+.c17.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
-.c4.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
+.c17.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
 }
 
-.c3 {
-  font-weight: bold;
+.c17.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c17 .form-label {
+  margin-bottom: unset;
 }
 
 .c5 {

@@ -15,6 +15,8 @@ namespace Pims.Api.Services
 
         PimsProperty GetByPin(int pin);
 
+        PimsProperty Add(PimsProperty property, bool commitTransaction = true);
+
         PimsProperty Update(PimsProperty property, bool commitTransaction = true);
 
         PimsProperty RetireProperty(PimsProperty property, bool commitTransaction = true);

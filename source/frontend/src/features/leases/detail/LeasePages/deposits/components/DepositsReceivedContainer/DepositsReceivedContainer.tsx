@@ -14,6 +14,7 @@ import { DepositListEntry, getColumns } from './columns';
 export interface IDepositsReceivedContainerProps {
   securityDeposits: ApiGen_Concepts_SecurityDeposit[];
   statusSolver?: LeaseStatusUpdateSolver;
+  canEdit?: boolean;
   onAdd: () => void;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
@@ -22,13 +23,14 @@ export interface IDepositsReceivedContainerProps {
 
 const DepositsReceivedContainer: React.FC<
   React.PropsWithChildren<IDepositsReceivedContainerProps>
-> = ({ securityDeposits, statusSolver, onAdd, onEdit, onDelete, onReturn }) => {
+> = ({ securityDeposits, statusSolver, canEdit, onAdd, onEdit, onDelete, onReturn }) => {
   const isFileFinalStatus = !statusSolver.canEditDeposits();
   const columns = getColumns({
     onEdit,
     onDelete,
     onReturn,
     isFileFinalStatus,
+    canEdit,
   });
   const dataSource = securityDeposits.map<DepositListEntry>(d => {
     return new DepositListEntry(d);
@@ -48,7 +50,7 @@ const DepositsReceivedContainer: React.FC<
               toolTip={cannotEditMessage}
             />
           }
-          isAddEnabled={!isFileFinalStatus}
+          isAddEnabled={canEdit === true && !isFileFinalStatus}
         />
       }
     >

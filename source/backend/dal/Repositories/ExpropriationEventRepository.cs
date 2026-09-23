@@ -10,9 +10,12 @@ namespace Pims.Dal.Repositories
 {
     public class ExpropriationEventRepository : BaseRepository<PimsExpropOwnerHistory>, IExpropriationEventRepository
     {
-        public ExpropriationEventRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ExpropriationEventRepository> logger)
+        private readonly INotificationRepository _notificationRepository;
+
+        public ExpropriationEventRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ExpropriationEventRepository> logger, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
+            _notificationRepository = notificationRepository;
         }
 
         public IEnumerable<PimsExpropOwnerHistory> GetExpropriationEventsByAcquisitionFile(long acquisitionFileId)
@@ -67,6 +70,16 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingEvent).CurrentValues.SetValues(expropriationEvent);
 
+            // Delete any notifications if the event date is null, indicating that the event has been removed or is no longer valid.
+            if (existingEvent.EventDt is null)
+            {
+                var existingNotification = Context.PimsNotifications.AsNoTracking().Where(n => n.AcquisitionFileId == expropriationEvent.AcquisitionFileId && n.ExpropOwnerHistoryId == expropriationEvent.ExpropOwnerHistoryId).ToList();
+                foreach (var notification in existingNotification)
+                {
+                    _notificationRepository.Delete(notification.NotificationId);
+                }
+            }
+
             return existingEvent;
         }
 
@@ -77,7 +90,14 @@ namespace Pims.Dal.Repositories
             var eventToDelete = Context.PimsExpropOwnerHistories.FirstOrDefault(x => x.ExpropOwnerHistoryId == expropriationEventId && x.AcquisitionFileId == acquisitionFileId);
             if (eventToDelete is not null)
             {
+                var existingNotifications = Context.PimsNotifications.AsNoTracking().Where(n => n.AcquisitionFileId == eventToDelete.AcquisitionFileId && n.ExpropOwnerHistoryId == eventToDelete.ExpropOwnerHistoryId).ToList();
+                foreach (var notification in existingNotifications)
+                {
+                    _notificationRepository.Delete(notification.NotificationId);
+                }
+
                 Context.PimsExpropOwnerHistories.Remove(eventToDelete);
+
                 return true;
             }
 

@@ -6,11 +6,9 @@ import { CellProps } from 'react-table';
 
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { ColumnWithProps, renderDate, Table } from '@/components/Table';
-import { getCalculatedExpiry } from '@/features/leases/leaseUtils';
 import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
+import { ApiGen_Concepts_LeaseAssociation } from '@/models/api/generated/ApiGen_Concepts_LeaseAssociation';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -30,9 +28,7 @@ interface IAssociationInfo {
 
 export interface ILeaseAssociationContentProps {
   associationName: string;
-  stakeholders: ApiGen_Concepts_LeaseStakeholder[];
-  renewals: ApiGen_Concepts_LeaseRenewal[];
-  leases: ApiGen_Concepts_Lease[];
+  leaseAssociations: ApiGen_Concepts_LeaseAssociation[];
   associations?: ApiGen_Concepts_Association[];
   linkUrlMask: string;
   disable?: boolean;
@@ -69,11 +65,11 @@ export const LeaseAssociationContent: React.FunctionComponent<
   if (props.associations === undefined) {
     return <>{noDataMessage}</>;
   }
+
   const tableData = orderBy(
     props.associations.map<IAssociationInfo>(x => {
-      const lease = find(props.leases, lease => x?.id === lease?.id);
-      const leaseRenewals = props.renewals?.filter(renewal => x.id === renewal?.leaseId);
-      const calculatedExpiry = getCalculatedExpiry(lease, leaseRenewals ?? []);
+      // const lease = find(props.leases, lease => x?.id === lease?.id);
+      const leaseAssociation = find(props.leaseAssociations, lease => x?.id === lease?.id);
 
       return {
         id: x.id?.toString() || '',
@@ -84,10 +80,11 @@ export const LeaseAssociationContent: React.FunctionComponent<
         createdByGuid: x.createdByGuid || '',
         createdDate: x.createdDateTime || '',
         status: x.status || '',
-        stakeholders: getFormattedTenants(
-          props.stakeholders?.filter(stakeholder => x.id === stakeholder?.leaseId),
-        ),
-        expiryDate: calculatedExpiry,
+        stakeholders:
+          leaseAssociation?.stakeholders.length > 0
+            ? getFormattedTenants(leaseAssociation?.stakeholders)
+            : '',
+        expiryDate: leaseAssociation?.leaseExpiryDate ?? '',
         disable: props.disable ?? false,
       };
     }),

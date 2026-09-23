@@ -200,7 +200,7 @@ describe('PropertyFileContainer component', () => {
     });
 
     await setup(undefined, { claims: [] });
-    expect(mockAxios.history.get.map(m => m.url)).not.toContain('/leases/34');
+    expect(mockAxios.history.get.map(m => m.url)).not.toContain('/leases/34/associations');
   });
 
   it('calls lease endpoints when user does has lease permissions', async () => {
@@ -222,9 +222,10 @@ describe('PropertyFileContainer component', () => {
       acquisitionAssociations: [],
       dispositionAssociations: [],
     });
+    mockAxios.onGet('/leases/34/associations').reply(200, { id: 34, stakeholders: [] });
 
     await setup(undefined, { claims: [Claims.LEASE_VIEW] });
-    expect(mockAxios.history.get.map(m => m.url)).toContain('/leases/34');
+    expect(mockAxios.history.get.map(m => m.url)).toContain('/leases/34/associations');
   });
 
   it('renders PLAN tab when property has a valid plan number', async () => {
