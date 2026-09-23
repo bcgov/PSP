@@ -102,6 +102,21 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
   align-content: space-between;
 }
 
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
 <div
     class="c0"
   >
@@ -847,7 +862,11 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
-          />
+          >
+            <div
+              class="c12"
+            />
+          </div>
         </div>
         <div
           class="pb-2 row"
