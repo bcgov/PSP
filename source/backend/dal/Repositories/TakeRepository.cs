@@ -38,7 +38,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="takeId"></param>
         /// <returns></returns>
-           public PimsTake GetById(long takeId)
+        public PimsTake GetById(long takeId)
         {
             return Context.PimsTakes
 
@@ -116,7 +116,7 @@ namespace Pims.Dal.Repositories
 
            public PimsTake AddTake(PimsTake take)
         {
-            using System.IDisposable scope = Logger.QueryScope();
+            using var scope = Logger.QueryScope();
 
             Context.PimsTakes.Add(take);
 
@@ -129,7 +129,7 @@ namespace Pims.Dal.Repositories
         /// <param name="take"></param>
            public PimsTake UpdateTake(PimsTake take)
         {
-            using System.IDisposable scope = Logger.QueryScope();
+            using var scope = Logger.QueryScope();
 
             PimsTake existingTake = Context.PimsTakes.FirstOrDefault(x => x.TakeId == take.TakeId) ?? throw new KeyNotFoundException();
 
@@ -140,12 +140,12 @@ namespace Pims.Dal.Repositories
                 notificationTypesToDelete.Add(nameof(NotificationTypes.TAKE_SRW));
             }
 
-            if (!take.IsNewLicenseToConstruct)
+            if (!take.IsNewLicenseToConstruct || !take.LtcEndDt.HasValue)
             {
                 notificationTypesToDelete.Add(nameof(NotificationTypes.TAKE_LTC));
             }
 
-            if (!take.IsNewLandAct)
+            if (!take.IsNewLandAct || !take.LandActEndDt.HasValue)
             {
                 notificationTypesToDelete.Add(nameof(NotificationTypes.TAKE_LAT));
             }
@@ -172,7 +172,7 @@ namespace Pims.Dal.Repositories
 
            public bool TryDeleteTake(long takeId)
             {
-                using System.IDisposable scope = Logger.QueryScope();
+                using var scope = Logger.QueryScope();
 
                 PimsTake deletedEntity = Context.PimsTakes.Where(x => x.TakeId == takeId).FirstOrDefault();
                 if (deletedEntity is null)
