@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 
@@ -13,16 +14,24 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class TakeRepository : BaseRepository<PimsTake>, ITakeRepository
     {
+           private readonly INotificationRepository _notificationRepository;
+            #region Constructors
+
         /// <summary>
         /// Creates a new instance of a TakeRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public TakeRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<TakeRepository> logger)
+        /// <param name="notificationRepository"></param>
+           public TakeRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<TakeRepository> logger, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
+            _notificationRepository = notificationRepository;
         }
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Get take by id.
@@ -47,7 +56,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsTake> GetAllByAcquisitionFileId(long fileId)
+           public IEnumerable<PimsTake> GetAllByAcquisitionFileId(long fileId)
         {
             return Context.PimsTakes
 
@@ -66,7 +75,7 @@ namespace Pims.Dal.Repositories
         /// <param name="fileId"></param>
         /// <param name="propertyId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsTake> GetAllByAcqPropertyId(long fileId, long propertyId)
+           public IEnumerable<PimsTake> GetAllByAcqPropertyId(long fileId, long propertyId)
         {
             return Context.PimsTakes
                 .Include(t => t.PropertyAcquisitionFile)
@@ -84,7 +93,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="propertyId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsTake> GetAllByPropertyId(long propertyId)
+           public IEnumerable<PimsTake> GetAllByPropertyId(long propertyId)
         {
             return Context.PimsTakes
                 .Where(t => t.PropertyAcquisitionFile.PropertyId == propertyId)
@@ -96,7 +105,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="propertyId"></param>
         /// <returns></returns>
-        public int GetCountByPropertyId(long propertyId)
+           public int GetCountByPropertyId(long propertyId)
         {
             return Context.PimsTakes
                 .Include(t => t.PropertyAcquisitionFile)
@@ -105,7 +114,7 @@ namespace Pims.Dal.Repositories
                 .Count();
         }
 
-        public PimsTake AddTake(PimsTake take)
+           public PimsTake AddTake(PimsTake take)
         {
             using var scope = Logger.QueryScope();
 
@@ -118,11 +127,42 @@ namespace Pims.Dal.Repositories
         /// Update the passed take.
         /// </summary>
         /// <param name="take"></param>
-        public PimsTake UpdateTake(PimsTake take)
+           public PimsTake UpdateTake(PimsTake take)
         {
             using var scope = Logger.QueryScope();
 
-            var existingTake = Context.PimsTakes.FirstOrDefault(x => x.TakeId == take.TakeId) ?? throw new KeyNotFoundException();
+            PimsTake existingTake = Context.PimsTakes.FirstOrDefault(x => x.TakeId == take.TakeId) ?? throw new KeyNotFoundException();
+
+            var notificationTypesToDelete = new List<string>();
+
+            if (!take.IsNewInterestInSrw || !take.SrwEndDt.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.TAKE_SRW));
+            }
+
+            if (!take.IsNewLicenseToConstruct || !take.LtcEndDt.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.TAKE_LTC));
+            }
+
+            if (!take.IsNewLandAct || !take.LandActEndDt.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.TAKE_LAT));
+            }
+
+            if (!take.IsActiveLease || !take.ActiveLeaseEndDt.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.TAKE_LPYBLE));
+            }
+
+            var notificationIds = Context.PimsNotifications.Where(n => n.TakeId == take.TakeId && notificationTypesToDelete.Contains(n.NotificationTypeCode))
+            .Select(n => n.NotificationId)
+            .ToList();
+
+            foreach (var notificationId in notificationIds)
+            {
+                _notificationRepository.Delete(notificationId);
+            }
 
             take.PropertyAcquisitionFileId = existingTake.PropertyAcquisitionFileId; // A take cannot be migrated between properties.
             Context.Entry(existingTake).CurrentValues.SetValues(take);
@@ -130,24 +170,35 @@ namespace Pims.Dal.Repositories
             return existingTake;
         }
 
-        public bool TryDeleteTake(long takeId)
-        {
-            using var scope = Logger.QueryScope();
-
-            var deletedEntity = Context.PimsTakes.Where(x => x.TakeId == takeId).FirstOrDefault();
-            if (deletedEntity is not null)
+           public bool TryDeleteTake(long takeId)
             {
-                Context.PimsTakes.Remove(deletedEntity);
+                using var scope = Logger.QueryScope();
 
+                PimsTake deletedEntity = Context.PimsTakes.Where(x => x.TakeId == takeId).FirstOrDefault();
+                if (deletedEntity is null)
+                {
+                    return false;
+                }
+
+                // Delete notifications associated with the take before deleting the take.
+                List<long> notificationIds = Context.PimsNotifications
+                    .Where(n => n.TakeId == takeId)
+                    .Select(n => n.NotificationId)
+                    .ToList();
+
+                foreach (long notificationId in notificationIds)
+                {
+                    _notificationRepository.Delete(notificationId);
+                }
+
+                Context.PimsTakes.Remove(deletedEntity);
                 return true;
             }
 
-            return false;
-        }
-
-        public IEnumerable<PimsTake> GetAllByPropertyAcquisitionFileId(long acquisitionFilePropertyId)
-        {
-            return Context.PimsTakes.Include(t => t.PropertyAcquisitionFile).Where(pf => pf.PropertyAcquisitionFileId == acquisitionFilePropertyId).ToList();
-        }
+           public IEnumerable<PimsTake> GetAllByPropertyAcquisitionFileId(long acquisitionFilePropertyId)
+            {
+                return Context.PimsTakes.Include(t => t.PropertyAcquisitionFile).Where(pf => pf.PropertyAcquisitionFileId == acquisitionFilePropertyId).ToList();
+            }
+        #endregion
     }
 }
