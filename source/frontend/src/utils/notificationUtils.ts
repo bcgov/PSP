@@ -51,13 +51,17 @@ export const getNotificationDeepLink = (
       // NOC applies to Acquisition or Management files; Acquisition takes precedence when both are set.
       if (isValidId(notification.acquisitionFileId)) {
         return DeepLinkGenerator.showDetails(
-          'acquisition',
+          ApiGen_CodeTypes_FileTypes.Acquisition,
           notification.acquisitionFileId,
           'fileDetails',
         );
       }
       return isValidId(notification.managementFileId)
-        ? DeepLinkGenerator.showDetails('management', notification.managementFileId, 'fileDetails')
+        ? DeepLinkGenerator.showDetails(
+            ApiGen_CodeTypes_FileTypes.Management,
+            notification.managementFileId,
+            'fileDetails',
+          )
         : null;
     default:
       return null;
