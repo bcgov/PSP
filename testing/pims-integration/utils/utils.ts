@@ -35,3 +35,11 @@ export function nullableBooleanToYesNoString(value?: boolean | null): string {
   if (value === true) return 'Yes';
   return 'No';
 }
+
+export const getTodayPrettyFormatted = (): string => {
+  return new Date().toLocaleDateString('en-US', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+  });
+};

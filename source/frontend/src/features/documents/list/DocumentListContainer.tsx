@@ -19,6 +19,7 @@ export interface IDocumentListContainerProps {
   addButtonText?: string;
   title?: string;
   statusSolver?: IUpdateDocumentsStrategy | null;
+  canEdit?: boolean;
   onSuccess?: () => void;
 }
 
@@ -91,7 +92,8 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     pathGenerator.showFile(relationshipType, parentId);
   };
 
-  const editDocumentsEnabled = !props.statusSolver || props.statusSolver?.canEditDocuments();
+  const editDocumentsEnabled =
+    (!props.statusSolver || props.statusSolver?.canEditDocuments()) && props.canEdit !== false;
 
   return (
     <DocumentListView

@@ -59,6 +59,44 @@ jobs:
           color: 17a2b8
           timezone: America/Los_Angeles
 
+  ## Version stamped onto the TEST tags. Read from the image being promoted
+  ## rather than from `make version`, so the tag always describes the image
+  ## content. `make version` reads package.json at HEAD, which has already
+  ## moved on if anything merged to dev after the image was built.
+  version:
+    name: Resolve promoted image version
+    needs: ci-cd-start-notification
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: Read PIMS_VERSION from the dev image
+        id: resolve
+        shell: bash
+        run: |
+          VERSION=$(oc -n "$OPENSHIFT_TOOLS_NAMESPACE" get istag pims-api:dev \
+            -o jsonpath='{.image.dockerImageMetadata.Config.Env}' \
+            | jq -r '.[] | select(startswith("PIMS_VERSION=")) | ltrimstr("PIMS_VERSION=")' \
+            | tail -1)
+
+          if [ -z "$VERSION" ]; then
+            echo "::error::pims-api:dev carries no PIMS_VERSION."
+            echo "::error::It predates build-image.sh. Rebuild DEV before promoting."
+            exit 1
+          fi
+
+          echo "Promoting version: ${VERSION}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
   detect-dependency-changes:
     runs-on: ubuntu-22.04
     needs: ci-cd-start-notification
@@ -227,10 +265,10 @@ jobs:
 
   deploy:
     name: Retag/Deploy to OpenShift
-    # Ordering after the start notification is already enforced via scan-images
-    needs: [scan-images]
+    needs: [ci-cd-start-notification, version, scan-images]
     if: |
       always() &&
+      needs.version.result == 'success' &&
       (needs.scan-images.result == 'success' || needs.scan-images.result == 'skipped')
     runs-on: ubuntu-22.04
     steps:
@@ -243,36 +281,30 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Docker login to OpenShift registry
-        run: echo "${{ env.OPENSHIFT_TOKEN }}" | docker login ${{ env.OPENSHIFT_REGISTRY }} -u unused --password-stdin
-      - name: Deploy PIMS frontend
+      - name: Deploy PIMS services
         shell: bash
         run: |
-          oc tag pims-app:$RELEASE_TAG pims-app:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
-      - name: Deploy PIMS api
-        shell: bash
-        run: |
-          oc tag pims-api:$RELEASE_TAG pims-api:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
-      - name: Deploy geoserver proxy microservice
-        shell: bash
-        run: |
-          oc tag pims-proxy:$RELEASE_TAG pims-proxy:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
-      - name: Deploy scheduler microservice
-        shell: bash
-        run: |
-          oc tag pims-scheduler:$RELEASE_TAG pims-scheduler:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
+          ./tools/cicd/build/deploy-image.sh \
+            --from dev \
+            --env test \
+            pims-app pims-api pims-proxy pims-scheduler
+      ## mayan-bcgov has no Deployment, so it is tag-only.
       - name: Deploy mayan
         shell: bash
         run: |
-          oc tag mayan-bcgov:$RELEASE_TAG mayan-bcgov:$DESTINATION
+          ./tools/cicd/build/deploy-image.sh \
+            --from dev \
+            --env test \
+            --no-rollout \
+            mayan-bcgov
+      - name: Tag images with version
+        shell: bash
+        run: |
+          ./tools/cicd/build/tag-version.sh \
+            --env test \
+            --version "${{ needs.version.outputs.version }}" \
+            pims-app pims-api pims-proxy pims-scheduler mayan-bcgov
+
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
   # 2) greps the generated name from the previous step.
@@ -301,8 +333,8 @@ jobs:
           oc wait --for=condition=complete job/$JOB_NAME --timeout=300s
           oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
 
-  # ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
-  # ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+  ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+  ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
@@ -356,6 +388,9 @@ jobs:
   run-e2e-integration-tests:
     name: PIMS e2e integration tests
     needs: run-e2e-smoke-tests
+    if: |
+      always() &&
+      needs.run-e2e-smoke-tests.result == 'success'
     uses: ./.github/workflows/ci-cd-pims-e2e-test.yml
     with:
       target_env: test

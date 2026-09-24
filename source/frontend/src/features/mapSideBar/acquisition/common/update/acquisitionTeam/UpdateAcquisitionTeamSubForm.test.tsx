@@ -1,5 +1,5 @@
 import { Formik, FormikProps, getIn } from 'formik';
-
+import { createRef } from 'react';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -13,7 +13,19 @@ import {
 
 import { WithAcquisitionTeam } from '../../models';
 import { UpdateAcquisitionTeamSubForm } from './UpdateAcquisitionTeamSubForm';
-import { createRef } from 'react';
+import { ApiGen_CodeTypes_AcquisitionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTeamProfileTypes';
+import { RestrictContactType } from '@/constants/contacts';
+import { IContactSearchResult } from '@/interfaces';
+import { UpdateAcquisitionTeamYupSchema } from './UpdateAcquisitionTeamYupSchema';
+
+const contactInputMock = vi.fn();
+
+vi.mock('@/components/common/form/ContactInput/ContactInputContainer', () => ({
+  ContactInputContainer: (props: any) => {
+    contactInputMock(props);
+    return <div data-testid="contact-input-container" />;
+  },
+}));
 
 describe('AcquisitionTeamSubForm component', () => {
   // render component under test
@@ -23,7 +35,12 @@ describe('AcquisitionTeamSubForm component', () => {
   ) => {
     const ref = createRef<FormikProps<WithAcquisitionTeam>>();
     const utils = render(
-      <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={vi.fn()}>
+      <Formik
+        innerRef={ref}
+        initialValues={props.initialForm}
+        validationSchema={UpdateAcquisitionTeamYupSchema}
+        onSubmit={vi.fn()}
+      >
         {formikProps => <UpdateAcquisitionTeamSubForm />}
       </Formik>,
       {
@@ -39,6 +56,22 @@ describe('AcquisitionTeamSubForm component', () => {
   };
 
   let testForm: WithAcquisitionTeam;
+
+  const selectedPerson: IContactSearchResult = {
+    id: '1',
+    summary: 'summary',
+    mailingAddress: '123 mock st',
+    surname: 'last',
+    firstName: 'first',
+    email: 'email',
+    municipalityName: 'city',
+    provinceState: 'province',
+    isDisabled: false,
+    personId: 1,
+    person: null,
+    middleNames: null,
+    organizationName: null,
+  };
 
   beforeEach(() => {
     testForm = { team: [] };
@@ -109,13 +142,113 @@ describe('AcquisitionTeamSubForm component', () => {
     expect(getByName('team.0.contactTypeCode')).toBeVisible();
   });
 
-  it(`sets the contact manager field as 'touched' when team profile type is changed`, async () => {
+  it('restricts contact selection to PIMS users for PROPCOORD profile', async () => {
+    const { getByTestId } = setup({
+      initialForm: testForm,
+    });
+
+    await act(async () => userEvent.click(getByTestId('add-team-member')));
+
+    await act(async () =>
+      selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPCOORD,
+      ),
+    );
+
+    expect(contactInputMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        restrictContactType: [RestrictContactType.ONLY_PIMSUSERS],
+      }),
+    );
+  });
+
+  it('allows all contact types for unrestricted team profiles', async () => {
+    const { getByTestId } = setup({
+      initialForm: testForm,
+    });
+
+    await act(async () => userEvent.click(getByTestId('add-team-member')));
+
+    await act(async () =>
+      selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_AcquisitionTeamProfileTypes.NEGOTAGENT,
+      ),
+    );
+
+    expect(contactInputMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        restrictContactType: [
+          RestrictContactType.ONLY_PIMSUSERS,
+          RestrictContactType.ONLY_INDIVIDUALS,
+          RestrictContactType.ONLY_ORGANIZATIONS,
+        ],
+      }),
+    );
+  });
+
+  it('restricts key contact selection to PIMS users', async () => {
+    const { getByTestId } = setup({ initialForm: testForm });
+    await act(async () => userEvent.click(getByTestId('add-team-member')));
+    await act(async () =>
+      selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_AcquisitionTeamProfileTypes.KEYCNTCT,
+      ),
+    );
+
+    expect(contactInputMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        restrictContactType: [RestrictContactType.ONLY_PIMSUSERS],
+      }),
+    );
+  });
+
+  it('displays an error when the same contact and role are selected twice', async () => {
     const { getByTestId, getFormikRef } = setup({
       initialForm: testForm,
     });
-    const addRow = getByTestId('add-team-member');
-    await act(async () => userEvent.click(addRow));
-    await act(async () => selectOptions('team.0.contactTypeCode', 'MOTILAWYER'));
-    expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
+
+    // First team member
+    await act(async () => {
+      await userEvent.click(getByTestId('add-team-member'));
+    });
+
+    await act(async () => {
+      await selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_AcquisitionTeamProfileTypes.EXPRAGENT,
+      );
+    });
+
+    await act(async () => {
+      await getFormikRef().current?.setFieldValue('team.0.contact', selectedPerson);
+    });
+
+    // Second team member
+    await act(async () => {
+      await userEvent.click(getByTestId('add-team-member'));
+    });
+
+    await act(async () => {
+      await selectOptions(
+        'team.1.contactTypeCode',
+        ApiGen_CodeTypes_AcquisitionTeamProfileTypes.EXPRAGENT,
+      );
+    });
+
+    // Select SAME person
+    await act(async () => {
+      await getFormikRef().current?.setFieldValue('team.1.contact', selectedPerson);
+    });
+
+    await act(async () => {
+      await getFormikRef().current?.validateForm();
+    });
+
+    expect(getFormikRef().current?.errors.team).toBe(
+      'You have selected a team member that already has the selected role.',
+    );
   });
 });

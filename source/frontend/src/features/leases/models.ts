@@ -259,6 +259,7 @@ export class LeaseFormModel implements WithLeaseTeam {
       renewalCount: formLease.renewals.length,
       totalAllowableCompensation: null,
       ...getEmptyBaseAudit(formLease.rowVersion),
+      canEdit: null,
     };
   }
 
@@ -464,6 +465,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     ...getEmptyBaseAudit(),
     totalAllowableCompensation: null,
     leaseTeam: [],
+    canEdit: true,
   });
 
 export const isLeaseFile = (file: object): file is ApiGen_Concepts_Lease =>

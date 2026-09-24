@@ -30,6 +30,7 @@ const setup = (
         onSave={onSave}
         onEdit={onEdit}
         isFileFinalStatus={renderOptions.isFileFinalStatus}
+        canEdit={renderOptions.canEdit}
       />
     </Formik>,
     {
@@ -88,6 +89,7 @@ describe('DepositNotes component', () => {
       lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
       claims: [Claims.LEASE_EDIT],
       disabled: true,
+      canEdit: true,
     });
     const editButton = getByTestId('edit-comments');
     await act(async () => userEvent.click(editButton));

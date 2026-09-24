@@ -38,6 +38,7 @@ describe('Note List Container', () => {
         entityId={renderOptions?.entityId ?? 1}
         onSuccess={renderOptions?.onSuccess ?? onSuccess}
         View={NoteListView}
+        canEdit={renderOptions?.canEdit ?? true}
       />,
       {
         ...renderOptions,

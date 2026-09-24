@@ -84,6 +84,11 @@ namespace Pims.Dal.Repositories
             }
             return false;
         }
+
+        public PimsLeaseNote GetByNoteId(long noteId)
+        {
+            return Context.PimsLeaseNotes.AsNoTracking().FirstOrDefault(x => x.NoteId == noteId);
+        }
         #endregion
     }
 }

@@ -68,4 +68,5 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   periods: ApiGen_Concepts_LeasePeriod[] | null;
   renewals: ApiGen_Concepts_LeaseRenewal[] | null;
   leaseTeam: ApiGen_Concepts_LeaseFileTeam[] | null;
+  canEdit: boolean | null;
 }

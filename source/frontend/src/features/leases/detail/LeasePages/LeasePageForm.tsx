@@ -47,6 +47,8 @@ export const LeaseViewPageForm: React.FunctionComponent<
     }
   };
 
+  const canEditLease = lease?.canEdit === true;
+
   return (
     <StyledLeasePage>
       <StyledEditWrapper className="mr-3 my-1">
@@ -54,7 +56,7 @@ export const LeaseViewPageForm: React.FunctionComponent<
           {displayLeaseTerminationMessage() && (
             <StyledTerminationMessage>{getTerminationMessage()}</StyledTerminationMessage>
           )}
-          {updateSolver.canEditLeasePage(leasePageName) ||
+          {(canEditLease && updateSolver.canEditLeasePage(leasePageName)) ||
           (hasRole(Roles.SYSTEM_ADMINISTRATOR) && leasePageName === LeasePageNames.DETAILS) ? (
             <LeaseEditButton onEdit={onEdit} isEditing={isEditing} pageName={leasePageName} />
           ) : (

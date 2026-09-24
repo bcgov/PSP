@@ -217,6 +217,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         onDeletePayment={onDeletePayment}
         onSavePayment={onSavePayment}
         isFileFinalStatus={!statusSolver.canEditPayments()}
+        canEdit={lease?.canEdit === true}
         isReceivable={
           lease?.paymentReceivableType?.id ===
           ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL.toString()

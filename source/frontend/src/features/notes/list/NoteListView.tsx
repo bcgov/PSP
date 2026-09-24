@@ -157,6 +157,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
           openModal={openViewNotes}
           closeModal={closeViewNotes}
           onSuccess={onChildSuccess}
+          isReadOnly={!canEditNotes}
         ></NoteContainer>
       )}
     </Section>

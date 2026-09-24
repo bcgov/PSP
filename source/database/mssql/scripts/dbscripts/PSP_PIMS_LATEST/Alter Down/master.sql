@@ -14,11 +14,23 @@ PRINT '     == DB TRANSACTION START ========'
 
    --Script section
 
-   PRINT '- Executing PSP_PIMS_S122_00/Alter Down/010_PSP_PIMS_Alter_Down.sql '
-   :setvar filepath "PSP_PIMS_S122_00/Alter Down/010_PSP_PIMS_Alter_Down.sql"
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Down/010_PSP_PIMS_Alter_Down.sql '
+   :setvar filepath "PSP_PIMS_S123_00/Alter Down/010_PSP_PIMS_Alter_Down.sql"
    :r $(filepath)
-   PRINT '- Executing PSP_PIMS_S122_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql '
-   :setvar filepath "PSP_PIMS_S122_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql"
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql '
+   :setvar filepath "PSP_PIMS_S123_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql"
+   :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Down/093_DML_PIMS_ACQ_FL_TEAM_PROFILE_TYPE_Alter_Down.sql '
+   :setvar filepath "PSP_PIMS_S123_00/Alter Down/093_DML_PIMS_ACQ_FL_TEAM_PROFILE_TYPE_Alter_Down.sql"
+   :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Down/144_DML_PIMS_DSP_FL_TEAM_PROFILE_TYPE_Alter_Down.sql '
+   :setvar filepath "PSP_PIMS_S123_00/Alter Down/144_DML_PIMS_DSP_FL_TEAM_PROFILE_TYPE_Alter_Down.sql"
+   :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Down/164_DML_PIMS_LL_TEAM_PROFILE_TYPE_Alter_Down.sql '
+   :setvar filepath "PSP_PIMS_S123_00/Alter Down/164_DML_PIMS_LL_TEAM_PROFILE_TYPE_Alter_Down.sql"
+   :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Down/167_DML_PIMS_MANAGEMENT_FILE_PROFILE_TYPE_Alter_Down.sql '
+   :setvar filepath "PSP_PIMS_S123_00/Alter Down/167_DML_PIMS_MANAGEMENT_FILE_PROFILE_TYPE_Alter_Down.sql"
    :r $(filepath)
 
    --End script section

@@ -22,6 +22,7 @@ namespace Pims.Dal.Repositories
     {
         private readonly ISequenceRepository _sequenceRepository;
         private readonly IMapper _mapper;
+        private readonly INotificationRepository _notificationRepository;
         #region Constructors
 
         /// <summary>
@@ -30,11 +31,12 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper)
+        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
             _sequenceRepository = sequenceRepository;
             _mapper = mapper;
+            _notificationRepository = notificationRepository;
         }
         #endregion
 
@@ -760,6 +762,24 @@ namespace Pims.Dal.Repositories
             Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqProgress, long>(p => p.PimsAcqFileAcqProgresses, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqProgresses.ToArray());
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqFlTakeTyp, long>(p => p.PimsAcqFileAcqFlTakeTyps, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqFlTakeTyps.ToArray());
+
+            // Find Notice of Claims that are being removed
+            var incomingNoticeOfClaimIds = acquisitionFile.PimsNoticeOfClaims
+                .Select(x => x.NoticeOfClaimId)
+                .ToHashSet();
+
+            var deletedNotificationIds = Context.PimsNoticeOfClaims
+                .Where(n => n.AcquisitionFileId == acquisitionFile.Internal_Id
+                    && !incomingNoticeOfClaimIds.Contains(n.NoticeOfClaimId))
+                .SelectMany(n => n.PimsNotifications)
+                .Select(n => n.NotificationId)
+                .ToList();
+
+            foreach (var notificationId in deletedNotificationIds)
+            {
+                _notificationRepository.Delete(notificationId);
+            }
+
             Context.UpdateChild<PimsAcquisitionFile, long, PimsNoticeOfClaim, long>(p => p.PimsNoticeOfClaims, acquisitionFile.Internal_Id, acquisitionFile.PimsNoticeOfClaims.ToArray());
 
             return acquisitionFile;

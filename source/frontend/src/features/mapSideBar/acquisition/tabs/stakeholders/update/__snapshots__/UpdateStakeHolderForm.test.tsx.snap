@@ -297,6 +297,37 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
   display: block;
 }
 
+.c0 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
 .c6 {
   position: relative;
   border-radius: 0.4rem;
@@ -340,37 +371,6 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-}
-
-.c0 {
-  background-color: #f2f2f2;
-  padding-top: 1rem;
-}
-
-.c1 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c5.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c4 {
-  font-weight: bold;
 }
 
 .c11 {
