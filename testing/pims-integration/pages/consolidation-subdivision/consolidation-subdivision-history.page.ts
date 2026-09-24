@@ -88,7 +88,13 @@ export class ConsolidationSubdivisionHistoryPage {
     this.subconTableContent = operationTable.locator('.tbody .tr-wrapper');
   }
 
-  async verifySubdivisionHistory(PID: string, plan: string, status: string, area: string, subdivisions: conSubHistory[]) {
+  async verifySubdivisionHistory(
+    PID: string,
+    plan: string,
+    status: string,
+    area: string,
+    subdivisions: conSubHistory[]
+  ) {
     await expect(this.subdivisionHistorySubtitle).toBeVisible();
 
     await expect(this.subconHistoryCreatedOnLabel).toBeVisible();
@@ -97,9 +103,7 @@ export class ConsolidationSubdivisionHistoryPage {
     await expect(this.subconHistoryTablePlanColumn).toBeVisible();
     await expect(this.subconHistoryTableStatusColumn).toBeVisible();
     await expect(this.subconHistoryTableAreaColumn).toBeVisible();
-    await expect(this.subdivisionParentIdentifier).toHaveText(
-      `PID: ${PID}`
-    );
+    await expect(this.subdivisionParentIdentifier).toHaveText(`PID: ${PID}`);
     await expect(this.subdivisionParentPlan).toHaveText(plan);
     await expect(this.subdivisionParentStatus).toHaveText(status);
     await expect(this.subdivisionParentArea).toHaveText(area);
@@ -116,7 +120,13 @@ export class ConsolidationSubdivisionHistoryPage {
     }
   }
 
-  async verifyConsolidationHistory(consolidations: conSubHistory[], PID: string, plan: string, status: string, area: string,) {
+  async verifyConsolidationHistory(
+    consolidations: conSubHistory[],
+    PID: string,
+    plan: string,
+    status: string,
+    area: string
+  ) {
     await expect(this.propertyInformationTitle).toBeVisible();
     await expect(this.consolidationHistorySubtitle).toBeVisible();
 
@@ -132,9 +142,7 @@ export class ConsolidationSubdivisionHistoryPage {
       const parentRow = this.subconTableContent.nth(i);
       const cells = parentRow.locator("[role='cell']");
 
-      await expect(cells.nth(2).locator('a')).toHaveText(
-        `PID: ${parent.pid}`
-      );
+      await expect(cells.nth(2).locator('a')).toHaveText(`PID: ${parent.pid}`);
       await expect(cells.nth(3)).toHaveText(parent.plan);
       await expect(cells.nth(4)).toHaveText(parent.status);
       await expect(cells.nth(5)).toHaveText(formatSqToMts(parent.area));
