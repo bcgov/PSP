@@ -1,57 +1,61 @@
 import { expect, Locator, Page } from '@playwright/test';
+import { ConSubHistory } from './consolidation-subdivision-history.page';
 
-export class SubdivisionConsolidation {
-  private readonly page: Page;
+export class ConsolidationPage {
+  readonly page: Page;
 
-  private readonly consolidationCreateTitle: Locator;
-  private readonly consolidationCreateSubtitle: Locator;
-  private readonly consolidationParentsInstructionsParagraph: Locator;
+  readonly consolidationCreateTitle: Locator;
+  readonly consolidationCreateSubtitle: Locator;
+  readonly consolidationParentsInstructionsParagraph: Locator;
 
-  private readonly consolidationSelectedParentsSubtitle: Locator;
-  private readonly consolidationParentPIDInput: Locator;
-  private readonly subconSearchParentResetButton: Locator;
-  private readonly subconSearchParentButton: Locator;
+  readonly consolidationSelectedParentsSubtitle: Locator;
+  readonly consolidationParentPIDInput: Locator;
+  readonly subconSearchParentResetButton: Locator;
+  readonly subconSearchParentButton: Locator;
 
-  private readonly consolidationParentsResultIdentifierColumn: Locator;
-  private readonly consolidationParentsResultPlanColumn: Locator;
-  private readonly consolidationParentsResultAreaColumn: Locator;
-  private readonly consolidationParentsResultAddressColumn: Locator;
+  readonly consolidationParentsResultIdentifierColumn: Locator;
+  readonly consolidationParentsResultPlanColumn: Locator;
+  readonly consolidationParentsResultAreaColumn: Locator;
+  readonly consolidationParentsResultAddressColumn: Locator;
 
-  private readonly consolidationChildInstructionsParagraph: Locator;
-  private readonly subconChildrenSearchTab: Locator;
-  private readonly subconChildrenSearchByPIDInput: Locator;
-  private readonly subconChildrenSearchButton: Locator;
-  private readonly subconChildrenResetButton: Locator;
-  private readonly subconChildren1stResultCheckbox: Locator;
-  private readonly subconChildernAddToSelectionBttn: Locator;
+  readonly consolidationChildInstructionsParagraph: Locator;
+  readonly subconChildrenSearchTab: Locator;
+  readonly subconChildrenSearchByPIDInput: Locator;
+  readonly subconChildrenSearchButton: Locator;
+  readonly subconChildrenResetButton: Locator;
+  readonly subconChildren1stResultCheckbox: Locator;
+  readonly subconChildernAddToSelectionBttn: Locator;
 
-  private readonly consolidationSelectedChildSubtitle: Locator;
-  private readonly consolidationChildResultIdentifierColumn: Locator;
-  private readonly consolidationChildResultPlanColumn: Locator;
-  private readonly consolidationChildResultAreaColumn: Locator;
-  private readonly consolidationChildResultAddressColumn: Locator;
+  readonly consolidationSelectedChildSubtitle: Locator;
+  readonly consolidationChildResultIdentifierColumn: Locator;
+  readonly consolidationChildResultPlanColumn: Locator;
+  readonly consolidationChildResultAreaColumn: Locator;
+  readonly consolidationChildResultAddressColumn: Locator;
 
-  private readonly consolidationPropertiesCreateButton: Locator;
+  readonly consolidationPropertiesCreateButton: Locator;
 
-  private readonly subconChildrenFirstResultCheckbox: Locator;
-  private readonly subconChildrenAddToSelectionButton: Locator;
+  readonly subconChildrenFirstResultCheckbox: Locator;
+  readonly subconChildrenAddToSelectionButton: Locator;
 
-  private readonly consolidationChooseParentsErrorMsg: Locator;
-  private readonly subdivisionChooseChildrenErrorMsg: Locator;
+  readonly consolidationChooseParentsErrorMsg: Locator;
+  readonly subdivisionChooseChildrenErrorMsg: Locator;
 
   //Modal Elements
-  private readonly subconModalWindow: Locator;
-  private readonly generalModalHeader: Locator;
-  private readonly subconGeneralModalContent: Locator;
-  private readonly subconWarningHeader: Locator;
-  private readonly subconErrorHeader: Locator;
-  private readonly subconModalSaveWarningP1: Locator;
-  private readonly subconModalSaveWarningP2: Locator;
-  private readonly subconModalOkBttn: Locator;
-  private readonly subconModalCancelBttn: Locator;
+  readonly subconModalWindow: Locator;
+  readonly generalModalHeader: Locator;
+  readonly subconGeneralModalContent: Locator;
+  readonly subconWarningHeader: Locator;
+  readonly subconErrorHeader: Locator;
+  readonly subconModalSaveWarningP1: Locator;
+  readonly subconModalSaveWarningP2: Locator;
+  readonly subconModalOkBttn: Locator;
+  readonly subconModalCancelBttn: Locator;
 
   //Toast Elements
-  private readonly generalToastBody: Locator;
+  readonly generalToastBody: Locator;
+
+  //Property Element
+  readonly propertyDetailsTab: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -167,10 +171,13 @@ export class SubdivisionConsolidation {
     this.subconModalCancelBttn = page.locator("button[title='cancel-modal']");
 
     this.generalToastBody = page.locator("div[class='Toastify__toast-body']");
+
+    //Properties page element:
+    this.propertyDetailsTab = page.locator("a[data-rb-event-key='details']");
   }
 
   async goto() {
-    await this.page.goto('/mapview/sidebar/subdivision/new', { waitUntil: 'domcontentloaded' });
+    await this.page.goto('/mapview/sidebar/consolidation/new', { waitUntil: 'domcontentloaded' });
   }
 
   async saveConsolidation() {
@@ -192,20 +199,24 @@ export class SubdivisionConsolidation {
     await this.subconModalOkBttn.click();
   }
 
+  async waitForPropertyPanel() {
+    await expect(this.propertyDetailsTab).toBeVisible();
+  }
+
   async cancelSubdivisionConsolidation() {
     await this.subconModalCancelBttn.click();
     await this.subconModalCancelBttn.click();
   }
 
-  async createConsolidation(parentProperties: string[], childroperty: string) {
+  async createConsolidation(parentProperties: ConSubHistory[], childroperty: ConSubHistory) {
     for (const parent of parentProperties) {
       await this.subconSearchParentResetButton.click();
-      await this.consolidationParentPIDInput.fill(parent);
+      await this.consolidationParentPIDInput.fill(parent.pid);
       await this.subconSearchParentButton.click();
     }
 
     await this.subconChildrenSearchTab.click();
-    await this.subconChildrenSearchByPIDInput.fill(childroperty);
+    await this.subconChildrenSearchByPIDInput.fill(childroperty.pid);
 
     await this.subconChildrenSearchButton.click();
 

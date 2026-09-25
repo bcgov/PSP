@@ -1,64 +1,68 @@
 import { expect, Locator, Page } from '@playwright/test';
+import { ConSubHistory } from './consolidation-subdivision-history.page';
 
-export class subdivisionPage {
+export class SubdivisionPage {
   private readonly page: Page;
 
-  private readonly menuSubdivisionConsolidationButton: Locator;
-  private readonly createSubdivisionButton: Locator;
+  readonly menuSubdivisionConsolidationButton: Locator;
+  readonly createSubdivisionButton: Locator;
 
-  private readonly subdivisionCreateTitle: Locator;
-  private readonly subdivisionCreateSubtitle: Locator;
-  private readonly subdivisionParentInstructionsParagraph: Locator;
+  readonly subdivisionCreateTitle: Locator;
+  readonly subdivisionCreateSubtitle: Locator;
+  readonly subdivisionParentInstructionsParagraph: Locator;
 
-  private readonly subconParentSearchAnchor: Locator;
-  private readonly subconSearchParentByPIDSelect: Locator;
-  private readonly subconSearchParentByPIDInput: Locator;
-  private readonly subconSearchParentButton: Locator;
-  private readonly subconSearchParentResetButton: Locator;
+  readonly subconParentSearchAnchor: Locator;
+  readonly subconSearchParentByPIDSelect: Locator;
+  readonly subconSearchParentByPIDInput: Locator;
+  readonly subconSearchParentButton: Locator;
+  readonly subconSearchParentResetButton: Locator;
 
-  private readonly subdivisionSelectedParentSubtitle: Locator;
-  private readonly subconParentResultIdentifierColumn: Locator;
-  private readonly subconParentResultPlanColumn: Locator;
-  private readonly subconParentResultAreaColumn: Locator;
-  private readonly subconParentResultAddressColumn: Locator;
+  readonly subdivisionSelectedParentSubtitle: Locator;
+  readonly subconParentResultIdentifierColumn: Locator;
+  readonly subconParentResultPlanColumn: Locator;
+  readonly subconParentResultAreaColumn: Locator;
+  readonly subconParentResultAddressColumn: Locator;
 
-  private readonly subdivisionChildrenInstructionsParagraph: Locator;
-  private readonly subconChildrenLocateOnMapTab: Locator;
-  private readonly subconChildrenLocateOnMapSubtitle: Locator;
-  private readonly subconChildrenLocateOnMapBlueIcon: Locator;
-  private readonly subconChildrenLocateOnMapInstruction1: Locator;
-  private readonly subconChildrenLocateOnMapInstruction2: Locator;
-  private readonly subconChildrenLocateOnMapInstruction3: Locator;
-  private readonly subconChildrenLocateOnMapSelectedLabel: Locator;
-  private readonly subconChildrenLocateOnMapPIDLabel: Locator;
-  private readonly subconChildrenLocateOnMapPlanLabel: Locator;
-  private readonly subconChildrenLocateOnMapAddressLabel: Locator;
-  private readonly subconChildrenLocateOnMapRegionLabel: Locator;
-  private readonly subconChildrenLocateOnMapDistrictLabel: Locator;
+  readonly subdivisionChildrenInstructionsParagraph: Locator;
+  readonly subconChildrenLocateOnMapTab: Locator;
+  readonly subconChildrenLocateOnMapSubtitle: Locator;
+  readonly subconChildrenLocateOnMapBlueIcon: Locator;
+  readonly subconChildrenLocateOnMapInstruction1: Locator;
+  readonly subconChildrenLocateOnMapInstruction2: Locator;
+  readonly subconChildrenLocateOnMapInstruction3: Locator;
+  readonly subconChildrenLocateOnMapSelectedLabel: Locator;
+  readonly subconChildrenLocateOnMapPIDLabel: Locator;
+  readonly subconChildrenLocateOnMapPlanLabel: Locator;
+  readonly subconChildrenLocateOnMapAddressLabel: Locator;
+  readonly subconChildrenLocateOnMapRegionLabel: Locator;
+  readonly subconChildrenLocateOnMapDistrictLabel: Locator;
 
-  private readonly subconChildrenSearchTab: Locator;
-  private readonly subconChildrenSearchByPIDSelect: Locator;
-  private readonly subconChildrenSearchByPIDInput: Locator;
-  private readonly subconChildrenSearchButton: Locator;
-  private readonly subconChildrenResetButton: Locator;
-  private readonly subconChildrenFirstResultCheckbox: Locator;
-  private readonly subconChildrenAddToSelectionButton: Locator;
+  readonly subconChildrenSearchTab: Locator;
+  readonly subconChildrenSearchByPIDSelect: Locator;
+  readonly subconChildrenSearchByPIDInput: Locator;
+  readonly subconChildrenSearchButton: Locator;
+  readonly subconChildrenResetButton: Locator;
+  readonly subconChildrenFirstResultCheckbox: Locator;
+  readonly subconChildrenAddToSelectionButton: Locator;
 
-  private readonly subdivisionSelectedChildrenSubtitle: Locator;
-  private readonly subdivisionChildrenResultIdentifierColumn: Locator;
-  private readonly subdivisionChildrenResultPlanColumn: Locator;
-  private readonly subdivisionChildrenResultAreaColumn: Locator;
-  private readonly subdivisionChildrenResultAddressColumn: Locator;
+  readonly subdivisionSelectedChildrenSubtitle: Locator;
+  readonly subdivisionChildrenResultIdentifierColumn: Locator;
+  readonly subdivisionChildrenResultPlanColumn: Locator;
+  readonly subdivisionChildrenResultAreaColumn: Locator;
+  readonly subdivisionChildrenResultAddressColumn: Locator;
 
-  private readonly subdivisionPropertiesCreateButton: Locator;
-  private readonly subconPropertiesCancelButton: Locator;
+  readonly subdivisionPropertiesCreateButton: Locator;
+  readonly subconPropertiesCancelButton: Locator;
 
-  private readonly subconModalWindow: Locator;
-  private readonly subconWarningHeader: Locator;
-  private readonly subconErrorHeader: Locator;
-  private readonly subconModalSaveWarningP1: Locator;
-  private readonly subconModalSaveWarningP2: Locator;
-  private readonly subconModalOkBttn: Locator;
+  readonly subconModalWindow: Locator;
+  readonly subconWarningHeader: Locator;
+  readonly subconErrorHeader: Locator;
+  readonly subconModalSaveWarningP1: Locator;
+  readonly subconModalSaveWarningP2: Locator;
+  readonly subconModalOkBttn: Locator;
+
+   //Properties page element:
+  readonly propertyDetailsTab: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -242,21 +246,27 @@ export class subdivisionPage {
     this.subconModalSaveWarningP1 = page.locator('.modal-body p').nth(0);
     this.subconModalSaveWarningP2 = page.locator('.modal-body p').nth(1);
     this.subconModalOkBttn = page.locator("button[title='ok-modal']");
+
+    //Properties page element:
+    this.propertyDetailsTab = page.locator("a[data-rb-event-key='details']");
   }
 
-  async navigateToCreateNewSubdivision() {
-    await this.menuSubdivisionConsolidationButton.click();
-    await this.createSubdivisionButton.click();
+  async goto() {
+    await this.page.goto('/mapview/sidebar/subdivision/new', { waitUntil: 'domcontentloaded' });
   }
 
-  async createSubdivision(parentProperty: string, childrenProperties: string[]) {
-    await this.subconSearchParentByPIDInput.fill(parentProperty);
+  async waitForPropertyPanel() {
+    await expect(this.propertyDetailsTab).toBeVisible();
+  }
+
+  async createSubdivision(parentProperty: ConSubHistory, childrenProperties: ConSubHistory[]) {
+    await this.subconSearchParentByPIDInput.fill(parentProperty.pid);
     await this.subconSearchParentButton.click();
     await this.subconChildrenSearchTab.click();
 
     for (const child of childrenProperties) {
       await this.subconChildrenResetButton.click();
-      await this.subconChildrenSearchByPIDInput.fill(child);
+      await this.subconChildrenSearchByPIDInput.fill(child.pid);
 
       await this.subconChildrenSearchButton.click();
       await this.subconChildrenFirstResultCheckbox.check();

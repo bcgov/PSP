@@ -6,7 +6,6 @@ test.describe('Acquisition file creation', () => {
     acquisitionWithNoticeOfClaim,
   }) => {
     await expect(acquisitionSummaryPage.fileDetailsTab).toBeVisible();
-
     await expect(acquisitionSummaryPage.noticeOfClaimReceivedDateLabel).toBeVisible();
 
     expect(acquisitionWithNoticeOfClaim.fileName).toBeTruthy();
