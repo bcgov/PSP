@@ -1,6 +1,6 @@
 -- -------------------------------------------------------------------------------------------
 -- Populate the PIMS_NOTIFICATION_TYPE table.
--- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+-- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 -- Author        Date         Ticket     Comment
 -- ------------  -----------  ---------  -----------------------------------------------------
 -- Arturo Reyes  2026-Sep-18  PSP-11980  Add new notification types
@@ -14,21 +14,215 @@ GO
 IF @@ERROR <> 0
     SET NOEXEC ON;
 GO
-PRINT N'Populate the PIMS_NOTIFICATION_TYPE table.';
+
+-- Add/Enable the "L_PERIOD_DUEDT" type.
+PRINT N'Add/Enable the "L_PERIOD_DUEDT" type.';
 GO
-INSERT INTO PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION)
-VALUES
-  (N'L_PERIOD_DUEDT',    N'Due date - L/L Periods'),
-  (N'TAKE_LAND_ACT',     N'Land Act - take'),
-  (N'EXPROPH_ADVPYSVDT', N'Expropriation advanced payment served date'),
-  (N'EXPROPH_VESTDT',    N'Expropriation vesting date'),
-  (N'EXPROPH_APPREFFDT', N'Expropriation appraisal effective date'),
-  (N'AGMT_AGMTDT',       N'Agreement date'),
-  (N'AGMT_COMPTDT',      N'Agreement completion date'),
-  (N'AGMT_TERMINDT',     N'Agreement termination date');
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'L_PERIOD_DUEDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 0,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+ELSE
+    INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+    VALUES (@CurrCd, N'Due date - L/L Periods', 0);
 GO
-IF @@ERROR <> 0 SET NOEXEC ON
+IF @@ERROR <> 0
+    SET NOEXEC ON;
 GO
+
+-- Add/Enable the "TAKE_LAND_ACT" type.
+PRINT N'Add/Enable the "TAKE_LAND_ACT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'TAKE_LAND_ACT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 0,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+ELSE
+    INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+    VALUES (@CurrCd, N'Land Act - take', 0);
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+
+-- Add/Enable the "EXPROPH_ADVPYSVDT" type.
+PRINT N'Add/Enable the "EXPROPH_ADVPYSVDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'EXPROPH_ADVPYSVDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 0,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+ELSE
+    INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+    VALUES (@CurrCd, N'Expropriation advanced payment served date', 0);
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+
+-- Add/Enable the "EXPROPH_VESTDT" type.
+PRINT N'Add/Enable the "EXPROPH_VESTDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'EXPROPH_VESTDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 0,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+ELSE
+    INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+    VALUES (@CurrCd, N'Expropriation vesting date', 0);
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+
+-- Add/Enable the "EXPROPH_APPREFFDT" type.
+PRINT N'Add/Enable the "EXPROPH_APPREFFDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'EXPROPH_APPREFFDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 0,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+ELSE
+    INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+    VALUES (@CurrCd, N'Expropriation appraisal effective date', 0);
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+
+-- Add/Enable the "AGMT_AGMTDT" type.
+PRINT N'Add/Enable the "AGMT_AGMTDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'AGMT_AGMTDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 0,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+ELSE
+    INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+    VALUES (@CurrCd, N'Agreement date', 0);
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+
+-- Add/Enable the "AGMT_COMPTDT" type.
+PRINT N'Add/Enable the "AGMT_COMPTDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'AGMT_COMPTDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 0,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+ELSE
+    INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+    VALUES (@CurrCd, N'Agreement completion date', 0);
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+
+-- Add/Enable the "AGMT_TERMINDT" type.
+PRINT N'Add/Enable the "AGMT_TERMINDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'AGMT_TERMINDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 0,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+ELSE
+    INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+    VALUES (@CurrCd, N'Agreement termination date', 0);
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+COMMIT TRANSACTION;
+
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+DECLARE @Success AS BIT;
+SET @Success = 1;
+SET NOEXEC OFF;
+IF (@Success = 1)
+    PRINT 'The database update succeeded';
+ELSE
+    BEGIN
+        IF @@TRANCOUNT > 0
+            ROLLBACK;
+        PRINT 'The database update failed';
+    END
+
 -- --------------------------------------------------------------
 -- Update the display order.
 -- --------------------------------------------------------------
@@ -41,24 +235,3 @@ FROM   PIMS_NOTIFICATION_TYPE AS biz
                ROW_NUMBER() OVER (ORDER BY DESCRIPTION) AS ROW_NUM
         FROM   PIMS_NOTIFICATION_TYPE) AS seq
        ON seq.NOTIFICATION_TYPE_CODE = biz.NOTIFICATION_TYPE_CODE;
-GO
-IF @@ERROR <> 0
-    SET NOEXEC ON;
-GO
-COMMIT TRANSACTION;
-GO
-IF @@ERROR <> 0
-    SET NOEXEC ON;
-GO
-DECLARE @Success AS BIT
-SET @Success = 1
-SET NOEXEC OFF;
-IF (@Success = 1)
-  PRINT 'The database update succeeded';
-ELSE
-  BEGIN
-    IF @@TRANCOUNT > 0
-      ROLLBACK TRANSACTION
-    PRINT 'The database update failed';
-  END
-GO
