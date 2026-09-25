@@ -17,6 +17,7 @@ namespace Pims.Dal.Entities;
 [Index("InsuranceId", Name = "NOTIFY_INSURANCE_ID_IDX")]
 [Index("LeaseConsultationId", Name = "NOTIFY_LEASE_CONSULTATION_ID_IDX")]
 [Index("LeaseId", Name = "NOTIFY_LEASE_ID_IDX")]
+[Index("LeasePeriodId", Name = "NOTIFY_LEASE_PERIOD_ID_IDX")]
 [Index("LeaseRenewalId", Name = "NOTIFY_LEASE_RENEWAL_ID_IDX")]
 [Index("ManagementFileId", Name = "NOTIFY_MANAGEMENT_FILE_ID_IDX")]
 [Index("NoticeOfClaimId", Name = "NOTIFY_NOTICE_OF_CLAIM_ID_IDX")]
@@ -214,6 +215,9 @@ public partial class PimsNotification
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    [Column("LEASE_PERIOD_ID")]
+    public long? LeasePeriodId { get; set; }
+
     [ForeignKey("AcquisitionFileId")]
     [InverseProperty("PimsNotifications")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
@@ -241,6 +245,10 @@ public partial class PimsNotification
     [ForeignKey("LeaseConsultationId")]
     [InverseProperty("PimsNotifications")]
     public virtual PimsLeaseConsultation LeaseConsultation { get; set; }
+
+    [ForeignKey("LeasePeriodId")]
+    [InverseProperty("PimsNotifications")]
+    public virtual PimsLeasePeriod LeasePeriod { get; set; }
 
     [ForeignKey("LeaseRenewalId")]
     [InverseProperty("PimsNotifications")]
