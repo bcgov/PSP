@@ -1,6 +1,9 @@
 import { BrowserContext, Page } from '@playwright/test';
 import { SubdivisionPage } from '../../../pages/consolidation-subdivision/subdivision.page';
-import { ConsolidationSubdivisionHistoryPage, ConSubHistory } from '../../../pages/consolidation-subdivision/consolidation-subdivision-history.page';
+import {
+  ConsolidationSubdivisionHistoryPage,
+  ConSubHistory,
+} from '../../../pages/consolidation-subdivision/consolidation-subdivision-history.page';
 import { subdivisionTest } from '../../../fixtures/consolidation-subdivision.fixture';
 
 type SubdivisionApiResponse = {
@@ -27,8 +30,16 @@ subdivisionTest.describe('Consolidation feature', () => {
   });
 
   subdivisionTest('new consolidation', async () => {
-    const parentProperty = { pid: '001-046-748', plan: 'NWP42089', status: 'ACTIVE', area: '1,200.1212'};
-    const childrenProperties = [{ pid: '015-380-483', plan: 'NO_PLAN', status: 'RETIRED', area: '1,200.1212'}, {pid: '005-565-405', plan: 'NWP56954', status: 'RETIRED', area: '1,200.1212'}];
+    const parentProperty = {
+      pid: '001-046-748',
+      plan: 'NWP42089',
+      status: 'ACTIVE',
+      area: '1,200.1212',
+    };
+    const childrenProperties = [
+      { pid: '015-380-483', plan: 'NO_PLAN', status: 'RETIRED', area: '1,200.1212' },
+      { pid: '005-565-405', plan: 'NWP56954', status: 'RETIRED', area: '1,200.1212' },
+    ];
 
     let apiFeatureFileJson: SubdivisionApiResponse;
     const responsePromise = page.waitForResponse(
@@ -46,11 +57,13 @@ subdivisionTest.describe('Consolidation feature', () => {
       apiFeatureFileJson = await response.json();
 
       await subdivisionPage.waitForPropertyPanel();
-
     });
 
     await subdivisionTest.step('Validate Subdivision history', async () => {
-      await consolidationHistoryPage.verifySubdivisionHistory(apiFeatureFileJson.sourceProperty, apiFeatureFileJson.destinationProperty);
+      await consolidationHistoryPage.verifySubdivisionHistory(
+        apiFeatureFileJson.sourceProperty,
+        apiFeatureFileJson.destinationProperty
+      );
     });
   });
 });

@@ -1,6 +1,9 @@
 import { BrowserContext, Page } from '@playwright/test';
 import { ConsolidationPage } from '../../../pages/consolidation-subdivision/consolidation.page';
-import { ConsolidationSubdivisionHistoryPage, ConSubHistory } from '../../../pages/consolidation-subdivision/consolidation-subdivision-history.page';
+import {
+  ConsolidationSubdivisionHistoryPage,
+  ConSubHistory,
+} from '../../../pages/consolidation-subdivision/consolidation-subdivision-history.page';
 import { consolidationTest } from '../../../fixtures/consolidation-subdivision.fixture';
 
 type ConsolidationApiResponse = {
@@ -27,8 +30,16 @@ consolidationTest.describe('Consolidation feature', () => {
   });
 
   consolidationTest('new consolidation', async () => {
-    const parentsProperties = [{ pid: '015-380-483', plan: 'NO_PLAN', status: 'RETIRED', area: '1,200.1212'}, {pid: '005-565-405', plan: 'NWP56954', status: 'RETIRED', area: '1,200.1212'}];
-    const childProperty = { pid: '001-046-748', plan: 'NWP42089', status: 'ACTIVE', area: '1,200.1212'};
+    const parentsProperties = [
+      { pid: '015-380-483', plan: 'NO_PLAN', status: 'RETIRED', area: '1,200.1212' },
+      { pid: '005-565-405', plan: 'NWP56954', status: 'RETIRED', area: '1,200.1212' },
+    ];
+    const childProperty = {
+      pid: '001-046-748',
+      plan: 'NWP42089',
+      status: 'ACTIVE',
+      area: '1,200.1212',
+    };
 
     let apiFeatureFileJson: ConsolidationApiResponse;
     const responsePromise = page.waitForResponse(
@@ -46,11 +57,13 @@ consolidationTest.describe('Consolidation feature', () => {
       apiFeatureFileJson = await response.json();
 
       await consolidationPage.waitForPropertyPanel();
-
     });
 
     await consolidationTest.step('Validate consolidation history', async () => {
-      await consolidationHistoryPage.verifyConsolidationHistory(apiFeatureFileJson.sourceProperty, apiFeatureFileJson.destinationProperty);
+      await consolidationHistoryPage.verifyConsolidationHistory(
+        apiFeatureFileJson.sourceProperty,
+        apiFeatureFileJson.destinationProperty
+      );
     });
   });
 });

@@ -61,7 +61,7 @@ export class SubdivisionPage {
   readonly subconModalSaveWarningP2: Locator;
   readonly subconModalOkBttn: Locator;
 
-   //Properties page element:
+  //Properties page element:
   readonly propertyDetailsTab: Locator;
 
   constructor(page: Page) {

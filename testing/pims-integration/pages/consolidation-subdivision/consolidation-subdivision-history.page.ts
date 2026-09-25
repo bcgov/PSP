@@ -118,8 +118,9 @@ export class ConsolidationSubdivisionHistoryPage {
   }
 
   async verifyConsolidationHistory(
-    parentsProperties: ConSubHistory[], childProperty: ConSubHistory) {
-
+    parentsProperties: ConSubHistory[],
+    childProperty: ConSubHistory
+  ) {
     //Validate static elements of the Property History section
     await expect(this.propertyInformationTitle).toBeVisible();
     await expect(this.consolidationHistorySubtitle).toBeVisible();
