@@ -278,7 +278,9 @@ exports[`File properties improvements list view > renders as expected 1`] = `
       <div
         class="collapse"
       >
-        <div>
+        <div
+          data-testid="property-improvement-0"
+        >
           <div
             class="pb-2 row"
           >
