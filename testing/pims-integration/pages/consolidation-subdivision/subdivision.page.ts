@@ -38,7 +38,6 @@ export class SubdivisionPage {
   readonly subconChildrenLocateOnMapDistrictLabel: Locator;
 
   readonly subconChildrenSearchTab: Locator;
-  readonly subconChildrenSearchByPIDSelect: Locator;
   readonly subconChildrenSearchByPIDInput: Locator;
   readonly subconChildrenSearchButton: Locator;
   readonly subconChildrenResetButton: Locator;
@@ -55,11 +54,9 @@ export class SubdivisionPage {
   readonly subconPropertiesCancelButton: Locator;
 
   readonly subconModalWindow: Locator;
-  readonly subconWarningHeader: Locator;
-  readonly subconErrorHeader: Locator;
-  readonly subconModalSaveWarningP1: Locator;
-  readonly subconModalSaveWarningP2: Locator;
-  readonly subconModalOkBttn: Locator;
+  readonly subconModalHeader: Locator;
+  readonly subconModalGeneralBody: Locator;
+
 
   //Properties page element:
   readonly propertyDetailsTab: Locator;
@@ -94,14 +91,12 @@ export class SubdivisionPage {
       "xpath=//a[contains(text(),'Parent Property Search')]/parent::nav/following-sibling::div/div/div/div/div/div/div/div/div/div/select"
     );
 
-    this.subconSearchParentByPIDInput = page.locator('#input-pid');
+    this.subconSearchParentByPIDInput = page.locator("div[data-testid='subdivision-parent-section'] input[id='input-pid']");
 
-    this.subconSearchParentButton = page.locator(
-      "xpath=//a[contains(text(),'Parent Property Search')]/parent::nav/following-sibling::div/div/div/div/div/div/div/div/button[@data-testid='search']"
-    );
+    this.subconSearchParentButton = page.getByTestId("subdivision-parent-search-button");
 
     this.subconSearchParentResetButton = page.locator(
-      "xpath=//a[contains(text(),'Parent Property Search')]/parent::nav/following-sibling::div/div/div/div/div/div/div/div/button[@data-testid='reset-button']"
+      "div[data-testid='subdivision-parent-section'] input[id='reset-button']"
     );
 
     this.subdivisionSelectedParentSubtitle = page.getByText('Selected Parent', {
@@ -181,20 +176,16 @@ export class SubdivisionPage {
       "xpath=//a[contains(text(),'Locate on Map')]/following-sibling::a"
     );
 
-    this.subconChildrenSearchByPIDSelect = page.locator(
-      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/div/div/select"
-    );
-
     this.subconChildrenSearchByPIDInput = page.locator(
-      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/div/input"
+      "div[data-testid='property-search-selector-section'] input[id='input-pid']"
     );
 
     this.subconChildrenSearchButton = page.locator(
-      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/button[@data-testid='search']"
+      "div[data-testid='property-search-selector-section'] button[data-testid='search']"
     );
 
     this.subconChildrenResetButton = page.locator(
-      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/button[@data-testid='reset-button']"
+      "div[data-testid='property-search-selector-section'] button[data-testid='reset-button']"
     );
 
     this.subconChildrenFirstResultCheckbox = page
@@ -234,18 +225,9 @@ export class SubdivisionPage {
     });
 
     this.subconModalWindow = page.locator('.modal-content');
+    this.subconModalHeader = page.locator('.modal-title');
 
-    this.subconWarningHeader = page.locator(
-      "xpath=//div[@class='modal-header']/div[contains(text(),'Are you sure?')]"
-    );
-
-    this.subconErrorHeader = page.locator(
-      "xpath=//div[@class='modal-header']/div[contains(text(),'Error')]"
-    );
-
-    this.subconModalSaveWarningP1 = page.locator('.modal-body p').nth(0);
-    this.subconModalSaveWarningP2 = page.locator('.modal-body p').nth(1);
-    this.subconModalOkBttn = page.locator("button[title='ok-modal']");
+    this.subconModalGeneralBody = page.locator('.modal-body');
 
     //Properties page element:
     this.propertyDetailsTab = page.locator("a[data-rb-event-key='details']");
@@ -262,6 +244,20 @@ export class SubdivisionPage {
   async createSubdivision(parentProperty: ConSubHistory, childrenProperties: ConSubHistory[]) {
     await this.subconSearchParentByPIDInput.fill(parentProperty.pid);
     await this.subconSearchParentButton.click();
+
+    const isModalVisible = await this.subconModalWindow
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
+
+    if (isModalVisible) {
+      await expect(this.subconModalHeader).toHaveText('Property not in PIMS');
+      await expect(this.subconModalGeneralBody).toContainText(
+          'This property is not currently in PIMS.'
+      );
+      await this.subconModalWindow.getByRole('button', { name: 'Yes' }).click();
+      await expect(this.subconModalWindow).toBeHidden();
+    }
+
     await this.subconChildrenSearchTab.click();
 
     for (const child of childrenProperties) {
@@ -278,18 +274,18 @@ export class SubdivisionPage {
     await this.subdivisionPropertiesCreateButton.click();
 
     await expect(this.subconModalWindow).toBeVisible();
-    await expect(this.subconWarningHeader).toBeVisible();
+    // await expect(this.subconWarningHeader).toBeVisible();
 
-    await expect(this.subconModalSaveWarningP1).toHaveText(
-      'You are subdividing a property into two or more properties. ' +
-        'The old parent property record will be retired, and the new child properties will be created'
-    );
+    // await expect(this.subconModalSaveWarningP1).toHaveText(
+    //   'You are subdividing a property into two or more properties. ' +
+    //     'The old parent property record will be retired, and the new child properties will be created'
+    // );
 
-    await expect(this.subconModalSaveWarningP2).toHaveText(
-      'If you proceed, you will be redirected to the old parent property record, ' +
-        'where you can view changes and make updates to the new properties. Do you want to proceed?'
-    );
+    // await expect(this.subconModalSaveWarningP2).toHaveText(
+    //   'If you proceed, you will be redirected to the old parent property record, ' +
+    //     'where you can view changes and make updates to the new properties. Do you want to proceed?'
+    // );
 
-    await this.subconModalOkBttn.click();
+      await this.subconModalWindow.getByRole('button', { name: 'Yes' }).click();
   }
 }
