@@ -57,7 +57,6 @@ export class SubdivisionPage {
   readonly subconModalHeader: Locator;
   readonly subconModalGeneralBody: Locator;
 
-
   //Properties page element:
   readonly propertyDetailsTab: Locator;
 
@@ -91,9 +90,11 @@ export class SubdivisionPage {
       "xpath=//a[contains(text(),'Parent Property Search')]/parent::nav/following-sibling::div/div/div/div/div/div/div/div/div/div/select"
     );
 
-    this.subconSearchParentByPIDInput = page.locator("div[data-testid='subdivision-parent-section'] input[id='input-pid']");
+    this.subconSearchParentByPIDInput = page.locator(
+      "div[data-testid='subdivision-parent-section'] input[id='input-pid']"
+    );
 
-    this.subconSearchParentButton = page.getByTestId("subdivision-parent-search-button");
+    this.subconSearchParentButton = page.getByTestId('subdivision-parent-search-button');
 
     this.subconSearchParentResetButton = page.locator(
       "div[data-testid='subdivision-parent-section'] input[id='reset-button']"
@@ -252,7 +253,7 @@ export class SubdivisionPage {
     if (isModalVisible) {
       await expect(this.subconModalHeader).toHaveText('Property not in PIMS');
       await expect(this.subconModalGeneralBody).toContainText(
-          'This property is not currently in PIMS.'
+        'This property is not currently in PIMS.'
       );
       await this.subconModalWindow.getByRole('button', { name: 'Yes' }).click();
       await expect(this.subconModalWindow).toBeHidden();
@@ -286,6 +287,6 @@ export class SubdivisionPage {
     //     'where you can view changes and make updates to the new properties. Do you want to proceed?'
     // );
 
-      await this.subconModalWindow.getByRole('button', { name: 'Yes' }).click();
+    await this.subconModalWindow.getByRole('button', { name: 'Yes' }).click();
   }
 }
