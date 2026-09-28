@@ -77,9 +77,13 @@ export class ConsolidationPage {
 
     this.consolidationSelectedParentsSubtitle = page.getByText('Selected Parents', { exact: true });
 
-    this.consolidationParentPIDInput = page.locator("div[data-testid='consolidation-parent-section'] input[id='input-pid']");
+    this.consolidationParentPIDInput = page.locator(
+      "div[data-testid='consolidation-parent-section'] input[id='input-pid']"
+    );
     this.subconSearchParentButton = page.getByTestId('consolidation-parent-search-button');
-    this.subconSearchParentResetButton = page.locator("div[data-testid='consolidation-parent-section'] button[id='reset-button']");
+    this.subconSearchParentResetButton = page.locator(
+      "div[data-testid='consolidation-parent-section'] button[id='reset-button']"
+    );
 
     this.consolidationParentsResultIdentifierColumn = page.locator(
       "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Identifier')]"
@@ -157,15 +161,15 @@ export class ConsolidationPage {
     );
 
     //Modal Elements
-    this.subconModalWindow = page.locator(".modal-content");
-    this.generalModalHeader = page.locator(".modal-title");
+    this.subconModalWindow = page.locator('.modal-content');
+    this.generalModalHeader = page.locator('.modal-title');
     this.subconErrorHeader = page.locator(
       "xpath=//div[@class='modal-header']/div[contains(text(),'Error')]"
     );
     this.subconWarningHeader = page.locator(
       "xpath=//div[@class='modal-header']/div[contains(text(),'Are you sure?')]"
     );
-    this.subconGeneralModalContent = page.locator(".modal-body");
+    this.subconGeneralModalContent = page.locator('.modal-body');
     this.subconModalSaveWarningP1 = page.locator("div[class='modal-body'] p:first-child");
     this.subconModalSaveWarningP2 = page.locator("div[class='modal-body'] p:nth-child(2)");
     this.subconModalOkBttn = page.locator("button[title='ok-modal']");
@@ -219,12 +223,14 @@ export class ConsolidationPage {
         .isVisible({ timeout: 3000 })
         .catch(() => false);
 
-        if(isModalVisible) {
-          await expect(this.generalModalHeader).toHaveText("Property not in PIMS");
-          await expect(this.subconGeneralModalContent).toContainText("This property is not currently in PIMS.");
-          await this.subconModalWindow.getByRole("button", { name: "Yes" }).click();
-          await expect(this.subconModalWindow).toBeHidden();
-        }
+      if (isModalVisible) {
+        await expect(this.generalModalHeader).toHaveText('Property not in PIMS');
+        await expect(this.subconGeneralModalContent).toContainText(
+          'This property is not currently in PIMS.'
+        );
+        await this.subconModalWindow.getByRole('button', { name: 'Yes' }).click();
+        await expect(this.subconModalWindow).toBeHidden();
+      }
     }
 
     await this.subconChildrenSearchTab.click();
