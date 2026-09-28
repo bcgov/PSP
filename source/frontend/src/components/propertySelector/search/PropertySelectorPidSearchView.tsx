@@ -11,15 +11,17 @@ import { ILayerSearchCriteria } from '../models';
 export interface IPropertySearchSelectorPidFormViewProps {
   onSearch: (search: ILayerSearchCriteria) => void;
   loading: boolean;
+  dataTestIdSearchButton?: string;
+  dataTestIdSection?: string;
 }
 
 export const PropertySearchSelectorPidFormView: React.FunctionComponent<
   React.PropsWithChildren<IPropertySearchSelectorPidFormViewProps>
-> = ({ onSearch, loading }) => {
+> = ({ onSearch, loading, dataTestIdSearchButton, dataTestIdSection }) => {
   const formikProps = useFormikContext<SubdivisionFormModel>();
   return (
     <>
-      <Section header={undefined}>
+      <Section header={undefined} data-testid={dataTestIdSection}>
         <Row>
           <Col xs={8}>
             <SelectInput<{ pid: string }, SubdivisionFormModel>
@@ -42,6 +44,7 @@ export const PropertySearchSelectorPidFormView: React.FunctionComponent<
                   disabled={loading}
                   onClick={() => onSearch({ pid: formikProps.values.pid })}
                   type="button"
+                  dataTestId={dataTestIdSearchButton}
                 />
               </Col>
               <Col className="p-0" xs={6}>

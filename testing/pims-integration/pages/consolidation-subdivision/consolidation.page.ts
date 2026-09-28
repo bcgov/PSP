@@ -77,9 +77,9 @@ export class ConsolidationPage {
 
     this.consolidationSelectedParentsSubtitle = page.getByText('Selected Parents', { exact: true });
 
-    this.consolidationParentPIDInput = page.locator('#input-pid');
-    this.subconSearchParentResetButton = page.locator('#search-button');
-    this.subconSearchParentButton = page.locator('#reset-button');
+    this.consolidationParentPIDInput = page.locator("div[data-testid='consolidation-parent-section'] input[id='input-pid']");
+    this.subconSearchParentButton = page.getByTestId('consolidation-parent-search-button');
+    this.subconSearchParentResetButton = page.locator("div[data-testid='consolidation-parent-section'] button[id='reset-button']");
 
     this.consolidationParentsResultIdentifierColumn = page.locator(
       "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Identifier')]"
@@ -107,13 +107,13 @@ export class ConsolidationPage {
       "xpath=//a[contains(text(),'Locate on Map')]/following-sibling::a"
     );
     this.subconChildrenSearchByPIDInput = page.locator(
-      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/div/input"
+      "div[data-testid='property-search-selector-section'] input[id='input-pid']"
     );
     this.subconChildrenSearchButton = page.locator(
-      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/button[@data-testid='search']"
+      "div[data-testid='property-search-selector-section'] button[data-testid='search']"
     );
     this.subconChildrenResetButton = page.locator(
-      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/button[@data-testid='reset-button']"
+      "div[data-testid='property-search-selector-section'] button[data-testid='reset-button']"
     );
     this.subconChildren1stResultCheckbox = page.locator(
       "div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td']:first-child input"
@@ -156,15 +156,16 @@ export class ConsolidationPage {
       'You must select at least two child properties'
     );
 
-    this.subconModalWindow = page.locator("div[class='modal-content']");
-    this.generalModalHeader = page.locator("div[class='modal-header'] div[class='modal-title h4']");
+    //Modal Elements
+    this.subconModalWindow = page.locator(".modal-content");
+    this.generalModalHeader = page.locator(".modal-title");
     this.subconErrorHeader = page.locator(
       "xpath=//div[@class='modal-header']/div[contains(text(),'Error')]"
     );
     this.subconWarningHeader = page.locator(
       "xpath=//div[@class='modal-header']/div[contains(text(),'Are you sure?')]"
     );
-    this.subconGeneralModalContent = page.locator("div[class='modal-body']");
+    this.subconGeneralModalContent = page.locator(".modal-body");
     this.subconModalSaveWarningP1 = page.locator("div[class='modal-body'] p:first-child");
     this.subconModalSaveWarningP2 = page.locator("div[class='modal-body'] p:nth-child(2)");
     this.subconModalOkBttn = page.locator("button[title='ok-modal']");
@@ -213,6 +214,17 @@ export class ConsolidationPage {
       await this.subconSearchParentResetButton.click();
       await this.consolidationParentPIDInput.fill(parent.pid);
       await this.subconSearchParentButton.click();
+
+      const isModalVisible = await this.subconModalWindow
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
+
+        if(isModalVisible) {
+          await expect(this.generalModalHeader).toHaveText("Property not in PIMS");
+          await expect(this.subconGeneralModalContent).toContainText("This property is not currently in PIMS.");
+          await this.subconModalWindow.getByRole("button", { name: "Yes" }).click();
+          await expect(this.subconModalWindow).toBeHidden();
+        }
     }
 
     await this.subconChildrenSearchTab.click();

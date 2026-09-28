@@ -17,7 +17,7 @@ let page: Page;
 let subdivisionPage: SubdivisionPage;
 let consolidationHistoryPage: ConsolidationSubdivisionHistoryPage;
 
-subdivisionTest.describe('Consolidation feature', () => {
+subdivisionTest.describe('Subdivision feature', () => {
   subdivisionTest.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
     page = await context.newPage();
@@ -29,7 +29,7 @@ subdivisionTest.describe('Consolidation feature', () => {
     await context.close();
   });
 
-  subdivisionTest('new consolidation', async () => {
+  subdivisionTest('new subdivision', async () => {
     const parentProperty = {
       pid: '001-046-748',
       plan: 'NWP42089',
@@ -47,7 +47,7 @@ subdivisionTest.describe('Consolidation feature', () => {
         response.url().includes('/api/property') && response.status() === 200
     );
 
-    await subdivisionTest.step('Create consolidation', async () => {
+    await subdivisionTest.step('Create subdivision', async () => {
       //Navigate to consolidation and create a minimum viable consolidation
       await subdivisionPage.goto();
       await subdivisionPage.createSubdivision(parentProperty, childrenProperties);
