@@ -46,10 +46,12 @@ export const test = base.extend<ManagementFixtures>({
     });
 
     if (await claimsDialog.isVisible()) {
-      await claimsDialog.getByRole('button', {
-        name: 'Continue',
-        exact: true,
-      }).click();
+      await claimsDialog
+        .getByRole('button', {
+          name: 'Continue',
+          exact: true,
+        })
+        .click();
 
       await expect(claimsDialog).toBeHidden();
     }
