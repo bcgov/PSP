@@ -763,14 +763,16 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqProgress, long>(p => p.PimsAcqFileAcqProgresses, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqProgresses.ToArray());
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqFlTakeTyp, long>(p => p.PimsAcqFileAcqFlTakeTyps, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqFlTakeTyps.ToArray());
 
-            // Find Notice of Claims that are being removed
-            var incomingNoticeOfClaimIds = acquisitionFile.PimsNoticeOfClaims
+            // Remove reminders associated with a NoC when its received date is cleared,
+            // even if the claim remains on the file with comments.
+            var noticeOfClaimIdsWithReceivedDates = acquisitionFile.PimsNoticeOfClaims
+                .Where(x => x.ReceivedDt.HasValue)
                 .Select(x => x.NoticeOfClaimId)
                 .ToHashSet();
 
             var deletedNotificationIds = Context.PimsNoticeOfClaims
                 .Where(n => n.AcquisitionFileId == acquisitionFile.Internal_Id
-                    && !incomingNoticeOfClaimIds.Contains(n.NoticeOfClaimId))
+                    && !noticeOfClaimIdsWithReceivedDates.Contains(n.NoticeOfClaimId))
                 .SelectMany(n => n.PimsNotifications)
                 .Select(n => n.NotificationId)
                 .ToList();
