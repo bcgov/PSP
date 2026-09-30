@@ -36,6 +36,7 @@ export const getNotificationDeepLink = (
     case ApiGen_CodeTypes_NotificationTypes.L_RENEWAL:
     case ApiGen_CodeTypes_NotificationTypes.L_INSURANCE:
     case ApiGen_CodeTypes_NotificationTypes.L_CONSULTFN:
+    case ApiGen_CodeTypes_NotificationTypes.L_ORIG_AGMT_EXPDT:
       return isValidId(notification.leaseId)
         ? DeepLinkGenerator.showFile(ApiGen_CodeTypes_FileTypes.Lease, notification.leaseId)
         : null;
