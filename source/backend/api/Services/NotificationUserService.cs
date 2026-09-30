@@ -119,6 +119,9 @@ namespace Pims.Api.Services
                 nameof(NotificationTypes.L_RENEWAL)
                     => $"Lease File #: {notification.Lease.LFileNo} ",
 
+                nameof(NotificationTypes.L_ORIG_AGMT_EXPDT)
+                    => GetOriginalAgreementExpirySource(notification),
+
                 nameof(NotificationTypes.L_INSURANCE)
                     => GetInsuranceSource(notification),
 
@@ -129,12 +132,27 @@ namespace Pims.Api.Services
             };
         }
 
+        private static string GetOriginalAgreementExpirySource(PimsNotification notification)
+        {
+            var lease = notification.Lease;
+
+            var text = $"Lease File #: {lease.LFileNo} " +
+                $"and Original Agreement Expiry Date: {lease.OrigExpiryDate:yyyy-MM-dd}";
+
+            if (lease.PimsLeaseStakeholders.Count > 0 && lease.LeasePayRvblTypeCode == "RCVBL")
+            {
+                var tenants = GetTenants(lease);
+                text += $" with {tenants} as Tenants.";
+            }
+
+            return text;
+        }
+
         private static string GetInsuranceSource(PimsNotification notification)
         {
             var lease = notification.Lease;
 
-            if (lease.PimsLeaseStakeholders.Count > 0 &&
-                lease.LeasePayRvblTypeCode == "RCVBL")
+            if (lease.PimsLeaseStakeholders.Count > 0 && lease.LeasePayRvblTypeCode == "RCVBL")
             {
                 var tenants = GetTenants(lease);
 
