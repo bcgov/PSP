@@ -16,13 +16,26 @@ export const getParentNotification = (
   return inboxItem?.notificationUser?.notification ?? null;
 };
 
+export const isTakeNotification = (inboxItem: ApiGen_Concepts_NotificationInboxItem): boolean => {
+  switch (getParentNotification(inboxItem)?.notificationTypeCode) {
+    case ApiGen_CodeTypes_NotificationTypes.TAKE_SRW:
+    case ApiGen_CodeTypes_NotificationTypes.TAKE_LAT:
+    case ApiGen_CodeTypes_NotificationTypes.TAKE_LTC:
+    case ApiGen_CodeTypes_NotificationTypes.TAKE_LPYBLE:
+      return true;
+    default:
+      return false;
+  }
+};
+
 /**
  * Returns the in-app deep-link path for a notification, or null when the row has no
- * recognized parent file FK. Sub-entity FKs (take, agreement, consultation, etc.) are
- * routed to the parent file's main screen — sub-tab deep-linking can be layered on later.
+ * recognized destination. Take links require the property-acquisition association ID,
+ * resolved by the caller; this is not the standalone property ID.
  */
 export const getNotificationDeepLink = (
   inboxItem: ApiGen_Concepts_NotificationInboxItem,
+  propertyAcquisitionFileId?: number,
 ): string | null => {
   const notification = getParentNotification(inboxItem);
   if (!exists(notification)) {
@@ -33,6 +46,18 @@ export const getNotificationDeepLink = (
 
   // TODO: Add more deep-links as more notification types are implemented.
   switch (notificationType) {
+    case ApiGen_CodeTypes_NotificationTypes.TAKE_SRW:
+    case ApiGen_CodeTypes_NotificationTypes.TAKE_LAT:
+    case ApiGen_CodeTypes_NotificationTypes.TAKE_LTC:
+    case ApiGen_CodeTypes_NotificationTypes.TAKE_LPYBLE:
+      return isValidId(notification.acquisitionFileId) && isValidId(propertyAcquisitionFileId)
+        ? DeepLinkGenerator.showFilePropertyDetail(
+            ApiGen_CodeTypes_FileTypes.Acquisition,
+            notification.acquisitionFileId,
+            propertyAcquisitionFileId,
+            'takes',
+          )
+        : null;
     case ApiGen_CodeTypes_NotificationTypes.L_RENEWAL:
     case ApiGen_CodeTypes_NotificationTypes.L_INSURANCE:
     case ApiGen_CodeTypes_NotificationTypes.L_CONSULTFN:

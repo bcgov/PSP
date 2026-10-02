@@ -1,10 +1,15 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { useApiTakes } from '@/hooks/pims-api/useApiTakes';
 import { useNotificationInboxRepository } from '@/hooks/repositories/useNotificationInboxRepository';
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
-import { exists } from '@/utils';
-import { getNotificationDeepLink } from '@/utils/notificationUtils';
+import { exists, isValidId } from '@/utils';
+import {
+  getNotificationDeepLink,
+  getParentNotification,
+  isTakeNotification,
+} from '@/utils/notificationUtils';
 
 import { INotificationInboxViewProps } from './NotificationInboxView';
 
@@ -35,6 +40,7 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
   onInboxChanged,
 }) => {
   const history = useHistory();
+  const { getTakesByAcqFileId } = useApiTakes();
   const [items, setItems] = useState<ApiGen_Concepts_NotificationInboxItem[]>([]);
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
@@ -69,12 +75,28 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
     fetchPage(page + 1, false);
   }, [fetchPage, page]);
 
+  const getPropertyAcquisitionFileId = useCallback(
+    async (notification: ApiGen_Concepts_NotificationInboxItem): Promise<number | undefined> => {
+      const parent = getParentNotification(notification);
+      if (!exists(parent) || !isValidId(parent.takeId) || !isValidId(parent.acquisitionFileId)) {
+        return undefined;
+      }
+
+      const { data: takes } = await getTakesByAcqFileId(parent.acquisitionFileId);
+      return takes.find(take => take.id === parent.takeId)?.propertyAcquisitionFileId;
+    },
+    [getTakesByAcqFileId],
+  );
+
   const handleSelect = useCallback(
     async (notification: ApiGen_Concepts_NotificationInboxItem) => {
       try {
         onRequestClose?.();
         await updateReadStatus(notification.id, true);
-        const target = getNotificationDeepLink(notification);
+        const propertyAcquisitionFileId = isTakeNotification(notification)
+          ? await getPropertyAcquisitionFileId(notification)
+          : undefined;
+        const target = getNotificationDeepLink(notification, propertyAcquisitionFileId);
         if (target !== null) {
           history.push(target);
         }
@@ -82,7 +104,7 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
         onInboxChanged?.();
       }
     },
-    [history, onInboxChanged, onRequestClose, updateReadStatus],
+    [getPropertyAcquisitionFileId, history, onInboxChanged, onRequestClose, updateReadStatus],
   );
 
   const handleToggleRead = useCallback(
