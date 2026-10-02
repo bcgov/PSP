@@ -31,10 +31,9 @@ VALUES
   (N'AGMT_SIGND',       N'Agreement signed'),
   (N'EXPROPH_APPEFFDT', N'Expropriation application effective date'),
   (N'L_PERIOD_DUEDT',   N'Due date - L/L Periods'),-- Added for PSP-11980
-  (N'TAKE_LAND_ACT',    N'Land Act - take'), -- Added for PSP-11980
+  (N'L_ORIG_AGMT_EXPDT',    N'L/L original agreement expiry'), -- Added for PSP-11980
   (N'EXPROPH_ADVPYSVDT', N'Expropriation advanced payment served date'), -- Added for PSP-11980
   (N'EXPROPH_VESTDT',   N'Expropriation vesting date'), -- Added for PSP-11980
-  (N'EXPROPH_APPREFFDT', N'Expropriation appraisal effective date'), -- Added for PSP-11980
   (N'AGMT_AGMTDT',      N'Agreement date'), -- Added for PSP-11980
   (N'AGMT_COMPTDT',     N'Agreement completion date'), -- Added for PSP-11980
   (N'AGMT_TERMINDT',    N'Agreement termination date'); -- Added for PSP-11980
