@@ -17,8 +17,8 @@ export class DocumentsListPage {
     this.documentTypesDropDownList = page.getByTestId('document-type');
     this.documentStatusesDropDownList = page.getByTestId('document-status');
     this.documentFileNameInput = page.getByTestId('document-filename');
-    this.documentSearchButton = page.getByTestId('search');
-    this.documentSearchResetButton = page.getByTestId('reset-button');
+    this.documentSearchButton = page.getByTestId('document-file-search-button');
+    this.documentSearchResetButton = page.getByTestId('document-file-search-reset-button');
   }
 
   async addDocumentButtonClick() {

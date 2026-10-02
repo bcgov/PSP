@@ -46,7 +46,7 @@ export const PropertyImprovementsListView: React.FunctionComponent<
         }
       >
         {propertyImprovements?.map((improvement, index) => (
-          <StyledBorder key={improvement.id}>
+          <StyledBorder key={improvement.id} data-testid={`property-improvement-${index}`}>
             <Section
               header={
                 <StyledHeaderContainer>

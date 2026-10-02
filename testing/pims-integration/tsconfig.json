@@ -11,6 +11,6 @@
     "resolveJsonModule": true,
     "outDir": "./dist"
   },
-  "include": ["tests/**/*", "pages/**/*", "*.ts", "*.mjs"],
+  "include": ["tests/**/*", "fixtures/**/*.ts", "pages/**/*", "*.ts", "*.mjs"],
   "exclude": ["node_modules", "dist"]
 }

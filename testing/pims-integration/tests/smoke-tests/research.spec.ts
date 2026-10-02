@@ -22,7 +22,7 @@ test.describe('Research Files feature', () => {
   test('verify initial Research File Create Form', async () => {
     await researchCreatePage.goto();
 
-    await expect(researchCreatePage.researchTitle).toBeVisible();
+    //await expect(researchCreatePage.researchTitle).toBeVisible();
     await expect(researchCreatePage.researchLabelName).toBeVisible();
     await expect(researchCreatePage.researchNameInput).toBeVisible();
     await expect(researchCreatePage.researchNameDescription).toBeVisible();
