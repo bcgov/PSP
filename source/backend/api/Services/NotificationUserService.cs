@@ -117,7 +117,10 @@ namespace Pims.Api.Services
                     => $"Management File #: M-{notification.ManagementFile.ManagementFileId}",
 
                 nameof(NotificationTypes.L_RENEWAL)
-                    => $"Lease File #: {notification.Lease.LFileNo} ",
+                    => GetLeaseRenewalSource(notification),
+
+                nameof(NotificationTypes.L_ORIG_AGMT_EXPDT)
+                    => GetOriginalAgreementExpirySource(notification),
 
                 nameof(NotificationTypes.L_INSURANCE)
                     => GetInsuranceSource(notification),
@@ -129,12 +132,47 @@ namespace Pims.Api.Services
             };
         }
 
+        private static bool IsLeaseReceivable(PimsLease lease)
+        {
+            return lease.LeasePayRvblTypeCode == LeasePaymentReceivableTypes.RCVBL.ToString();
+        }
+
+        private static string GetOriginalAgreementExpirySource(PimsNotification notification)
+        {
+            var lease = notification.Lease;
+
+            var text = $"Lease File #: {lease.LFileNo} " +
+                $"and Original Agreement Expiry Date: {lease.OrigExpiryDate:yyyy-MM-dd}";
+
+            if (lease.PimsLeaseStakeholders.Count > 0 && IsLeaseReceivable(lease))
+            {
+                var tenants = GetTenants(lease);
+                text += $" with {tenants} as Tenants.";
+            }
+
+            return text;
+        }
+
+        private static string GetLeaseRenewalSource(PimsNotification notification)
+        {
+            var lease = notification.Lease;
+
+            var text = $"Lease File #: {lease.LFileNo}";
+
+            if (lease.PimsLeaseStakeholders.Count > 0 && IsLeaseReceivable(lease))
+            {
+                var tenants = GetTenants(lease);
+                text += $" with {tenants} as Tenants.";
+            }
+
+            return text;
+        }
+
         private static string GetInsuranceSource(PimsNotification notification)
         {
             var lease = notification.Lease;
 
-            if (lease.PimsLeaseStakeholders.Count > 0 &&
-                lease.LeasePayRvblTypeCode == "RCVBL")
+            if (lease.PimsLeaseStakeholders.Count > 0 && IsLeaseReceivable(lease))
             {
                 var tenants = GetTenants(lease);
 
@@ -151,7 +189,7 @@ namespace Pims.Api.Services
         {
             var lease = notification.Lease;
 
-            if (lease.PimsLeaseStakeholders.Count > 0 && lease.LeasePayRvblTypeCode == "RCVBL")
+            if (lease.PimsLeaseStakeholders.Count > 0 && IsLeaseReceivable(lease))
             {
                 var tenants = GetTenants(lease);
 
@@ -212,6 +250,5 @@ namespace Pims.Api.Services
 
             return newEmail;
         }
-
     }
 }
