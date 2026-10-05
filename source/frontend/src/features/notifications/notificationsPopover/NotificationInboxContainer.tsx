@@ -93,10 +93,10 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
       try {
         onRequestClose?.();
         await updateReadStatus(notification.id, true);
-        const propertyAcquisitionFileId = isTakeNotification(notification)
+        const filePropertyId = isTakeNotification(notification)
           ? await getPropertyAcquisitionFileId(notification)
           : undefined;
-        const target = getNotificationDeepLink(notification, propertyAcquisitionFileId);
+        const target = getNotificationDeepLink(notification, filePropertyId);
         if (target !== null) {
           history.push(target);
         }

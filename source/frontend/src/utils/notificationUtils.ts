@@ -35,7 +35,7 @@ export const isTakeNotification = (inboxItem: ApiGen_Concepts_NotificationInboxI
  */
 export const getNotificationDeepLink = (
   inboxItem: ApiGen_Concepts_NotificationInboxItem,
-  propertyAcquisitionFileId?: number,
+  filePropertyId?: number,
 ): string | null => {
   const notification = getParentNotification(inboxItem);
   if (!exists(notification)) {
@@ -50,11 +50,11 @@ export const getNotificationDeepLink = (
     case ApiGen_CodeTypes_NotificationTypes.TAKE_LAT:
     case ApiGen_CodeTypes_NotificationTypes.TAKE_LTC:
     case ApiGen_CodeTypes_NotificationTypes.TAKE_LPYBLE:
-      return isValidId(notification.acquisitionFileId) && isValidId(propertyAcquisitionFileId)
+      return isValidId(notification.acquisitionFileId) && isValidId(filePropertyId)
         ? DeepLinkGenerator.showFilePropertyDetail(
             ApiGen_CodeTypes_FileTypes.Acquisition,
             notification.acquisitionFileId,
-            propertyAcquisitionFileId,
+            filePropertyId,
             'takes',
           )
         : null;
