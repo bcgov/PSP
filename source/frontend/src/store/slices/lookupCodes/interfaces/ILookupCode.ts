@@ -12,7 +12,7 @@ export interface ILookupCode {
   key?: string;
   description?: string;
   hint?: string;
-  displayOrder: number;
+  displayOrder: number | null;
   appCreateTimestamp?: UtcIsoDateTime;
   updatedOn?: string;
   updatedByName?: string;
