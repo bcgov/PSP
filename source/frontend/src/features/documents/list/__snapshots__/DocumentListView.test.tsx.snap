@@ -622,7 +622,7 @@ exports[`Document List View > renders as expected 1`] = `
               >
                 <button
                   class="c5 Button Button--icon-only primary btn btn-primary"
-                  data-testid="search"
+                  data-testid="document-file-search-button"
                   id="search-button"
                   title="search"
                   type="button"
@@ -651,7 +651,7 @@ exports[`Document List View > renders as expected 1`] = `
               >
                 <button
                   class="c5 Button Button--icon-only btn btn-info"
-                  data-testid="reset-button"
+                  data-testid="document-file-search-reset-button"
                   id="reset-button"
                   title="reset-button"
                   type="reset"

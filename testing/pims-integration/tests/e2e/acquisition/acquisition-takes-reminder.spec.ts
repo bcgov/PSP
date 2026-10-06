@@ -1,4 +1,4 @@
-import { test, expect } from '../../../fixtures/acquisition.fixtures';
+import { expect } from '@playwright/test';
 
 const INITIAL_REMINDER_DATE = 'Aug 10, 2026';
 const UPDATED_REMINDER_DATE = 'Aug 12, 2026';
@@ -7,8 +7,8 @@ const UPDATED_REMINDER_DATE = 'Aug 12, 2026';
 // lookups, form fills, a save round-trip) which comfortably exceeds the default 30s secs.
 test.describe.configure({ timeout: 60_000 });
 
-test.describe('Acquisition reminder feature', () => {
-  test('Manages a reminder for the Notice of Claim received date', async ({
+test.describe('Acquisition takes reminder feature', () => {
+  test('Create an acquisition with a property', async ({
     acquisitionSummaryPage,
     acquisitionWithNoticeOfClaim,
   }) => {
@@ -29,8 +29,11 @@ test.describe('Acquisition reminder feature', () => {
 
     await test.step('update the reminder', async () => {
       await acquisitionSummaryPage.noticeOfClaimReminder.openPopover();
+
       await acquisitionSummaryPage.noticeOfClaimReminder.setDate(UPDATED_REMINDER_DATE);
+
       await acquisitionSummaryPage.noticeOfClaimReminder.save();
+
       await expect(acquisitionSummaryPage.noticeOfClaimReminder.reminderButton).toHaveAttribute(
         'title',
         `Reminder set for ${UPDATED_REMINDER_DATE}`
@@ -39,7 +42,9 @@ test.describe('Acquisition reminder feature', () => {
 
     await test.step('delete the reminder', async () => {
       await acquisitionSummaryPage.noticeOfClaimReminder.openPopover();
+
       await acquisitionSummaryPage.noticeOfClaimReminder.remove();
+
       await expect.poll(() => acquisitionSummaryPage.noticeOfClaimReminder.isSet()).toBe(false);
     });
   });

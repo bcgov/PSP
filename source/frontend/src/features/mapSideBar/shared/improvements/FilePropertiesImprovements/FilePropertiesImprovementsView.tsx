@@ -65,7 +65,7 @@ export const FilePropertiesImprovementsView: React.FunctionComponent<
         >
           {propertyImprovements.improvements.map(
             (improvement: ApiGen_Concepts_PropertyImprovement, index: number) => (
-              <div key={improvement.id}>
+              <div key={improvement.id} data-testid={`property-improvement-${index}`}>
                 <PropertyImprovementDetails
                   propertyImprovement={improvement}
                   propertyImprovementIndex={index}
