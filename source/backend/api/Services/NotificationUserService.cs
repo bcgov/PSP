@@ -147,7 +147,7 @@ namespace Pims.Api.Services
             if (lease.PimsLeaseStakeholders.Count > 0 && IsLeaseReceivable(lease))
             {
                 var tenants = GetTenants(lease);
-                text += $" with {tenants} as Tenants.";
+                text += $" with {tenants} as Tenants";
             }
 
             return text;
@@ -162,7 +162,7 @@ namespace Pims.Api.Services
             if (lease.PimsLeaseStakeholders.Count > 0 && IsLeaseReceivable(lease))
             {
                 var tenants = GetTenants(lease);
-                text += $" with {tenants} as Tenants.";
+                text += $" with {tenants} as Tenants";
             }
 
             return text;
