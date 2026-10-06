@@ -34,7 +34,7 @@ export const ContactManagerModal: React.FunctionComponent<
   const [searchFilter, setSearchFilter] = useState<IContactFilter>();
 
   const hasValidContactTypes = Boolean(
-    props.restrictContactType?.includes(RestrictContactType.ONLY_INDIVIDUALS) &&
+    props.restrictContactType?.includes(RestrictContactType.ONLY_INDIVIDUALS) ||
       props.restrictContactType?.includes(RestrictContactType.ONLY_ORGANIZATIONS),
   );
 
@@ -72,6 +72,7 @@ export const ContactManagerModal: React.FunctionComponent<
               setIsCreatingContact(false);
             }}
             onCancel={() => setIsCreatingContact(false)}
+            restrictContactType={props.restrictContactType}
           />
         ) : (
           <ContactManagerView

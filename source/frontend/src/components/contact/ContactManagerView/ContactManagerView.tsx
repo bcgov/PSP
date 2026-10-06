@@ -50,7 +50,12 @@ const ContactManagerView = ({
   const { getContacts } = useApiContacts();
 
   const initialFilter: IContactFilter = (initialSearchFilter ??
-    (noInitialSearch ? undefined : defaultFilter)) as IContactFilter;
+    (noInitialSearch
+      ? undefined
+      : {
+          ...defaultFilter,
+          searchBy: restrictContactType?.length ? [...restrictContactType] : defaultFilter.searchBy,
+        })) as IContactFilter;
 
   const {
     results,
