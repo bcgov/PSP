@@ -67,7 +67,9 @@ export const ContactManagerModal: React.FunctionComponent<
         isCreatingContact ? (
           <ContactCreateForm
             onSaved={contact => {
-              props.setSelectedRows([contact]);
+              props.setSelectedRows(
+                props.isSingleSelect ? [contact] : [...props.selectedRows, contact],
+              );
               setNewContact(contact);
               setIsCreatingContact(false);
             }}
