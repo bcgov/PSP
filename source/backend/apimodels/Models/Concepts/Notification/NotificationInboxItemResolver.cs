@@ -77,6 +77,7 @@ namespace Pims.Api.Models.Concepts.Notification
                 nameof(NotificationTypes.L_RENEWAL) => notification.LeaseRenewal?.ExpiryDt ?? null,
                 nameof(NotificationTypes.L_INSURANCE) => notification.Insurance?.ExpiryDate.ToNullableDateTime() ?? null,
                 nameof(NotificationTypes.L_CONSULTFN) => notification.LeaseConsultation?.RequestedOn ?? null,
+                nameof(NotificationTypes.L_ORIG_AGMT_EXPDT) => notification.Lease?.OrigExpiryDate ?? null,
 
                 // Notice of Claim sub-entity (can be in either Acquisition of Management files)
                 nameof(NotificationTypes.NOC) => notification.NoticeOfClaim?.ReceivedDt.ToNullableDateTime() ?? null,

@@ -1,12 +1,16 @@
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledLink } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import ReminderView from '@/features/notifications/ReminderView';
 import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
@@ -86,7 +90,20 @@ export const LeaseDetailView: React.FunctionComponent<
             </SectionField>
           </Col>
           <Col>
-            <SectionField label="Expiry">{prettyFormatDate(lease.expiryDate)}</SectionField>
+            <SectionField label="Expiry">
+              <StyledReminderContent>
+                {prettyFormatDate(lease.expiryDate)}
+                {exists(lease.expiryDate) && (
+                  <ReminderContainer
+                    keyDate={lease.expiryDate}
+                    keyDateLabel="Original Agreement Expiry"
+                    notificationType={ApiGen_CodeTypes_NotificationTypes.L_ORIG_AGMT_EXPDT}
+                    notificationSource={{ leaseId: lease.id }}
+                    View={ReminderView}
+                  />
+                )}
+              </StyledReminderContent>
+            </SectionField>
           </Col>
         </Row>
         {lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
@@ -138,3 +155,10 @@ export const LeaseDetailView: React.FunctionComponent<
 };
 
 export default LeaseDetailView;
+
+const StyledReminderContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  gap: 1.2rem;
+`;

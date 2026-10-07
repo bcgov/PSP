@@ -32,6 +32,21 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
   font-weight: bold;
 }
 
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: top;
+  -webkit-box-align: top;
+  -ms-flex-align: top;
+  align-items: top;
+  gap: 1.2rem;
+}
+
 <div
     class="c0 form-section"
   >
@@ -183,7 +198,11 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
             </div>
             <div
               class="c3 text-left col"
-            />
+            >
+              <div
+                class="c4"
+              />
+            </div>
           </div>
         </div>
       </div>

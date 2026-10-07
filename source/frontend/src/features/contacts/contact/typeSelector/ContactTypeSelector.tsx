@@ -5,21 +5,22 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { ContactTypes } from '@/features/contacts/interfaces';
 
 interface IContactTypeSelectorProps {
-  disabled?: boolean;
+  disableIndividual?: boolean;
+  disableOrganization?: boolean;
   contactType: ContactTypes;
   setContactType: (contactType: ContactTypes) => void;
 }
 
 export const ContactTypeSelector: React.FunctionComponent<
   React.PropsWithChildren<IContactTypeSelectorProps>
-> = ({ contactType, setContactType, disabled }) => {
+> = ({ contactType, setContactType, disableIndividual, disableOrganization }) => {
   return (
     <StyledInlineFlex>
       <Form.Check
         id="contact-individual"
         type="radio"
         label="Individual"
-        disabled={disabled}
+        disabled={disableIndividual}
         checked={contactType === ContactTypes.INDIVIDUAL}
         onChange={() => setContactType(ContactTypes.INDIVIDUAL)}
       ></Form.Check>
@@ -27,7 +28,7 @@ export const ContactTypeSelector: React.FunctionComponent<
         id="contact-organization"
         label="Organization"
         type="radio"
-        disabled={disabled}
+        disabled={disableOrganization}
         checked={contactType === ContactTypes.ORGANIZATION}
         onChange={() => setContactType(ContactTypes.ORGANIZATION)}
       ></Form.Check>

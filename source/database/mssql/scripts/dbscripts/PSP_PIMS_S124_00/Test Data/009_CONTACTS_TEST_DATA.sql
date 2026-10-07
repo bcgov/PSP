@@ -1,0 +1,8 @@
+-- Change to inactive organization
+UPDATE
+    [dbo].[PIMS_ORGANIZATION]
+SET
+    [IS_DISABLED] = 1,
+    [CONCURRENCY_CONTROL_NUMBER] = [CONCURRENCY_CONTROL_NUMBER] + 1
+WHERE
+    [ORGANIZATION_ID] = 5
