@@ -1,8 +1,10 @@
 import { FC, useMemo } from 'react';
 import { FaCircle, FaExternalLinkAlt, FaMinus, FaRegCheckCircle } from 'react-icons/fa';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
+import { TooltipWrapper } from '@/components/common/TooltipWrapper';
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 import { prettyFormatDate } from '@/utils';
 
@@ -21,7 +23,7 @@ export const NotificationRow: FC<INotificationRowProps> = ({
   onToggleRead,
   onDelete,
 }) => {
-  const fileLabel = notification?.subject ?? '';
+  const subjectLabel = notification?.subject ?? '';
   const typeLabel = notification?.notificationType?.description ?? '';
   const trackedDate = notification?.trackedDate ?? null;
   const unread = !notification.isRead;
@@ -68,11 +70,21 @@ export const NotificationRow: FC<INotificationRowProps> = ({
           onSelect(notification);
         }
       }}
-      aria-label={`${typeLabel} notification for ${fileLabel}`}
+      aria-label={`${typeLabel} notification for ${subjectLabel}`}
     >
       <DotCell>{unread && <UnreadDot aria-label="Unread notification" />}</DotCell>
-      <FileCell>{fileLabel}</FileCell>
-      <TypeCell>{typeLabel}</TypeCell>
+      <TooltipWrapper
+        tooltipId={`notification-subject-tooltip-${notification?.id ?? uuidv4()}`}
+        tooltip={subjectLabel}
+      >
+        <FileCell>{subjectLabel}</FileCell>
+      </TooltipWrapper>
+      <TooltipWrapper
+        tooltipId={`notification-type-tooltip-${notification?.id ?? uuidv4()}`}
+        tooltip={typeLabel}
+      >
+        <TypeCell>{typeLabel}</TypeCell>
+      </TooltipWrapper>
       <DateCell>{trackedDate !== null ? prettyFormatDate(trackedDate) : ''}</DateCell>
       <ActionsCell
         onClick={event => event.stopPropagation()}
