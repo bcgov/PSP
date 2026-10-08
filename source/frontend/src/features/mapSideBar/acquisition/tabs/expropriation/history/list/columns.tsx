@@ -70,6 +70,34 @@ export const getExpropriationEventColumns = (
                   />
                 )}
 
+              {event.eventType === ApiGen_CodeTypes_ExpropiationOwnerHistoryType.ADVPMTSRVDDT &&
+                event.eventDate && (
+                  <ReminderContainer
+                    keyDate={event.eventDate}
+                    keyDateLabel="Advance payment served date"
+                    notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_ADVPYSVDT}
+                    notificationSource={{
+                      acquisitionFileId: event.acquisitionFileId,
+                      expropOwnerHistoryId: event.id,
+                    }}
+                    View={ReminderView}
+                  />
+                )}
+
+              {event.eventType === ApiGen_CodeTypes_ExpropiationOwnerHistoryType.EXPRVSTNGDT &&
+                event.eventDate && (
+                  <ReminderContainer
+                    keyDate={event.eventDate}
+                    keyDateLabel="Expropriation vesting date"
+                    notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_VESTDT}
+                    notificationSource={{
+                      acquisitionFileId: event.acquisitionFileId,
+                      expropOwnerHistoryId: event.id,
+                    }}
+                    View={ReminderView}
+                  />
+                )}
+
               <EditButton
                 title="edit expropriation event"
                 data-testId={`edit-expropriation-event-${props.row.index}`}
@@ -92,6 +120,42 @@ export const getExpropriationEventColumns = (
                 keyDate={event.eventDate}
                 keyDateLabel="Appraisal effective date"
                 notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT}
+                notificationSource={{
+                  acquisitionFileId: event.acquisitionFileId,
+                  expropOwnerHistoryId: event.id,
+                }}
+                View={ReminderView}
+              />
+            </ExpropriationActionsDiv>
+          );
+        } else if (
+          event.eventType === ApiGen_CodeTypes_ExpropiationOwnerHistoryType.ADVPMTSRVDDT &&
+          event.eventDate
+        ) {
+          return (
+            <ExpropriationActionsDiv>
+              <ReminderContainer
+                keyDate={event.eventDate}
+                keyDateLabel="Advancement served date"
+                notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_ADVPYSVDT}
+                notificationSource={{
+                  acquisitionFileId: event.acquisitionFileId,
+                  expropOwnerHistoryId: event.id,
+                }}
+                View={ReminderView}
+              />
+            </ExpropriationActionsDiv>
+          );
+        } else if (
+          event.eventType === ApiGen_CodeTypes_ExpropiationOwnerHistoryType.EXPRVSTNGDT &&
+          event.eventDate
+        ) {
+          return (
+            <ExpropriationActionsDiv>
+              <ReminderContainer
+                keyDate={event.eventDate}
+                keyDateLabel="Expropriation vesting date"
+                notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_VESTDT}
                 notificationSource={{
                   acquisitionFileId: event.acquisitionFileId,
                   expropOwnerHistoryId: event.id,
