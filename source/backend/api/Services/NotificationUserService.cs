@@ -107,6 +107,8 @@ namespace Pims.Api.Services
                 or nameof(NotificationTypes.TAKE_LTC)
                 or nameof(NotificationTypes.TAKE_LPYBLE)
                 or nameof(NotificationTypes.EXPROPH_APPEFFDT)
+                or nameof(NotificationTypes.EXPROPH_VESTDT)
+                or nameof(NotificationTypes.EXPROPH_ADVPYSVDT)
                 or nameof(NotificationTypes.AGMT_SIGND)
                     => $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}",
 
