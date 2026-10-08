@@ -6,7 +6,7 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <ProjectGuid>{89A99CC5-ADFB-4FC2-9136-7B0029EEA2D8}</ProjectGuid>
     <Configurations>Debug;Release</Configurations>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />

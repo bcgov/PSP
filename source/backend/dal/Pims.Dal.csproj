@@ -6,7 +6,7 @@
     <Version>2.0.0.0</Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <ProjectGuid>6DFFF5E1-1B87-403B-99D0-A9E03D8A8EB3</ProjectGuid>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

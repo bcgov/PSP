@@ -5,7 +5,7 @@
     <ProjectGuid>412BF533-2759-4FBE-B4C6-B89DB44FB6B5</ProjectGuid>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
     <RunAnalyzers>false</RunAnalyzers>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

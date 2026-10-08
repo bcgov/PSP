@@ -5,7 +5,7 @@
     <Version>1.0.0.0</Version>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <ProjectGuid>BF7450E8-B3C5-46FB-BEC1-C5FC1C5964DC</ProjectGuid>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
