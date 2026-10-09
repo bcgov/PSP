@@ -1,4 +1,7 @@
 <Project>
+    <!-- This imports global tools (Sonar, StyleCop, CodeStyle) cleanly from the root -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <AnalysisMode>Minimum</AnalysisMode>
@@ -6,33 +9,9 @@
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.27.0.35380">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis" Version="4.11.0" />
-        <PackageReference Include="Microsoft.CodeAnalysis.Compilers" Version="4.11.0" />
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" Version="4.11.0">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.Net.Compilers" Version="4.2.0">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.8.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers;</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
+
+    <!-- CLEANED: SonarAnalyzer, StyleCop, and CodeStyle are cleanly inherited via the Import above -->
+
     <ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)\..\.editorconfig" />
     </ItemGroup>
