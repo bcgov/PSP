@@ -150,9 +150,8 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-
   it('does not display the reminder button when the agreement date is not set', () => {
-    mockViewProps.agreements = mockAgreementsResponse().map((agreement) => ({
+    mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       agreementDate: null,
     }));
@@ -163,9 +162,7 @@ describe('AgreementView component', () => {
     });
 
     expect(
-      screen.queryByTestId(
-        `reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT}`,
-      ),
+      screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT}`),
     ).not.toBeInTheDocument();
   });
 
@@ -180,9 +177,8 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-
   it('does not display the reminder button when the completion date is not set', () => {
-    mockViewProps.agreements = mockAgreementsResponse().map((agreement) => ({
+    mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       completionDate: null,
     }));
@@ -193,9 +189,7 @@ describe('AgreementView component', () => {
     });
 
     expect(
-      screen.queryByTestId(
-        `reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT}`,
-      ),
+      screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT}`),
     ).not.toBeInTheDocument();
   });
 
@@ -210,9 +204,8 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-
   it('does not display the reminder button when the termination date is not set', () => {
-    mockViewProps.agreements = mockAgreementsResponse().map((agreement) => ({
+    mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       terminationDate: null,
     }));
@@ -223,10 +216,7 @@ describe('AgreementView component', () => {
     });
 
     expect(
-      screen.queryByTestId(
-        `reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT}`,
-      ),
+      screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT}`),
     ).not.toBeInTheDocument();
   });
-
 });
