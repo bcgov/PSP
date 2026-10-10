@@ -14,10 +14,13 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import Claims from '@/constants/claims';
 //Check this later if we need to move to shared folder.
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import ReminderView from '@/features/notifications/ReminderView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { exists, formatMoney, prettyFormatDate } from '@/utils';
 
@@ -170,7 +173,21 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
               )}
 
               <SectionField labelWidth={{ xs: 6 }} label="Agreement date">
-                {prettyFormatDate(agreement.agreementDate)}
+                <StyledReminderContent>
+                  <StyledDate>{prettyFormatDate(agreement.agreementDate)}</StyledDate>
+                  {agreement.agreementDate && (
+                    <ReminderContainer
+                      keyDate={agreement.agreementDate}
+                      keyDateLabel="Agreement date"
+                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT}
+                      notificationSource={{
+                        acquisitionFileId: agreement.fileId,
+                        agreementId: agreement.agreementId,
+                      }}
+                      View={ReminderView}
+                    />
+                  )}
+                </StyledReminderContent>
               </SectionField>
               {agreement.agreementType?.id === ApiGen_CodeTypes_AgreementTypes.H0074 && (
                 <SectionField labelWidth={{ xs: 6 }} label="Commencement date">
@@ -178,10 +195,38 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                 </SectionField>
               )}
               <SectionField labelWidth={{ xs: 6 }} label="Completion date">
-                {prettyFormatDate(agreement.completionDate)}
+                <StyledReminderContent>
+                  <StyledDate>{prettyFormatDate(agreement.completionDate)}</StyledDate>
+                  {agreement.completionDate && (
+                    <ReminderContainer
+                      keyDate={agreement.completionDate}
+                      keyDateLabel="Completion date"
+                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT}
+                      notificationSource={{
+                        acquisitionFileId: agreement.fileId,
+                        agreementId: agreement.agreementId,
+                      }}
+                      View={ReminderView}
+                    />
+                  )}
+                </StyledReminderContent>
               </SectionField>
               <SectionField labelWidth={{ xs: 6 }} label="Termination date">
-                {prettyFormatDate(agreement.terminationDate)}
+                <StyledReminderContent>
+                  <StyledDate>{prettyFormatDate(agreement.terminationDate)}</StyledDate>
+                  {agreement.terminationDate && (
+                    <ReminderContainer
+                      keyDate={agreement.terminationDate}
+                      keyDateLabel="Termination date"
+                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT}
+                      notificationSource={{
+                        acquisitionFileId: agreement.fileId,
+                        agreementId: agreement.agreementId,
+                      }}
+                      View={ReminderView}
+                    />
+                  )}
+                </StyledReminderContent>
               </SectionField>
               <SectionField labelWidth={{ xs: 6 }} label="Possession date">
                 {prettyFormatDate(agreement.possessionDate)}
@@ -274,4 +319,16 @@ export const StyledAgreementSubheader = styled.div`
   border-bottom: 0.2rem ${props => props.theme.css.headerBorderColor} solid;
   margin-top: 2rem;
   margin-bottom: 2rem;
+`;
+
+const StyledReminderContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  gap: 1.2rem;
+`;
+
+const StyledDate = styled.span`
+  width: 100px;
+  flex-shrink: 0;
 `;

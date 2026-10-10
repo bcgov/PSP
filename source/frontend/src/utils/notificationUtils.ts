@@ -89,6 +89,16 @@ export const getNotificationDeepLink = (
             'fileDetails',
           )
         : null;
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT:
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT:
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT:
+      return isValidId(notification.acquisitionFileId)
+        ? DeepLinkGenerator.showDetails(
+            ApiGen_CodeTypes_FileTypes.Acquisition,
+            notification.acquisitionFileId,
+            'agreements',
+          )
+        : null;
     default:
       return null;
   }

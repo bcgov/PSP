@@ -4,6 +4,7 @@ import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import AgreementView, { IAgreementViewProps } from './AgreementView';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 
 // mock auth library
 
@@ -13,6 +14,17 @@ const mockViewProps: IAgreementViewProps = {
   loading: false,
   onDelete: vi.fn(),
 };
+
+vi.mock('@/features/notifications/ReminderContainer', () => ({
+  default: (props: any) => (
+    <div
+      data-testid={`reminder-${props.notificationType}`}
+      data-key-date={props.keyDate}
+      agreement-id={props.notificationSource.agreementId}
+      data-acquisition-file-id={props.notificationSource.acquisitionFileId}
+    />
+  ),
+}));
 
 describe('AgreementView component', () => {
   const setup = (renderOptions: RenderOptions & { props?: Partial<IAgreementViewProps> } = {}) => {
@@ -126,4 +138,95 @@ describe('AgreementView component', () => {
     const agreementSignedDate = queryByTestId('agreement[0].agreementSignedDate');
     expect(agreementSignedDate).not.toBeInTheDocument();
   });
+
+  it('displays the reminder button when the agreement date is set', async () => {
+    const {} = setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: false, isSection3: false },
+    });
+
+    expect(
+      await screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT}`),
+    ).toBeVisible();
+  });
+
+
+  it('does not display the reminder button when the agreement date is not set', () => {
+    mockViewProps.agreements = mockAgreementsResponse().map((agreement) => ({
+      ...agreement,
+      agreementDate: null,
+    }));
+
+    setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: false, isSection3: false },
+    });
+
+    expect(
+      screen.queryByTestId(
+        `reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT}`,
+      ),
+    ).not.toBeInTheDocument();
+  });
+
+  it('displays the reminder button when the completion date is set', async () => {
+    const {} = setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: false, isSection3: false },
+    });
+
+    expect(
+      await screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT}`),
+    ).toBeVisible();
+  });
+
+
+  it('does not display the reminder button when the completion date is not set', () => {
+    mockViewProps.agreements = mockAgreementsResponse().map((agreement) => ({
+      ...agreement,
+      completionDate: null,
+    }));
+
+    setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: false, isSection3: false },
+    });
+
+    expect(
+      screen.queryByTestId(
+        `reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT}`,
+      ),
+    ).not.toBeInTheDocument();
+  });
+
+  it('displays the reminder button when the termination date is set', async () => {
+    const {} = setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: false, isSection3: false },
+    });
+
+    expect(
+      await screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT}`),
+    ).toBeVisible();
+  });
+
+
+  it('does not display the reminder button when the termination date is not set', () => {
+    mockViewProps.agreements = mockAgreementsResponse().map((agreement) => ({
+      ...agreement,
+      terminationDate: null,
+    }));
+
+    setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: false, isSection3: false },
+    });
+
+    expect(
+      screen.queryByTestId(
+        `reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT}`,
+      ),
+    ).not.toBeInTheDocument();
+  });
+
 });
