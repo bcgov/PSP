@@ -7,7 +7,7 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.27.0.35380">
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="10.35.0.4138">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
