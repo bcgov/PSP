@@ -38,5 +38,8 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "EXPROPH_APPEFFDT")]
         EXPROPH_APPEFFDT,
+
+        [EnumMember(Value = "L_ORIG_AGMT_EXPDT")]
+        L_ORIG_AGMT_EXPDT,
     }
 }

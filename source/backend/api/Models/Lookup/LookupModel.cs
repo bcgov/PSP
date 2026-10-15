@@ -61,7 +61,7 @@ namespace Pims.Api.Models.Lookup
         /// <summary>
         /// get/set - The item's sort order.
         /// </summary>
-        public int DisplayOrder { get; set; }
+        public int? DisplayOrder { get; set; }
 
         /// <summary>
         /// get/set - The item's type.

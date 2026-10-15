@@ -93,6 +93,21 @@ exports[`TakesDetailView component > renders as expected 1`] = `
   padding: 1rem;
 }
 
+.c13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: top;
+  -webkit-box-align: top;
+  -ms-flex-align: top;
+  align-items: top;
+  gap: 1.2rem;
+}
+
 <div
     class="c0"
   >
@@ -710,7 +725,17 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                       <div
                         class="c5 text-left col-4"
                       >
-                        Nov 20, 2022
+                        <div
+                          class="c13"
+                        >
+                          Nov 20, 2022
+                          <div
+                            data-acquisition-file-id="1"
+                            data-key-date="2022-11-20"
+                            data-take-id="4"
+                            data-testid="reminder-TAKE_SRW"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -865,7 +890,17 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                       <div
                         class="c5 text-left col-4"
                       >
-                        Jan 1, 2020
+                        <div
+                          class="c13"
+                        >
+                          Jan 1, 2020
+                          <div
+                            data-acquisition-file-id="1"
+                            data-key-date="2020-01-01"
+                            data-take-id="4"
+                            data-testid="reminder-TAKE_LAT"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1002,7 +1037,17 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                       <div
                         class="c5 text-left col-4"
                       >
-                        Jan 1, 2020
+                        <div
+                          class="c13"
+                        >
+                          Jan 1, 2020
+                          <div
+                            data-acquisition-file-id="1"
+                            data-key-date="2020-01-01"
+                            data-take-id="4"
+                            data-testid="reminder-TAKE_LTC"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1139,7 +1184,17 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                       <div
                         class="c5 text-left col-4"
                       >
-                        Nov 21, 2022
+                        <div
+                          class="c13"
+                        >
+                          Nov 21, 2022
+                          <div
+                            data-acquisition-file-id="1"
+                            data-key-date="2022-11-21"
+                            data-take-id="4"
+                            data-testid="reminder-TAKE_LPYBLE"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

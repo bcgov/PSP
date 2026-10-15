@@ -16,11 +16,14 @@ import { Claims, Roles } from '@/constants';
 import * as API from '@/constants/API';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import AcquisitionFileStatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import ReminderView from '@/features/notifications/ReminderView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_CodeTypes_LandActTypes';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { getApiPropertyName, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
@@ -78,7 +81,6 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
     }
     return false;
   };
-
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
@@ -222,7 +224,21 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                         labelWidth={{ xs: 3 }}
                         contentWidth={{ xs: 4 }}
                       >
-                        {prettyFormatDate(take.srwEndDt ?? undefined)}
+                        <StyledReminderContent>
+                          {prettyFormatDate(take.srwEndDt ?? undefined)}
+                          {take?.srwEndDt && (
+                            <ReminderContainer
+                              keyDate={take?.srwEndDt}
+                              keyDateLabel="SRW end date"
+                              notificationType={ApiGen_CodeTypes_NotificationTypes.TAKE_SRW}
+                              notificationSource={{
+                                acquisitionFileId: fileProperty?.file.id,
+                                takeId: take?.id,
+                              }}
+                              View={ReminderView}
+                            />
+                          )}
+                        </StyledReminderContent>
                       </SectionField>
                     </>
                   )}
@@ -252,7 +268,21 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                           labelWidth={{ xs: 3 }}
                           contentWidth={{ xs: 4 }}
                         >
-                          {prettyFormatDate(take.landActEndDt ?? undefined)}
+                          <StyledReminderContent>
+                            {prettyFormatDate(take.landActEndDt ?? undefined)}
+                            {take.landActEndDt && (
+                              <ReminderContainer
+                                keyDate={take?.landActEndDt}
+                                keyDateLabel="End date"
+                                notificationType={ApiGen_CodeTypes_NotificationTypes.TAKE_LAT}
+                                notificationSource={{
+                                  acquisitionFileId: fileProperty?.file.id,
+                                  takeId: take?.id,
+                                }}
+                                View={ReminderView}
+                              />
+                            )}
+                          </StyledReminderContent>
                         </SectionField>
                       )}
                     </>
@@ -276,7 +306,21 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                         labelWidth={{ xs: 3 }}
                         contentWidth={{ xs: 4 }}
                       >
-                        {prettyFormatDate(take.ltcEndDt ?? undefined)}
+                        <StyledReminderContent>
+                          {prettyFormatDate(take.ltcEndDt ?? undefined)}
+                          {take.ltcEndDt && (
+                            <ReminderContainer
+                              keyDate={take?.ltcEndDt}
+                              keyDateLabel="LTC end date"
+                              notificationType={ApiGen_CodeTypes_NotificationTypes.TAKE_LTC}
+                              notificationSource={{
+                                acquisitionFileId: fileProperty?.file.id,
+                                takeId: take?.id,
+                              }}
+                              View={ReminderView}
+                            />
+                          )}
+                        </StyledReminderContent>
                       </SectionField>
                     </>
                   )}
@@ -296,7 +340,21 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                         labelWidth={{ xs: 3 }}
                         contentWidth={{ xs: 4 }}
                       >
-                        {prettyFormatDate(take.leasePayableEndDt ?? undefined)}
+                        <StyledReminderContent>
+                          {prettyFormatDate(take.leasePayableEndDt ?? undefined)}
+                          {take.leasePayableEndDt && (
+                            <ReminderContainer
+                              keyDate={take?.leasePayableEndDt}
+                              keyDateLabel="End date"
+                              notificationType={ApiGen_CodeTypes_NotificationTypes.TAKE_LPYBLE}
+                              notificationSource={{
+                                acquisitionFileId: fileProperty?.file.id,
+                                takeId: take?.id,
+                              }}
+                              View={ReminderView}
+                            />
+                          )}
+                        </StyledReminderContent>
                       </SectionField>
                     </>
                   )}
@@ -326,6 +384,13 @@ const StyledBlueSection = styled.div`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
   padding: 1rem;
+`;
+
+const StyledReminderContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  gap: 1.2rem;
 `;
 
 export default TakesDetailView;

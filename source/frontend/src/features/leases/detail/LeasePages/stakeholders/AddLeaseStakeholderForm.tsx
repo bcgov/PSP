@@ -11,6 +11,7 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import { Claims } from '@/constants';
+import { allContactTypes } from '@/constants/contacts';
 import { LeaseFormModel } from '@/features/leases/models';
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
@@ -154,6 +155,7 @@ export const AddLeaseStakeholderForm: React.FunctionComponent<
                   }}
                   showActiveSelector={true}
                   isSummary={true}
+                  restrictContactType={allContactTypes}
                 ></ContactManagerModal>
               </StyledFormBody>
               {children}

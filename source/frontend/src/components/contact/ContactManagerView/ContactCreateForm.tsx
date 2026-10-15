@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
 
 import { Button } from '@/components/common/buttons/Button';
+import { RestrictContactType } from '@/constants/contacts';
 import { ContactTypeSelector } from '@/features/contacts';
 import { useAddressHelpers } from '@/features/contacts/contact/create/components';
 import { hasEmail, hasPhoneNumber } from '@/features/contacts/contact/create/validation';
@@ -22,10 +23,24 @@ import { fromApiOrganization, fromApiPerson, IContactSearchResult } from '@/inte
 export interface IContactCreateFormProps {
   onSaved: (contact: IContactSearchResult) => void;
   onCancel: () => void;
+  restrictContactType?: RestrictContactType[];
 }
 
-export const ContactCreateForm: React.FC<IContactCreateFormProps> = ({ onSaved, onCancel }) => {
-  const initialContactType = ContactTypes.INDIVIDUAL;
+export const ContactCreateForm: React.FC<IContactCreateFormProps> = ({
+  onSaved,
+  onCancel,
+  restrictContactType,
+}) => {
+  const allowIndividual =
+    restrictContactType === undefined ||
+    restrictContactType.includes(RestrictContactType.ONLY_INDIVIDUALS);
+
+  const allowOrganization =
+    restrictContactType === undefined ||
+    restrictContactType.includes(RestrictContactType.ONLY_ORGANIZATIONS);
+
+  const initialContactType = allowIndividual ? ContactTypes.INDIVIDUAL : ContactTypes.ORGANIZATION;
+
   const [selectedType, setSelectedType] = useState(initialContactType);
   const personRef = useRef<FormikProps<IEditablePersonForm>>(null);
   const organizationRef = useRef<FormikProps<IEditableOrganizationForm>>(null);
@@ -113,8 +128,12 @@ export const ContactCreateForm: React.FC<IContactCreateFormProps> = ({ onSaved, 
 
   return (
     <>
-      <ContactTypeSelector contactType={selectedType} setContactType={setSelectedType} />
-
+      <ContactTypeSelector
+        contactType={selectedType}
+        setContactType={setSelectedType}
+        disableIndividual={!allowIndividual}
+        disableOrganization={!allowOrganization}
+      />
       {form}
     </>
   );

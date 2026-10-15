@@ -14,4 +14,5 @@ export enum ApiGen_CodeTypes_NotificationTypes {
   ADV_PAY = 'ADV_PAY',
   AGMT_SIGND = 'AGMT_SIGND',
   EXPROPH_APPEFFDT = 'EXPROPH_APPEFFDT',
+  L_ORIG_AGMT_EXPDT = 'L_ORIG_AGMT_EXPDT',
 }

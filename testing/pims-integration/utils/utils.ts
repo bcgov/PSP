@@ -39,7 +39,7 @@ export function nullableBooleanToYesNoString(value?: boolean | null): string {
 export const getTodayPrettyFormatted = (): string => {
   return new Date().toLocaleDateString('en-US', {
     month: 'short',
-    day: '2-digit',
+    day: 'numeric',
     year: 'numeric',
   });
 };

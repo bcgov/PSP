@@ -61,6 +61,14 @@ export function useLookupCodeHelpers() {
 }
 
 function byDisplayOrder(a: ILookupCode, b: ILookupCode) {
+  //Sort alphabetically by name when both have no displayOrder
+  if (a.displayOrder == null && b.displayOrder == null) {
+    return a.name.localeCompare(b.name);
+  }
+
+  if (a.displayOrder == null) return 1;
+  if (b.displayOrder == null) return -1;
+
   return a.displayOrder - b.displayOrder;
 }
 

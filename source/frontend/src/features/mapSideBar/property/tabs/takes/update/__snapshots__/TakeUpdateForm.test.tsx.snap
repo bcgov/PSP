@@ -1318,7 +1318,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c5 text-left col"
+                    class="c5 required text-left col"
                   >
                     <div
                       class="c6 form-group"
@@ -1564,7 +1564,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c5 text-left col"
+                    class="c5 required text-left col"
                   >
                     <div
                       class="c6 form-group"

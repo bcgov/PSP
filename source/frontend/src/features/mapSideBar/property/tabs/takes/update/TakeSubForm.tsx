@@ -276,7 +276,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
                 ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
                 ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
               ].includes(take.landActTypeCode) && (
-                <SectionField label="End date" labelWidth={{ xs: 3 }} className="mt-4">
+                <SectionField label="End date" required labelWidth={{ xs: 3 }} className="mt-4">
                   <FastDatePicker
                     field="landActEndDt"
                     formikProps={formikProps}
@@ -323,7 +323,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
                 />
               </SectionField>
 
-              <SectionField label="LTC end date" labelWidth={{ xs: 3 }} className="mt-4">
+              <SectionField label="LTC end date" required labelWidth={{ xs: 3 }} className="mt-4">
                 <FastDatePicker field="ltcEndDt" formikProps={formikProps} />
               </SectionField>
             </>

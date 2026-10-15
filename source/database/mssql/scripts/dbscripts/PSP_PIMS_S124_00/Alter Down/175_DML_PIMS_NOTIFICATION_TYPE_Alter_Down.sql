@@ -1,0 +1,182 @@
+-- -------------------------------------------------------------------------------------------
+-- Disable notification types.
+-- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+-- Author        Date         Ticket     Comment
+-- ------------  -----------  ---------  -----------------------------------------------------
+-- Arturo Reyes  2026-Sep-18  PSP-11980  Disable new notification types
+-- -------------------------------------------------------------------------------------------
+SET XACT_ABORT ON;
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+GO
+BEGIN TRANSACTION;
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+
+-- Disable the "L_PERIOD_DUEDT" type.
+PRINT N'Disable the "L_PERIOD_DUEDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'L_PERIOD_DUEDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 1,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd
+           AND IS_DISABLED = 0;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON;
+GO
+
+-- Disable the "L_ORIG_AGMT_EXPDT" type.
+PRINT N'Disable the "L_ORIG_AGMT_EXPDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'L_ORIG_AGMT_EXPDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 1,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd
+           AND IS_DISABLED = 0;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON;
+GO
+
+-- Disable the "EXPROPH_ADVPYSVDT" type.
+PRINT N'Disable the "EXPROPH_ADVPYSVDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'EXPROPH_ADVPYSVDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 1,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd
+           AND IS_DISABLED = 0;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON;
+GO
+
+-- Disable the "EXPROPH_VESTDT" type.
+PRINT N'Disable the "EXPROPH_VESTDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'EXPROPH_VESTDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 1,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd
+           AND IS_DISABLED = 0;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON;
+GO
+
+
+-- Disable the "AGMT_AGMTDT" type.
+PRINT N'Disable the "AGMT_AGMTDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'AGMT_AGMTDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 1,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd
+           AND IS_DISABLED = 0;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON;
+GO
+
+-- Disable the "AGMT_COMPTDT" type.
+PRINT N'Disable the "AGMT_COMPTDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'AGMT_COMPTDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 1,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd
+           AND IS_DISABLED = 0;
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+
+-- Disable the "AGMT_TERMINDT" type.
+PRINT N'Disable the "AGMT_TERMINDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'AGMT_TERMINDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 1,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd
+           AND IS_DISABLED = 0;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON;
+GO
+
+COMMIT TRANSACTION;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON;
+GO
+DECLARE @Success AS BIT;
+SET @Success = 1;
+SET NOEXEC OFF;
+IF (@Success = 1)
+    PRINT 'The database update succeeded';
+ELSE
+    BEGIN
+        IF @@TRANCOUNT > 0
+            ROLLBACK;
+        PRINT 'The database update failed';
+    END
+GO

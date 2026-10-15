@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Pims.Dal;
 using Pims.Dal.Entities;
