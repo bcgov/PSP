@@ -41,5 +41,14 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "L_ORIG_AGMT_EXPDT")]
         L_ORIG_AGMT_EXPDT,
+
+        [EnumMember(Value = "AGMT_AGMTDT")]
+        AGMT_AGMTDT,
+
+        [EnumMember(Value = "AGMT_COMPTDT")]
+        AGMT_COMPTDT,
+
+        [EnumMember(Value = "AGMT_TERMINDT")]
+        AGMT_TERMINDT,
     }
 }

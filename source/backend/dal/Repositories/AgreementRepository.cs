@@ -4,6 +4,7 @@ using System.Security.Claims;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -15,6 +16,7 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class AgreementRepository : BaseRepository<PimsAgreement>, IAgreementRepository
     {
+        private readonly INotificationRepository _notificationRepository;
         #region Constructors
 
         /// <summary>
@@ -23,9 +25,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public AgreementRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AgreementRepository> logger)
+        public AgreementRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AgreementRepository> logger, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
+            _notificationRepository = notificationRepository;
         }
 
         #endregion
@@ -111,9 +114,33 @@ namespace Pims.Dal.Repositories
             using var scope = Logger.QueryScope();
 
             var existingAgreement = Context.PimsAgreements.FirstOrDefault(x => x.AgreementId == agreement.AgreementId) ?? throw new KeyNotFoundException();
+            var notificationTypesToDelete = new List<string>();
+
+            if (!agreement.AgreementDate.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_AGMTDT));
+            }
+
+            if (!agreement.CompletionDate.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_COMPTDT));
+            }
+
+            if (!agreement.CompletionDate.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_COMPTDT));
+            }
+
+            var notificationIds = Context.PimsNotifications.Where(n => n.AgreementId == agreement.AgreementId && notificationTypesToDelete.Contains(n.NotificationTypeCode))
+            .Select(n => n.NotificationId)
+            .ToList();
+
+            foreach (var notificationId in notificationIds)
+            {
+                _notificationRepository.Delete(notificationId);
+            }
 
             Context.Entry(existingAgreement).CurrentValues.SetValues(agreement);
-
             return existingAgreement;
         }
 
