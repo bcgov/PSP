@@ -10,6 +10,17 @@ import {
   IExpropriationEventResultsProps,
 } from './ExpropriationEventResults';
 
+vi.mock('@/features/notifications/ReminderContainer', () => ({
+  default: (props: any) => (
+    <div
+      data-testid={`reminder-${props.notificationType}`}
+      data-key-date={props.keyDate}
+      data-expropiation-owner-id={props.notificationSource.ExpropOwnerHistoryId}
+      data-acquisition-file-id={props.notificationSource.acquisitionFileId}
+    />
+  ),
+}));
+
 describe('ExpropriationEventResults', () => {
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<IExpropriationEventResultsProps> } = {},
