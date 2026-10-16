@@ -7,18 +7,18 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="10.35.0.4138">
+        <PackageReference Include="SonarAnalyzer.CSharp">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+        <PackageReference Include="StyleCop.Analyzers" />
     </ItemGroup>
     <ItemGroup>
         <!-- CLEANED: Microsoft.CodeAnalysis has been removed -->
         <!-- CLEANED: Microsoft.CodeAnalysis.CSharp has been removed -->
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" Version="4.11.0">
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
