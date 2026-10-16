@@ -39,7 +39,6 @@
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Npgsql" />
     <PackageReference Include="System.Drawing.Common" />
-    <PackageReference Include="System.Data.SqlClient" />
     <PackageReference Include="System.Linq.Dynamic.Core" />
     
     <!-- Microsoft.CodeAnalysis overrides to match Pims.Api version -->

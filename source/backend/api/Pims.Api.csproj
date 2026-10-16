@@ -59,7 +59,6 @@
     <PackageReference Include="System.Drawing.Common" />
     <PackageReference Include="KubernetesClient" />
     <PackageReference Include="Npgsql" />
-    <PackageReference Include="System.Data.SqlClient" />
     <!-- TODO: updated version has a critical vulnerability -->
     <PackageReference Include="System.Linq.Dynamic.Core" />
     <PackageReference Include="System.Security.Cryptography.Pkcs" />
