@@ -29,14 +29,18 @@ VALUES
   (N'NOC',              N'Notice of claim'),
   (N'ADV_PAY',          N'Advance payment'),
   (N'AGMT_SIGND',       N'Agreement signed'),
-  (N'EXPROPH_APPEFFDT', N'Expropriation application effective date'),
+  (N'EXPROPH_APPEFFDT', N'Expropriation appraisal effective date'),
   (N'L_PERIOD_DUEDT',   N'Due date - L/L Periods'),-- Added for PSP-11980
   (N'L_ORIG_AGMT_EXPDT',    N'L/L original agreement expiry'), -- Added for PSP-11980
   (N'EXPROPH_ADVPYSVDT', N'Expropriation advanced payment served date'), -- Added for PSP-11980
   (N'EXPROPH_VESTDT',   N'Expropriation vesting date'), -- Added for PSP-11980
   (N'AGMT_AGMTDT',      N'Agreement date'), -- Added for PSP-11980
   (N'AGMT_COMPTDT',     N'Agreement completion date'), -- Added for PSP-11980
-  (N'AGMT_TERMINDT',    N'Agreement termination date'); -- Added for PSP-11980
+  (N'AGMT_TERMINDT',    N'Agreement termination date'), -- Added for PSP-11980
+  (N'EXPROPH_EXPNOTSERVDT', N'Expropriation notice served date'), -- Added for PSP-12086
+  (N'AGMT_POSNDT', N'Agreement possession date'), -- Added for PSP-12086
+  (N'ACQ_DLVDT', N'Acquisition delivery date'), -- Added for PSP-12086
+  (N'L_PERIOD_EXPDT',    N'Expiry date - L/L Periods'); -- Added for PSP-12086
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 
