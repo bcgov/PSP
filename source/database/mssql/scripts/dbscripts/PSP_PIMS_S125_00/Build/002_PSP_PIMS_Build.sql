@@ -26416,6 +26416,7 @@ CREATE TABLE [dbo].[PIMS_NOTIFICATION]  (
 	[NOTIFICATION_TYPE_CODE]        	nvarchar(20) NOT NULL,
 	[ACQUISITION_FILE_ID]           	bigint NULL,
 	[DISPOSITION_FILE_ID]           	bigint NULL,
+	[DISPOSITION_AGREEMENT_ID]        bigint NULL, -- Added for PSP-12086
 	[RESEARCH_FILE_ID]              	bigint NULL,
 	[MANAGEMENT_FILE_ID]            	bigint NULL,
 	[LEASE_ID]                      	bigint NULL,
@@ -26470,6 +26471,12 @@ EXEC sp_addextendedproperty
 	@level2type = N'Column', @level2name = N'DISPOSITION_FILE_ID'
 GO
 EXEC sp_addextendedproperty
+	@name = N'MS_Description', @value = N'Foreign key to the PIMS_DISPOSITION_AGREEMENT table.' ,
+	@level0type = N'Schema', @level0name = N'dbo',
+	@level1type = N'Table', @level1name = N'PIMS_NOTIFICATION',
+	@level2type = N'Column', @level2name = N'DISPOSITION_AGREEMENT_ID'
+GO
+EXEC sp_addextendedproperty
 	@name = N'MS_Description', @value = N'Foreign key to the PIMS_RESEARCH_FILE table.' ,
 	@level0type = N'Schema', @level0name = N'dbo',
 	@level1type = N'Table', @level1name = N'PIMS_NOTIFICATION',
@@ -26486,6 +26493,12 @@ EXEC sp_addextendedproperty
 	@level0type = N'Schema', @level0name = N'dbo',
 	@level1type = N'Table', @level1name = N'PIMS_NOTIFICATION',
 	@level2type = N'Column', @level2name = N'LEASE_ID'
+GO
+EXEC sp_addextendedproperty
+	@name = N'MS_Description', @value = N'Foreign key to the PIMS_LEASE_PERIOD table.' ,
+	@level0type = N'Schema', @level0name = N'dbo',
+	@level1type = N'Table', @level1name = N'PIMS_NOTIFICATION',
+	@level2type = N'Column', @level2name = N'LEASE_PERIOD_ID'
 GO
 EXEC sp_addextendedproperty
 	@name = N'MS_Description', @value = N'Foreign key to the PIMS_TAKE table.' ,
@@ -26633,10 +26646,11 @@ CREATE TABLE [dbo].[PIMS_NOTIFICATION_HIST]  (
 	[NOTIFICATION_TYPE_CODE]        	nvarchar(20) NOT NULL,
 	[ACQUISITION_FILE_ID]           	bigint NULL,
 	[DISPOSITION_FILE_ID]           	bigint NULL,
+	[DISPOSITION_AGREEMENT_ID]        bigint NULL, -- Added for PSP-12086
 	[RESEARCH_FILE_ID]              	bigint NULL,
 	[MANAGEMENT_FILE_ID]            	bigint NULL,
 	[LEASE_ID]                      	bigint NULL,
-	[LEASE_PERIOD_ID]                 	bigint NULL, -- Added for PSP-11980
+	[LEASE_PERIOD_ID]                 bigint NULL, -- Added for PSP-11980
 	[TAKE_ID]                       	bigint NULL,
 	[INSURANCE_ID]                  	bigint NULL,
 	[LEASE_CONSULTATION_ID]         	bigint NULL,
@@ -37187,10 +37201,11 @@ BEGIN TRY
       "NOTIFICATION_TYPE_CODE" = inserted."NOTIFICATION_TYPE_CODE",
       "ACQUISITION_FILE_ID" = inserted."ACQUISITION_FILE_ID",
       "DISPOSITION_FILE_ID" = inserted."DISPOSITION_FILE_ID",
+      "DISPOSITION_AGREEMENT_ID" = inserted."DISPOSITION_AGREEMENT_ID", -- Added for PSP-12086
       "RESEARCH_FILE_ID" = inserted."RESEARCH_FILE_ID",
       "MANAGEMENT_FILE_ID" = inserted."MANAGEMENT_FILE_ID",
       "LEASE_ID" = inserted."LEASE_ID",
-	  "LEASE_PERIOD_ID" = inserted."LEASE_PERIOD_ID", -- Added for PSP-11980
+	    "LEASE_PERIOD_ID" = inserted."LEASE_PERIOD_ID", -- Added for PSP-11980
       "TAKE_ID" = inserted."TAKE_ID",
       "INSURANCE_ID" = inserted."INSURANCE_ID",
       "LEASE_CONSULTATION_ID" = inserted."LEASE_CONSULTATION_ID",
@@ -47426,6 +47441,7 @@ SET @curr_date = getutcdate();
 		[NOTIFICATION_TYPE_CODE],
 		[ACQUISITION_FILE_ID],
 		[DISPOSITION_FILE_ID],
+		[DISPOSITION_AGREEMENT_ID], -- Added for PSP-12086
 		[RESEARCH_FILE_ID],
 		[MANAGEMENT_FILE_ID],
 		[LEASE_ID],
@@ -47459,6 +47475,7 @@ SET @curr_date = getutcdate();
 	         [NOTIFICATION_TYPE_CODE],
 			 [ACQUISITION_FILE_ID],
 			 [DISPOSITION_FILE_ID],
+			 [DISPOSITION_AGREEMENT_ID], -- Added for PSP-12086
 			 [RESEARCH_FILE_ID],
 			 [MANAGEMENT_FILE_ID],
 			 [LEASE_ID],
@@ -53655,10 +53672,11 @@ BEGIN TRY
       "NOTIFICATION_TYPE_CODE",
       "ACQUISITION_FILE_ID",
       "DISPOSITION_FILE_ID",
+      "DISPOSITION_AGREEMENT_ID", -- Added for PSP-12086
       "RESEARCH_FILE_ID",
       "MANAGEMENT_FILE_ID",
       "LEASE_ID",
-	  "LEASE_PERIOD_ID", -- Added for PSP-11980
+	    "LEASE_PERIOD_ID", -- Added for PSP-11980
       "TAKE_ID",
       "INSURANCE_ID",
       "LEASE_CONSULTATION_ID",
@@ -53681,10 +53699,11 @@ BEGIN TRY
       "NOTIFICATION_TYPE_CODE",
       "ACQUISITION_FILE_ID",
       "DISPOSITION_FILE_ID",
+      "DISPOSITION_AGREEMENT_ID", -- Added for PSP-12086
       "RESEARCH_FILE_ID",
       "MANAGEMENT_FILE_ID",
       "LEASE_ID",
-	  "LEASE_PERIOD_ID", -- Added for PSP-11980
+	    "LEASE_PERIOD_ID", -- Added for PSP-11980
       "TAKE_ID",
       "INSURANCE_ID",
       "LEASE_CONSULTATION_ID",
@@ -61624,6 +61643,13 @@ ALTER TABLE [dbo].[PIMS_NOTIFICATION]
 	ON DELETE NO ACTION
 	ON UPDATE NO ACTION;
 
+-- Add FK to PIMS_DISPOSITION_AGREEMENT in PIMS_NOTIFICATION
+ALTER TABLE [dbo].[PIMS_NOTIFICATION]
+    ADD CONSTRAINT [PIM_DISPAGRMNT_PIM_NOTIFY_FK]
+	FOREIGN KEY ([DISPOSITION_AGREEMENT_ID])
+	REFERENCES [dbo].[PIMS_DISPOSITION_AGREEMENT] ([DISPOSITION_AGREEMENT_ID])
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION;
 
 ALTER TABLE [dbo].[PIMS_NOTIFICATION_USER]
 	ADD CONSTRAINT [PIM_USER_PIM_NOTUSR_FK]
