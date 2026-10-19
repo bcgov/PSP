@@ -57,31 +57,48 @@ jobs:
             "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-api:prod"
             "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-proxy:prod"
             "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-scheduler:prod"
-            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/dotnet-aspnet:8.0"
-            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/dotnet-sdk:8.0"
-            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/nodejs-20-ubi9:${NODEJS20_BASE_TAG}"
-            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/nginx-base:${NGINX_BASE_TAG}"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/dotnet-100:10.0"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/nodejs-20:1-34"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/nginx-runtime:dev"
           )
           printf "%s\n" "${IMAGES[@]}" > images.txt
 
       - name: Pull images
+        shell: bash
         run: |
-          while read IMG; do
-            echo "Pulling $IMG";
-            docker pull "$IMG";
+          set -euo pipefail
+          while IFS= read -r IMG; do
+            for attempt in 1 2 3; do
+              echo "Pulling $IMG (attempt $attempt/3)"
+              if docker pull "$IMG"; then
+                break
+              fi
+
+              if [ "$attempt" -eq 3 ]; then
+                echo "::error::Image pull failed after 3 attempts: $IMG"
+                exit 1
+              fi
+
+              sleep 10
+            done
           done < images.txt
 
       - name: Scan all images with Trivy
+        shell: bash
         run: |
+          set -euo pipefail
+          # Exclude embedded local-development Dockerfiles from the S2I image scan.
+          # Review these files separately; validate deployment non-root settings independently.
+          # These exclusions skip all checks on these files, not package vulnerability scans.
           SCAN_FAILED=0
-          while read IMG; do
+          while IFS= read -r IMG; do
             echo "Scanning $IMG"
             FILENAME="$(echo $IMG | tr '/' '_' | tr ':' '_')"
-            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMG" | tee "${FILENAME}.txt" || SCAN_FAILED=1
-            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMG" -o "/workspace/${FILENAME}.sarif"
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --skip-files /opt/app-root/src/Dockerfile --skip-files /opt/app-root/src/Dockerfile.proxy --skip-files /opt/app-root/src/Dockerfile.scheduler --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMG" | tee "${FILENAME}.txt" || SCAN_FAILED=1
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --skip-files /opt/app-root/src/Dockerfile --skip-files /opt/app-root/src/Dockerfile.proxy --skip-files /opt/app-root/src/Dockerfile.scheduler --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMG" -o "/workspace/${FILENAME}.sarif"
           done < images.txt
           if [ $SCAN_FAILED -eq 1 ]; then
-            echo "One or more scans found CRITICAL/HIGH vulnerabilities"
+            echo "One or more scans found CRITICAL/HIGH vulnerabilities or failed to complete. Review the scan logs."
             exit 1
           fi
 
