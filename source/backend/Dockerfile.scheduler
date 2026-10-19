@@ -1,9 +1,14 @@
-FROM mcr.microsoft.com/dotnet/aspnet:10.0.13-noble AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0.12-noble AS base
 WORKDIR /app
 EXPOSE 8080
 
 # Copy csproj and restore as distinct layers
-FROM mcr.microsoft.com/dotnet/sdk:10.0.401-noble AS build
+# Match the Red Hat SDK image used by OpenShift dotnet:10.0 (SDK 10.0.112).
+# Pin the observed OpenShift image digest so local builds use the same SDK image.
+FROM registry.access.redhat.com/ubi9/dotnet-100@sha256:39f09c87b0b44e3430c788fd6a775423f5aa78eefabe2854b677528392013358 AS build
+# The previous Microsoft SDK image ran as root; Red Hat defaults to UID 1001.
+# Preserve build permissions for /src and /app; the final runtime stage is independent.
+USER 0
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY . .
