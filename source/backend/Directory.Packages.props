@@ -27,7 +27,7 @@
     <PackageVersion Include="Hangfire.Redis.StackExchange" Version="1.12.0" />
     <PackageVersion Include="Hangfire.StackTrace" Version="1.0.0" />
     <PackageVersion Include="JsonSubTypes" Version="2.2.0" />
-    <PackageVersion Include="KubernetesClient" Version="18.0.13" />
+    <PackageVersion Include="KubernetesClient" Version="21.0.8" />
     <PackageVersion Include="LinqKit" Version="1.4.0" />
     <PackageVersion Include="Macross.Json.Extensions" Version="3.0.0" />
     <PackageVersion Include="Mapster" Version="10.0.13" />
@@ -65,13 +65,13 @@
     <PackageVersion Include="Microsoft.OpenApi" Version="1.6.22" />
     <PackageVersion Include="Moq" Version="4.20.70" />
     <PackageVersion Include="Moq.EntityFrameworkCore" Version="10.0.0.2" />
-    <PackageVersion Include="nClam" Version="7.0.0" />
+    <PackageVersion Include="nClam" Version="9.0.0" />
     <PackageVersion Include="NetTopologySuite" Version="2.6.0" />
     <PackageVersion Include="NetTopologySuite.IO.GeoJSON4STJ" Version="4.0.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="NExpect" Version="2.0.55" />
     <PackageVersion Include="Npgsql" Version="10.0.3" />
-    <PackageVersion Include="NuGet.CommandLine" Version="6.12.5" />
+    <PackageVersion Include="NuGet.CommandLine" Version="7.9.0" />
     <PackageVersion Include="Polly" Version="8.8.0" />
     <PackageVersion Include="Polly.Extensions" Version="8.8.0" />
     <PackageVersion Include="ProjNet" Version="2.1.0" />
