@@ -56,5 +56,98 @@ namespace Pims.Api.Helpers.Extensions
             // Regular (non-contractor) users have access across regions
             return true;
         }
+
+        public static void ThrowIfCannotEditDispositionFile(this PimsDispositionFile dispositionFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository, ILookupRepository lookupRepository)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+            ArgumentNullException.ThrowIfNull(dispositionFile);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+
+            // Check if contractor is not in team
+            if (pimsUser?.IsContractor == true)
+            {
+                var project = dispositionFile.ProjectId.HasValue ? projectRepository.TryGet(dispositionFile.ProjectId.Value) : null;
+                if (!dispositionFile.HasAccessToFile(pimsUser, project))
+                {
+                    throw new ContractorNotInTeamException("Contractor is not assigned to the Disposition File's team or the associated Project's team");
+                }
+            }
+
+            // General edit access check
+            if (!dispositionFile.CanEditDispositionFile(
+                principal,
+                userRepository,
+                projectRepository,
+                lookupRepository))
+            {
+                throw new NotAuthorizedException(
+                    "User does not have edit access to this Disposition File");
+            }
+        }
+
+        public static bool CanEditDispositionFile(this PimsDispositionFile dispositionFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository, ILookupRepository lookupRepository)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+            ArgumentNullException.ThrowIfNull(dispositionFile);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+            var project = dispositionFile.ProjectId.HasValue ? projectRepository.TryGet(dispositionFile.ProjectId.Value) : null;
+            var cannotDetermineRegion = lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+
+            return dispositionFile.CanEditDispositionFile(pimsUser, project, cannotDetermineRegion?.RegionCode);
+        }
+
+        private static bool IsUserAssignedToDispositionFileRegion(this PimsDispositionFile dispositionFile, PimsUser pimsUser)
+        {
+            ArgumentNullException.ThrowIfNull(dispositionFile);
+
+            if (pimsUser is null)
+            {
+                return false;
+            }
+
+            if (pimsUser.IsContractor)
+            {
+                // Contractors can only access leases with a valid region
+                return pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == dispositionFile.RegionCode);
+            }
+            else
+            {
+                // For ministry staff, they can access leases without any region attached.
+                return pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == dispositionFile.RegionCode);
+            }
+        }
+
+        private static bool CanEditDispositionFile(this PimsDispositionFile dispositionFile, PimsUser pimsUser, PimsProject project, short? cannotDetermineRegionCode)
+        {
+            if (dispositionFile is null || pimsUser is null)
+            {
+                return false;
+            }
+
+            var isOnLeaseTeam =
+                dispositionFile.PimsDispositionFileTeams.Any(
+                    x => x.PersonId == pimsUser.PersonId);
+
+            var isOnProjectTeam =
+                project != null &&
+                project.PimsProjectPeople.Any(
+                    x => x.PersonId == pimsUser.PersonId);
+
+            if (pimsUser.IsContractor)
+            {
+                return (isOnLeaseTeam || isOnProjectTeam)
+                    && dispositionFile.IsUserAssignedToDispositionFileRegion(pimsUser);
+            }
+
+            var isCannotDetermineRegion = cannotDetermineRegionCode != null && dispositionFile.RegionCode == cannotDetermineRegionCode;
+
+            return isCannotDetermineRegion
+                || dispositionFile.IsUserAssignedToDispositionFileRegion(pimsUser)
+                || isOnLeaseTeam
+                || isOnProjectTeam;
+        }
+
     }
 }
