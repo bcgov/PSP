@@ -28,8 +28,7 @@ WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
     UPDATE dbo.PIMS_NOTIFICATION_TYPE
-    SET    IS_DISABLED                = 0,
-           DESCRIPTION                 = N'Expropriation appraisal effective date',
+    SET    DESCRIPTION                = N'Expropriation appraisal effective date',
            CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
     WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
 ELSE
