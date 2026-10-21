@@ -37,10 +37,17 @@ VALUES
   (N'AGMT_AGMTDT',      N'Agreement date'), -- Added for PSP-11980
   (N'AGMT_COMPTDT',     N'Agreement completion date'), -- Added for PSP-11980
   (N'AGMT_TERMINDT',    N'Agreement termination date'), -- Added for PSP-11980
+  (N'L_PERIOD_EXPDT',    N'Expiry date - L/L Periods'), -- Added for PSP-12086
   (N'EXPROPH_EXPNOTSERVDT', N'Expropriation notice served date'), -- Added for PSP-12086
-  (N'AGMT_POSNDT', N'Agreement possession date'), -- Added for PSP-12086
+  (N'AGMT_POSNDT', N'Acquisition - agreement possession date'), -- Added for PSP-12086
   (N'ACQ_DLVDT', N'Acquisition delivery date'), -- Added for PSP-12086
-  (N'L_PERIOD_EXPDT',    N'Expiry date - L/L Periods'); -- Added for PSP-12086
+  (N'DSP_AGMT_AGMTDT', N'Disposition - Agreement date'), -- Added for PSP-12086
+  (N'DSP_AGMT_COMPTDT', N'Disposition - Completion date'), -- Added for PSP-12086
+  (N'DSP_AGMT_TMTDT', N'Disposition - Termination date'), -- Added for PSP-12086
+  (N'DSP_AGMT_POSNDT', N'Disposition - Possession date'), -- Added for PSP-12086
+  (N'DSP_OFFR_EXPDT', N'Disposition - Offer expiry date'), -- Added for PSP-12086
+  (N'DSP_SALE_COMPTDT', N'Disposition - Sale completion date'), -- Added for PSP-12086
+  (N'DSP_SALE_LSTCONDRMVDT', N'Disposition - Last condition removed date'); -- Added for PSP-12086
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 
