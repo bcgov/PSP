@@ -106,7 +106,7 @@ IF @@ROWCOUNT = 1
     WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
 ELSE
     INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
-    VALUES (@CurrCd, N'Agreement possession date', 0);
+    VALUES (@CurrCd, N'Acquisition - agreement possession date', 0);
 GO
 IF @@ERROR <> 0
     SET NOEXEC ON;
@@ -136,16 +136,12 @@ IF @@ERROR <> 0
     SET NOEXEC ON;
 GO
 
-
-
--- ===================> delete below this line if necessary
-
--- Add/Enable the "L_ORIG_AGMT_EXPDT" type.
-PRINT N'Add/Enable the "L_ORIG_AGMT_EXPDT" type.';
+-- Add/Enable the "DSP_AGMT_AGMTDT" type.
+PRINT N'Add/Enable the "DSP_AGMT_AGMTDT" type.';
 GO
 DECLARE @CurrCd AS NVARCHAR (20);
 
-SET @CurrCd = N'L_ORIG_AGMT_EXPDT';
+SET @CurrCd = N'DSP_AGMT_AGMTDT';
 
 SELECT NOTIFICATION_TYPE_CODE
 FROM   dbo.PIMS_NOTIFICATION_TYPE
@@ -158,19 +154,18 @@ IF @@ROWCOUNT = 1
     WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
 ELSE
     INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
-    VALUES (@CurrCd, N'L/L original agreement expiry', 0);
+    VALUES (@CurrCd, N'Disposition - Agreement date', 0);
 GO
 IF @@ERROR <> 0
     SET NOEXEC ON;
 GO
 
-
--- Add/Enable the "EXPROPH_ADVPYSVDT" type.
-PRINT N'Add/Enable the "EXPROPH_ADVPYSVDT" type.';
+-- Add/Enable the "DSP_AGMT_COMPTDT" type.
+PRINT N'Add/Enable the "DSP_AGMT_COMPTDT" type.';
 GO
 DECLARE @CurrCd AS NVARCHAR (20);
 
-SET @CurrCd = N'EXPROPH_ADVPYSVDT';
+SET @CurrCd = N'DSP_AGMT_COMPTDT';
 
 SELECT NOTIFICATION_TYPE_CODE
 FROM   dbo.PIMS_NOTIFICATION_TYPE
@@ -183,18 +178,18 @@ IF @@ROWCOUNT = 1
     WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
 ELSE
     INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
-    VALUES (@CurrCd, N'Expropriation advanced payment served date', 0);
+    VALUES (@CurrCd, N'Disposition - Completion date', 0);
 GO
 IF @@ERROR <> 0
     SET NOEXEC ON;
 GO
 
--- Add/Enable the "EXPROPH_VESTDT" type.
-PRINT N'Add/Enable the "EXPROPH_VESTDT" type.';
+-- Add/Enable the "DSP_AGMT_TMTDT" type.
+PRINT N'Add/Enable the "DSP_AGMT_TMTDT" type.';
 GO
 DECLARE @CurrCd AS NVARCHAR (20);
 
-SET @CurrCd = N'EXPROPH_VESTDT';
+SET @CurrCd = N'DSP_AGMT_TMTDT';
 
 SELECT NOTIFICATION_TYPE_CODE
 FROM   dbo.PIMS_NOTIFICATION_TYPE
@@ -207,19 +202,18 @@ IF @@ROWCOUNT = 1
     WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
 ELSE
     INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
-    VALUES (@CurrCd, N'Expropriation vesting date', 0);
+    VALUES (@CurrCd, N'Disposition - Termination date', 0);
 GO
 IF @@ERROR <> 0
     SET NOEXEC ON;
 GO
 
-
--- Add/Enable the "AGMT_AGMTDT" type.
-PRINT N'Add/Enable the "AGMT_AGMTDT" type.';
+-- Add/Enable the "DSP_AGMT_POSNDT" type.
+PRINT N'Add/Enable the "DSP_AGMT_POSNDT" type.';
 GO
 DECLARE @CurrCd AS NVARCHAR (20);
 
-SET @CurrCd = N'AGMT_AGMTDT';
+SET @CurrCd = N'DSP_AGMT_POSNDT';
 
 SELECT NOTIFICATION_TYPE_CODE
 FROM   dbo.PIMS_NOTIFICATION_TYPE
@@ -232,18 +226,18 @@ IF @@ROWCOUNT = 1
     WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
 ELSE
     INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
-    VALUES (@CurrCd, N'Agreement date', 0);
+    VALUES (@CurrCd, N'Disposition - Possession date', 0);
 GO
 IF @@ERROR <> 0
     SET NOEXEC ON;
 GO
 
--- Add/Enable the "AGMT_COMPTDT" type.
-PRINT N'Add/Enable the "AGMT_COMPTDT" type.';
+-- Add/Enable the "DSP_OFFR_EXPDT" type.
+PRINT N'Add/Enable the "DSP_OFFR_EXPDT" type.';
 GO
 DECLARE @CurrCd AS NVARCHAR (20);
 
-SET @CurrCd = N'AGMT_COMPTDT';
+SET @CurrCd = N'DSP_OFFR_EXPDT';
 
 SELECT NOTIFICATION_TYPE_CODE
 FROM   dbo.PIMS_NOTIFICATION_TYPE
@@ -256,18 +250,18 @@ IF @@ROWCOUNT = 1
     WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
 ELSE
     INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
-    VALUES (@CurrCd, N'Agreement completion date', 0);
+    VALUES (@CurrCd, N'Disposition - Offer expiry date', 0);
 GO
 IF @@ERROR <> 0
     SET NOEXEC ON;
 GO
 
--- Add/Enable the "AGMT_TERMINDT" type.
-PRINT N'Add/Enable the "AGMT_TERMINDT" type.';
+-- Add/Enable the "DSP_SALE_COMPTDT" type.
+PRINT N'Add/Enable the "DSP_SALE_COMPTDT" type.';
 GO
 DECLARE @CurrCd AS NVARCHAR (20);
 
-SET @CurrCd = N'AGMT_TERMINDT';
+SET @CurrCd = N'DSP_SALE_COMPTDT';
 
 SELECT NOTIFICATION_TYPE_CODE
 FROM   dbo.PIMS_NOTIFICATION_TYPE
@@ -280,11 +274,37 @@ IF @@ROWCOUNT = 1
     WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
 ELSE
     INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
-    VALUES (@CurrCd, N'Agreement termination date', 0);
+    VALUES (@CurrCd, N'Disposition - Sale completion date', 0);
 GO
 IF @@ERROR <> 0
     SET NOEXEC ON;
 GO
+
+-- Add/Enable the "DSP_SALE_LSTCONDRMVDT" type.
+PRINT N'Add/Enable the "DSP_SALE_LSTCONDRMVDT" type.';
+GO
+DECLARE @CurrCd AS NVARCHAR (20);
+
+SET @CurrCd = N'DSP_SALE_LSTCONDRMVDT';
+
+SELECT NOTIFICATION_TYPE_CODE
+FROM   dbo.PIMS_NOTIFICATION_TYPE
+WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+    UPDATE dbo.PIMS_NOTIFICATION_TYPE
+    SET    IS_DISABLED                = 0,
+           CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+    WHERE  NOTIFICATION_TYPE_CODE = @CurrCd;
+ELSE
+    INSERT INTO dbo.PIMS_NOTIFICATION_TYPE (NOTIFICATION_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+    VALUES (@CurrCd, N'Disposition - Last condition removed date', 0);
+GO
+IF @@ERROR <> 0
+    SET NOEXEC ON;
+GO
+
+
 COMMIT TRANSACTION;
 
 IF @@ERROR <> 0
