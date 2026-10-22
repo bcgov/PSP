@@ -15,6 +15,8 @@ export interface INotificationRowProps {
   onSelect: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
   onToggleRead: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
   onDelete: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
+  isMenuOpen?: boolean;
+  onMenuToggle?: (isOpen: boolean) => void;
 }
 
 export const NotificationRow: FC<INotificationRowProps> = ({
@@ -22,6 +24,8 @@ export const NotificationRow: FC<INotificationRowProps> = ({
   onSelect,
   onToggleRead,
   onDelete,
+  isMenuOpen,
+  onMenuToggle,
 }) => {
   const subjectLabel = notification?.subject ?? '';
   const typeLabel = notification?.notificationType?.description ?? '';
@@ -90,7 +94,7 @@ export const NotificationRow: FC<INotificationRowProps> = ({
         onClick={event => event.stopPropagation()}
         onKeyDown={event => event.stopPropagation()}
       >
-        <MoreOptionsMenu options={menuOptions} />
+        <MoreOptionsMenu options={menuOptions} show={isMenuOpen} onToggle={onMenuToggle} />
       </ActionsCell>
     </Row>
   );
