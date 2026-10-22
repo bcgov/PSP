@@ -28,6 +28,9 @@ export interface IMoreOptionsMenuProps {
   dataTestid?: string;
   /** Called when the menu is opened */
   onMenuOpen?: () => void;
+  /** Optional controlled visibility for coordinating a group of menus. */
+  show?: boolean;
+  onToggle?: (isOpen: boolean) => void;
 }
 
 /**
@@ -46,13 +49,17 @@ const MoreOptionsMenu: React.FC<IMoreOptionsMenuProps> = ({
   variant = 'light',
   dataTestid,
   onMenuOpen,
+  show,
+  onToggle,
 }) => {
   return (
     <Dropdown
       alignRight={alignRight}
+      show={show}
       onToggle={(isOpen, event) => {
         event.preventDefault();
         event.stopPropagation();
+        onToggle?.(isOpen);
         if (isOpen) onMenuOpen?.();
       }}
     >
@@ -95,7 +102,8 @@ const MoreOptionsMenu: React.FC<IMoreOptionsMenuProps> = ({
                 onClick={e => {
                   e.preventDefault();
                   e.stopPropagation();
-                  opt.onClick();
+                  onToggle?.(false);
+                  opt.onClick?.();
                 }}
               >
                 {opt.icon && <span>{opt.icon}</span>}
