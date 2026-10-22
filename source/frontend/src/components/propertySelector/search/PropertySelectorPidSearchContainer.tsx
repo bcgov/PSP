@@ -14,11 +14,18 @@ export interface PropertySelectorPidSearchContainerProps {
   PropertySelectorPidSearchView: React.FunctionComponent<
     React.PropsWithChildren<IPropertySearchSelectorPidFormViewProps>
   >;
+  dataTestIdSearchButton?: string;
+  dataTestIdSection?: string;
 }
 
 export const PropertySelectorPidSearchContainer: React.FunctionComponent<
   React.PropsWithChildren<PropertySelectorPidSearchContainerProps>
-> = ({ setSelectProperty, PropertySelectorPidSearchView }) => {
+> = ({
+  setSelectProperty,
+  PropertySelectorPidSearchView,
+  dataTestIdSearchButton,
+  dataTestIdSection,
+}) => {
   const { getPropertyByPidLookupWrapper } = usePimsPropertyRepository();
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -84,6 +91,8 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
     <PropertySelectorPidSearchView
       onSearch={searchFunc}
       loading={getPropertyByPidLookupWrapper.loading}
+      dataTestIdSearchButton={dataTestIdSearchButton}
+      dataTestIdSection={dataTestIdSection}
     />
   );
 };

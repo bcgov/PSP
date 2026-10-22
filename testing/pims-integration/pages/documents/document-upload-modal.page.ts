@@ -7,6 +7,7 @@ export class DocumentUploadModalPage {
   readonly supportedFileExtensions: Locator;
   readonly cancelModalButton: Locator;
   readonly confirmOkModalButton: Locator;
+  readonly documentModalCloseButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,6 +16,7 @@ export class DocumentUploadModalPage {
     this.documentInput = page.getByTestId('upload-input');
     this.cancelModalButton = page.getByTestId('cancel-modal-button');
     this.confirmOkModalButton = page.getByTestId('ok-modal-button');
+    this.documentModalCloseButton = page.locator("div[class='modal-close-btn']");
   }
 
   async uploadDocument(fileName: string) {
@@ -49,5 +51,13 @@ export class DocumentUploadModalPage {
 
   async getSupportedFileExtensionsText(): Promise<string> {
     return await this.supportedFileExtensions.innerText();
+  }
+
+  async documentCloseModalButtonClick() {
+    this.documentModalCloseButton.click();
+  }
+
+  async documentCancelModalButtonClick() {
+    this.cancelModalButton.click();
   }
 }

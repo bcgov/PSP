@@ -120,6 +120,8 @@ const AddConsolidationView: React.FunctionComponent<
                           <PropertySelectorPidSearchComponent
                             setSelectProperty={selectedProperty => push(selectedProperty)}
                             PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
+                            dataTestIdSearchButton="consolidation-parent-search-button"
+                            dataTestIdSection="consolidation-parent-section"
                           />
                         </Tab>
                       </StyledTabView>

@@ -29,11 +29,8 @@ test.describe('Acquisition reminder feature', () => {
 
     await test.step('update the reminder', async () => {
       await acquisitionSummaryPage.noticeOfClaimReminder.openPopover();
-
       await acquisitionSummaryPage.noticeOfClaimReminder.setDate(UPDATED_REMINDER_DATE);
-
       await acquisitionSummaryPage.noticeOfClaimReminder.save();
-
       await expect(acquisitionSummaryPage.noticeOfClaimReminder.reminderButton).toHaveAttribute(
         'title',
         `Reminder set for ${UPDATED_REMINDER_DATE}`
@@ -42,9 +39,7 @@ test.describe('Acquisition reminder feature', () => {
 
     await test.step('delete the reminder', async () => {
       await acquisitionSummaryPage.noticeOfClaimReminder.openPopover();
-
       await acquisitionSummaryPage.noticeOfClaimReminder.remove();
-
       await expect.poll(() => acquisitionSummaryPage.noticeOfClaimReminder.isSet()).toBe(false);
     });
   });

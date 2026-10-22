@@ -31,6 +31,27 @@ export const formatApiDate = (apiDate: string | null | undefined): string => {
   });
 };
 
+export const formatApiBoolean = (value: boolean | null | undefined): string => {
+  if (value == null) {
+    return 'No';
+  }
+
+  return value ? 'Yes' : 'No';
+};
+
+export const formatSqToMts = (area: string): string => {
+  if (area === '') {
+    return '';
+  }
+
+  const value = Number(area);
+
+  return `${value.toLocaleString('en-CA', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 4,
+  })} m\r\n2`;
+};
+
 export function nullableBooleanToYesNoString(value?: boolean | null): string {
   if (value === true) return 'Yes';
   return 'No';

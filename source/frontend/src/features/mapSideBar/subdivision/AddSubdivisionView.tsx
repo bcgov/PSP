@@ -124,6 +124,8 @@ const AddSubdivisionView: React.FunctionComponent<
                         setFieldValue('sourceProperty', selectedProperty)
                       }
                       PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
+                      dataTestIdSection="subdivision-parent-section"
+                      dataTestIdSearchButton="subdivision-parent-search-button"
                     />
                   </Tab>
                 </StyledTabView>
