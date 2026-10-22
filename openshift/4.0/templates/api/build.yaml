@@ -1,4 +1,4 @@
-# This is a build template for .NET 6
+# This is a build template for .NET 10
 # It will build a new image from the specified source control repo
 # that will run your application.
 kind: Template
@@ -6,8 +6,8 @@ apiVersion: template.openshift.io/v1
 metadata:
   name: pims-api-build
   annotations:
-    openshift.io/display-name: .NET 6 Build Template
-    description: Build template for a .NET 6 application.
+    openshift.io/display-name: .NET 10 Build Template
+    description: Build template for a .NET 10 application.
     tags: pims-api
 parameters:
   - name: APP_NAME
@@ -38,11 +38,11 @@ parameters:
   - name: BUILDIMAGE_NAME
     displayName: "Source Image Name"
     description: "The image to use as the Builder Image."
-    value: "dotnet-80"
+    value: "dotnet-100"
   - name: BUILDIMAGE_TAG
     displayName: "Source Image Tag"
     description: "The s2i image tag which is used to build the code."
-    value: "8.0"
+    value: "10.0"
 
   - name: GIT_URL
     displayName: Git Repository URL

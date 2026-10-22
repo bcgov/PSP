@@ -26,11 +26,13 @@ namespace Pims.Api.Helpers.Validators
 
             var claim = _context.PimsNoticeOfClaims
                 .FirstOrDefault(noc => noc.NoticeOfClaimId == notification.NoticeOfClaimId.Value) ?? throw new KeyNotFoundException("Notice of Claim not found.");
-            if (claim.AcquisitionFileId != notification.AcquisitionFileId)
+
+            // A claim can belong to both file types, but a notification targets only one file.
+            if (notification.AcquisitionFileId.HasValue && claim.AcquisitionFileId != notification.AcquisitionFileId)
             {
                 throw new InvalidOperationException("Notice of Claim's AcquisitionFileId does not match the notification's AcquisitionFileId.");
             }
-            if (claim.ManagementFileId != notification.ManagementFileId)
+            if (notification.ManagementFileId.HasValue && claim.ManagementFileId != notification.ManagementFileId)
             {
                 throw new InvalidOperationException("Notice of Claim's ManagementFileId does not match the notification's ManagementFileId.");
             }
