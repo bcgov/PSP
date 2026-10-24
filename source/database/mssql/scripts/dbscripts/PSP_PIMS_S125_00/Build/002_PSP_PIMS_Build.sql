@@ -26417,6 +26417,8 @@ CREATE TABLE [dbo].[PIMS_NOTIFICATION]  (
 	[ACQUISITION_FILE_ID]           	bigint NULL,
 	[DISPOSITION_FILE_ID]           	bigint NULL,
 	[DISPOSITION_AGREEMENT_ID]        bigint NULL, -- Added for PSP-12086
+	[DISPOSITION_OFFER_ID]            bigint NULL, -- Added for PSP-12086
+	[DISPOSITION_SALE_ID]             bigint NULL, -- Added for PSP-12086
 	[RESEARCH_FILE_ID]              	bigint NULL,
 	[MANAGEMENT_FILE_ID]            	bigint NULL,
 	[LEASE_ID]                      	bigint NULL,
@@ -26475,6 +26477,18 @@ EXEC sp_addextendedproperty
 	@level0type = N'Schema', @level0name = N'dbo',
 	@level1type = N'Table', @level1name = N'PIMS_NOTIFICATION',
 	@level2type = N'Column', @level2name = N'DISPOSITION_AGREEMENT_ID'
+GO
+EXEC sp_addextendedproperty
+	@name = N'MS_Description', @value = N'Foreign key to the PIMS_DISPOSITION_OFFER table.' ,
+	@level0type = N'Schema', @level0name = N'dbo',
+	@level1type = N'Table', @level1name = N'PIMS_NOTIFICATION',
+	@level2type = N'Column', @level2name = N'DISPOSITION_OFFER_ID'
+GO
+EXEC sp_addextendedproperty
+	@name = N'MS_Description', @value = N'Foreign key to the PIMS_DISPOSITION_SALE table.' ,
+	@level0type = N'Schema', @level0name = N'dbo',
+	@level1type = N'Table', @level1name = N'PIMS_NOTIFICATION',
+	@level2type = N'Column', @level2name = N'DISPOSITION_SALE_ID'
 GO
 EXEC sp_addextendedproperty
 	@name = N'MS_Description', @value = N'Foreign key to the PIMS_RESEARCH_FILE table.' ,
@@ -26647,6 +26661,8 @@ CREATE TABLE [dbo].[PIMS_NOTIFICATION_HIST]  (
 	[ACQUISITION_FILE_ID]           	bigint NULL,
 	[DISPOSITION_FILE_ID]           	bigint NULL,
 	[DISPOSITION_AGREEMENT_ID]        bigint NULL, -- Added for PSP-12086
+	[DISPOSITION_OFFER_ID]            bigint NULL, -- Added for PSP-12086
+	[DISPOSITION_SALE_ID]             bigint NULL, -- Added for PSP-12086
 	[RESEARCH_FILE_ID]              	bigint NULL,
 	[MANAGEMENT_FILE_ID]            	bigint NULL,
 	[LEASE_ID]                      	bigint NULL,
