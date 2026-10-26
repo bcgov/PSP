@@ -38,4 +38,5 @@ export interface ApiGen_Concepts_DispositionFile extends ApiGen_Concepts_FileWit
   dispositionOffers: ApiGen_Concepts_DispositionFileOffer[] | null;
   dispositionSale: ApiGen_Concepts_DispositionFileSale | null;
   dispositionAppraisal: ApiGen_Concepts_DispositionFileAppraisal | null;
+  canEdit: boolean;
 }

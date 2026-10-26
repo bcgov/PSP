@@ -95,7 +95,7 @@ namespace Pims.Api.Helpers.Extensions
             var project = dispositionFile.ProjectId.HasValue ? projectRepository.TryGet(dispositionFile.ProjectId.Value) : null;
             var cannotDetermineRegion = lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
 
-            return dispositionFile.CanEditDispositionFile(pimsUser, project, cannotDetermineRegion?.RegionCode);
+            return CanEditDispositionFile(dispositionFile, pimsUser, project, cannotDetermineRegion?.RegionCode);
         }
 
         private static bool IsUserAssignedToDispositionFileRegion(this PimsDispositionFile dispositionFile, PimsUser pimsUser)
@@ -106,15 +106,9 @@ namespace Pims.Api.Helpers.Extensions
             {
                 return false;
             }
-
-            if (pimsUser.IsContractor)
-            {
-                // Contractors can only access leases with a valid region
-                return pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == dispositionFile.RegionCode);
-            }
             else
             {
-                // For ministry staff, they can access leases without any region attached.
+                // Contractors can only access leases with a valid region
                 return pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == dispositionFile.RegionCode);
             }
         }
@@ -126,7 +120,7 @@ namespace Pims.Api.Helpers.Extensions
                 return false;
             }
 
-            var isOnLeaseTeam =
+            var isOnDispositionTeam =
                 dispositionFile.PimsDispositionFileTeams.Any(
                     x => x.PersonId == pimsUser.PersonId);
 
@@ -137,7 +131,7 @@ namespace Pims.Api.Helpers.Extensions
 
             if (pimsUser.IsContractor)
             {
-                return (isOnLeaseTeam || isOnProjectTeam)
+                return (isOnDispositionTeam || isOnProjectTeam)
                     && dispositionFile.IsUserAssignedToDispositionFileRegion(pimsUser);
             }
 
@@ -145,7 +139,7 @@ namespace Pims.Api.Helpers.Extensions
 
             return isCannotDetermineRegion
                 || dispositionFile.IsUserAssignedToDispositionFileRegion(pimsUser)
-                || isOnLeaseTeam
+                || isOnDispositionTeam
                 || isOnProjectTeam;
         }
 
