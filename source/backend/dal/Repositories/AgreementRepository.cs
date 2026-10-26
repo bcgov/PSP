@@ -126,9 +126,9 @@ namespace Pims.Dal.Repositories
                 notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_COMPTDT));
             }
 
-            if (!agreement.CompletionDate.HasValue)
+            if (!agreement.TerminationDate.HasValue)
             {
-                notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_COMPTDT));
+                notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_TERMINDT));
             }
 
             var notificationIds = Context.PimsNotifications.Where(n => n.AgreementId == agreement.AgreementId && notificationTypesToDelete.Contains(n.NotificationTypeCode))
