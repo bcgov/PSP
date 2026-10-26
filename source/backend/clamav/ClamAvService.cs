@@ -77,16 +77,20 @@ namespace Pims.Av
             switch (scanResult.Result)
             {
                 case ClamScanResults.Unknown:
-                    this._logger.LogError("ClamAV scan failed", scanResult);
+                    this._logger.LogError("ClamAV scan failed: {ScanResult}", scanResult);
                     throw new AvException("Virus scan failed with unknown response. If you continue to see this error, please contact your site administrator.");
                 case ClamScanResults.Clean:
-                    this._logger.LogDebug("ClamAV scan was clean", scanResult);
+                    // FIX CA1873: Wrap in an IsEnabled block so nothing is evaluated if Debug logs are turned off
+                    if (this._logger.IsEnabled(LogLevel.Debug))
+                    {
+                        this._logger.LogDebug("ClamAV scan was clean: {ScanResult}", scanResult.RawResult);
+                    }
                     break;
                 case ClamScanResults.VirusDetected:
-                    this._logger.LogWarning("ClamAV scan possible threat", scanResult);
+                    this._logger.LogWarning("ClamAV scan possible threat: {ScanResult}", scanResult);
                     throw new AvException($"Virus scan failed, one or more threats found. If you are confident this file is safe, please contact your site administrator.");
                 case ClamScanResults.Error:
-                    this._logger.LogError("ClamAV scan returned an error", scanResult);
+                    this._logger.LogError("ClamAV scan returned an error: {ScanResult}", scanResult);
                     throw new AvException($"Virus scan failed with error: {scanResult.RawResult}. If you continue to see this error, please contact your site administrator.");
             }
             this._logger.LogInformation("ClamAV scan end");
