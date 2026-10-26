@@ -33,7 +33,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Searching for contacts...");
 
-            _logger.LogDebug("Contact search with filter", filter);
+            _logger.LogDebug("Contact search with filter: {Filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.ContactView);
             Paged<PimsContactMgrVw> contacts = _contactRepository.GetPage(filter);
             return contacts;
