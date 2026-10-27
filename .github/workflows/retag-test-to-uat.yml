@@ -75,7 +75,7 @@ jobs:
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/frontend_predeploy_scan.sarif
       - name: Upload frontend SARIF to Security tab
         if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: frontend_predeploy_scan.sarif
           category: uat-frontend-predeploy
@@ -88,7 +88,7 @@ jobs:
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/api_predeploy_scan.sarif
       - name: Upload api SARIF to Security tab
         if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: api_predeploy_scan.sarif
           category: uat-api-predeploy
@@ -101,7 +101,7 @@ jobs:
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/proxy_predeploy_scan.sarif
       - name: Upload proxy SARIF to Security tab
         if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: proxy_predeploy_scan.sarif
           category: uat-proxy-predeploy
@@ -114,13 +114,13 @@ jobs:
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/scheduler_predeploy_scan.sarif
       - name: Upload scheduler SARIF to Security tab
         if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: scheduler_predeploy_scan.sarif
           category: uat-scheduler-predeploy
       - name: Upload scan reports
         if: always()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: uat-predeploy-scan-reports
           path: |
@@ -131,7 +131,7 @@ jobs:
           retention-days: 14
       - name: Upload SARIF files
         if: always()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: uat-predeploy-sarif-reports
           path: |

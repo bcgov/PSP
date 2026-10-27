@@ -62,7 +62,7 @@ jobs:
           fetch-depth: 0
       - name: "Get Previous tag"
         id: previoustag
-        uses: WyriHaximus/github-action-get-previous-tag@04e8485ecb6487243907e330d522ff60f02283ce # v1.4.0
+        uses: WyriHaximus/github-action-get-previous-tag@61819f33034117e6c686e6a31dba995a85afc9de # v2.0.0
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
@@ -89,31 +89,31 @@ jobs:
           fi
       - name: Upload frontend SARIF to Security tab
         if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: pims-app_prod_predeploy_scan.sarif
           category: prod-frontend-predeploy
       - name: Upload api SARIF to Security tab
         if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: pims-api_prod_predeploy_scan.sarif
           category: prod-api-predeploy
       - name: Upload proxy SARIF to Security tab
         if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: pims-proxy_prod_predeploy_scan.sarif
           category: prod-proxy-predeploy
       - name: Upload scheduler SARIF to Security tab
         if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: pims-scheduler_prod_predeploy_scan.sarif
           category: prod-scheduler-predeploy
       - name: Upload scan reports
         if: always()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: prod-predeploy-scan-reports
           path: |
@@ -124,7 +124,7 @@ jobs:
           retention-days: 14
       - name: Upload SARIF files
         if: always()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: uat-predeploy-sarif-reports
           path: |
