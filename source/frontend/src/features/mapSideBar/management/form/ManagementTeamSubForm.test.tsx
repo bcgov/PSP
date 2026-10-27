@@ -1,8 +1,8 @@
 import { Formik, FormikProps, getIn } from 'formik';
 import { createRef } from 'react';
 
-import { ApiGen_CodeTypes_ManagementTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementTeamProfileTypes';
 import { mockLookups } from '@/mocks/index.mock';
+import { ApiGen_CodeTypes_ManagementTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementTeamProfileTypes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -117,23 +117,54 @@ describe('ManagementTeamSubForm component', () => {
     });
     const addRow = getByTestId('add-team-member');
     await act(async () => userEvent.click(addRow));
-    await act(async () => selectOptions('team.0.teamProfileTypeCode', 'MINSTAFF'));
-    expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
-  });
-
-  it('restricts key contact selection to PIMS users', async () => {
-    const { getByTestId, getByTitle } = setup({ initialForm: testForm });
-    await act(async () => userEvent.click(getByTestId('add-team-member')));
     await act(async () =>
       selectOptions(
         'team.0.teamProfileTypeCode',
-        ApiGen_CodeTypes_ManagementTeamProfileTypes.KEYCNTCT,
+        ApiGen_CodeTypes_ManagementTeamProfileTypes.MINSTAFF,
       ),
     );
-    await act(async () => userEvent.click(getByTitle('Select Contact')));
-
-    expect(document.querySelector('#input-searchBy-pimsusers')).toBeInTheDocument();
-    expect(document.querySelector('#input-searchBy-persons')).toBeNull();
-    expect(document.querySelector('#input-searchBy-organizations')).toBeNull();
+    expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
   });
+
+  it.each([
+    {
+      profile: ApiGen_CodeTypes_ManagementTeamProfileTypes.KEYCNTCT,
+      description: 'only PIMS users',
+      pimsUsers: true,
+      persons: false,
+      organizations: false,
+    },
+    {
+      profile: ApiGen_CodeTypes_ManagementTeamProfileTypes.MINSTAFF,
+      description: 'only PIMS users',
+      pimsUsers: true,
+      persons: false,
+      organizations: false,
+    },
+    {
+      profile: ApiGen_CodeTypes_ManagementTeamProfileTypes.CONTRACT,
+      description: 'individuals and organizations',
+      pimsUsers: true,
+      persons: true,
+      organizations: true,
+    },
+  ])(
+    'allows $description to be selected for $profile team members',
+    async ({ profile, pimsUsers, persons, organizations }) => {
+      const { getByTestId, getByTitle } = setup({ initialForm: testForm });
+      await act(async () => userEvent.click(getByTestId('add-team-member')));
+      await act(async () => selectOptions('team.0.teamProfileTypeCode', profile));
+      await act(async () => userEvent.click(getByTitle('Select Contact')));
+
+      const pimsUsersOption = document.querySelector('#input-searchBy-pimsusers');
+      const personsOption = document.querySelector('#input-searchBy-persons');
+      const organizationsOption = document.querySelector('#input-searchBy-organizations');
+
+      pimsUsers ? expect(pimsUsersOption).toBeInTheDocument() : expect(pimsUsersOption).toBeNull();
+      persons ? expect(personsOption).toBeInTheDocument() : expect(personsOption).toBeNull();
+      organizations
+        ? expect(organizationsOption).toBeInTheDocument()
+        : expect(organizationsOption).toBeNull();
+    },
+  );
 });
