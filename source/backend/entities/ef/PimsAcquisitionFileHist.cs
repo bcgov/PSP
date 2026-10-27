@@ -118,10 +118,6 @@ public partial class PimsAcquisitionFileHist
     [StringLength(2000)]
     public string PhysicalFileDetails { get; set; }
 
-    [Column("OWNER_REP_COMMENT")]
-    [StringLength(2000)]
-    public string OwnerRepComment { get; set; }
-
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
@@ -179,4 +175,8 @@ public partial class PimsAcquisitionFileHist
     [Column("FILE_NUMBER")]
     [StringLength(18)]
     public string FileNumber { get; set; }
+
+    [Column("OWNER_REP_COMMENT")]
+    [StringLength(2000)]
+    public string OwnerRepComment { get; set; }
 }

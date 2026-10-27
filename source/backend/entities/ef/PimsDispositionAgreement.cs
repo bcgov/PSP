@@ -237,4 +237,7 @@ public partial class PimsDispositionAgreement
     [ForeignKey("DspAgreementStatusTypeCode")]
     [InverseProperty("PimsDispositionAgreements")]
     public virtual PimsDspAgreementStatusType DspAgreementStatusTypeCodeNavigation { get; set; }
+
+    [InverseProperty("DispositionAgreement")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
 }
