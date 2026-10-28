@@ -67,7 +67,7 @@ jobs:
           # User defined upload name. Visible in Codecov UI
           name: PIMS
           # Path to coverage file to upload
-          file: ./coverage.opencover.xml
+          files: ./coverage.opencover.xml
           # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
           flags: unittests
           env_vars: C#
@@ -83,7 +83,7 @@ jobs:
           # User defined upload name. Visible in Codecov UI
           name: PIMS
           # Path to coverage file to upload
-          file: ./coverage-final.json
+          files: ./coverage-final.json
           # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
           flags: unittests
           # Environment variables to tag the upload with (e.g. PYTHON | OS,PYTHON)
