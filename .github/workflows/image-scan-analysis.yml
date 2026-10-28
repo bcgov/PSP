@@ -86,7 +86,7 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -96,11 +96,7 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> "$GITHUB_OUTPUT"
+            { echo "body<<EOF"; cat "${{env.output-filename}}"; echo; echo "EOF"; } >> "$GITHUB_OUTPUT"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -215,7 +211,7 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -226,11 +222,7 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> "$GITHUB_OUTPUT"
+            { echo "body<<EOF"; cat "${{env.output-filename}}"; echo; echo "EOF"; } >> "$GITHUB_OUTPUT"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -348,7 +340,7 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -359,11 +351,7 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> "$GITHUB_OUTPUT"
+            { echo "body<<EOF"; cat "${{env.output-filename}}"; echo; echo "EOF"; } >> "$GITHUB_OUTPUT"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -478,7 +466,7 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -489,11 +477,7 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> "$GITHUB_OUTPUT"
+            { echo "body<<EOF"; cat "${{env.output-filename}}"; echo; echo "EOF"; } >> "$GITHUB_OUTPUT"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -608,7 +592,7 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -619,11 +603,7 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> "$GITHUB_OUTPUT"
+            { echo "body<<EOF"; cat "${{env.output-filename}}"; echo; echo "EOF"; } >> "$GITHUB_OUTPUT"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -739,7 +719,7 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -750,11 +730,7 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> "$GITHUB_OUTPUT"
+            { echo "body<<EOF"; cat "${{env.output-filename}}"; echo; echo "EOF"; } >> "$GITHUB_OUTPUT"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -871,7 +847,7 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -881,11 +857,7 @@ jobs:
         run: |
           cd ${{env.image-name}}/
           if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> "$GITHUB_OUTPUT"
+            { echo "body<<EOF"; cat "${{env.output-filename}}"; echo; echo "EOF"; } >> "$GITHUB_OUTPUT"
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
