@@ -9,5 +9,11 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "KEYCNTCT")]
         KEYCNTCT,
+
+        [EnumMember(Value = "MINSTAFF")]
+        MINSTAFF,
+
+        [EnumMember(Value = "CONTRACT")]
+        CONTRACT,
     }
 }

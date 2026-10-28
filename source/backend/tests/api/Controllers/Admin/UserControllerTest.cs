@@ -51,7 +51,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<UserModel>>(actionResult.Value);
-            mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
+            mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items, options => options.IgnoringCyclicReferences());
             repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
 
@@ -76,7 +76,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<UserModel>>(actionResult.Value);
-            mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
+            mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items, options => options.IgnoringCyclicReferences());
             repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
         #endregion
@@ -103,7 +103,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<UserModel>>(actionResult.Value);
-            mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items);
+            mapper.Map<UserModel[]>(users).Should().BeEquivalentTo(actualResult.Items, options => options.IgnoringCyclicReferences());
             repository.Verify(m => m.GetAllByFilter(It.IsAny<Entity.Models.UserFilter>()), Times.Once());
         }
         #endregion
@@ -128,7 +128,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<UserModel>(actionResult.Value);
-            mapper.Map<UserModel>(user).Should().BeEquivalentTo(actualResult);
+            mapper.Map<UserModel>(user).Should().BeEquivalentTo(actualResult, options => options.IgnoringCyclicReferences());
             repository.Verify(m => m.GetByKeycloakUserId(user.GuidIdentifierValue.Value), Times.Once());
         }
         #endregion

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
@@ -25,6 +25,8 @@ export const NotificationInboxView: FC<INotificationInboxViewProps> = ({
   onToggleRead,
   onDelete,
 }) => {
+  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
+
   if (!isLoading && items.length === 0) {
     return (
       <Container>
@@ -45,6 +47,10 @@ export const NotificationInboxView: FC<INotificationInboxViewProps> = ({
             onSelect={onSelect}
             onToggleRead={onToggleRead}
             onDelete={onDelete}
+            isMenuOpen={openMenuId === item.id}
+            onMenuToggle={isOpen =>
+              setOpenMenuId(current => (isOpen ? item.id : current === item.id ? null : current))
+            }
           />
         ))}
         {isLoading && items.length === 0 && <EmptyState>Loading…</EmptyState>}

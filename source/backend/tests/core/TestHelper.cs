@@ -70,8 +70,10 @@ namespace Pims.Core.Test
 
             config.Apply(registers);
 
+            // Mirror PIMS production rule flags
             config.Default.IgnoreNonMapped(true);
             config.Default.IgnoreNullValues(true);
+            config.Default.PreserveReference(true);
             config.AllowImplicitDestinationInheritance = true;
             config.AllowImplicitSourceInheritance = true;
             config.Default.UseDestinationValue(member =>

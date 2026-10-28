@@ -12,7 +12,10 @@ namespace Pims.Dal.Entities;
 [Table("PIMS_NOTIFICATION")]
 [Index("AcquisitionFileId", Name = "NOTIFY_ACQUISITION_FILE_ID_IDX")]
 [Index("AgreementId", Name = "NOTIFY_AGREEMENT_ID_IDX")]
+[Index("DispositionAgreementId", Name = "NOTIFY_DISPOSITION_AGREEMENT_ID_IDX")]
 [Index("DispositionFileId", Name = "NOTIFY_DISPOSITION_FILE_ID_IDX")]
+[Index("DispositionOfferId", Name = "NOTIFY_DISPOSITION_OFFER_ID_IDX")]
+[Index("DispositionSaleId", Name = "NOTIFY_DISPOSITION_SALE_ID_IDX")]
 [Index("ExpropOwnerHistoryId", Name = "NOTIFY_EXPROP_OWNER_HISTORY_ID_IDX")]
 [Index("InsuranceId", Name = "NOTIFY_INSURANCE_ID_IDX")]
 [Index("LeaseConsultationId", Name = "NOTIFY_LEASE_CONSULTATION_ID_IDX")]
@@ -218,6 +221,15 @@ public partial class PimsNotification
     [Column("LEASE_PERIOD_ID")]
     public long? LeasePeriodId { get; set; }
 
+    [Column("DISPOSITION_AGREEMENT_ID")]
+    public long? DispositionAgreementId { get; set; }
+
+    [Column("DISPOSITION_OFFER_ID")]
+    public long? DispositionOfferId { get; set; }
+
+    [Column("DISPOSITION_SALE_ID")]
+    public long? DispositionSaleId { get; set; }
+
     [ForeignKey("AcquisitionFileId")]
     [InverseProperty("PimsNotifications")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
@@ -226,9 +238,21 @@ public partial class PimsNotification
     [InverseProperty("PimsNotifications")]
     public virtual PimsAgreement Agreement { get; set; }
 
+    [ForeignKey("DispositionAgreementId")]
+    [InverseProperty("PimsNotifications")]
+    public virtual PimsDispositionAgreement DispositionAgreement { get; set; }
+
     [ForeignKey("DispositionFileId")]
     [InverseProperty("PimsNotifications")]
     public virtual PimsDispositionFile DispositionFile { get; set; }
+
+    [ForeignKey("DispositionOfferId")]
+    [InverseProperty("PimsNotifications")]
+    public virtual PimsDispositionOffer DispositionOffer { get; set; }
+
+    [ForeignKey("DispositionSaleId")]
+    [InverseProperty("PimsNotifications")]
+    public virtual PimsDispositionSale DispositionSale { get; set; }
 
     [ForeignKey("ExpropOwnerHistoryId")]
     [InverseProperty("PimsNotifications")]

@@ -51,7 +51,7 @@ namespace Pims.Api.Services
 
         public bool Delete(long id)
         {
-            _logger.LogInformation("Deleting Expropriation Payment with id ...", id);
+            _logger.LogInformation("Deleting Expropriation Payment with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
             var deleteAttempt = _expropriationPaymentRepository.TryDelete(id);

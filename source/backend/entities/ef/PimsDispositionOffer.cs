@@ -164,4 +164,7 @@ public partial class PimsDispositionOffer
     [ForeignKey("DispositionOfferStatusTypeCode")]
     [InverseProperty("PimsDispositionOffers")]
     public virtual PimsDispositionOfferStatusType DispositionOfferStatusTypeCodeNavigation { get; set; }
+
+    [InverseProperty("DispositionOffer")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
 }
