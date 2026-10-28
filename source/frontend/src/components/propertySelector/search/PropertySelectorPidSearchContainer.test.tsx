@@ -76,7 +76,8 @@ describe('PropertySearchPidSelector component', () => {
   });
 
   it('calls setSelectedProperty when onSearch', async () => {
-    mockGetByPidWrapper.execute.mockResolvedValue({ property: { id: 1 } });
+    const property = { id: 442, isOwned: false, isRetired: false };
+    mockGetByPidWrapper.execute.mockResolvedValue({ foundInPims: true, property });
 
     await setup();
 
@@ -85,6 +86,8 @@ describe('PropertySearchPidSelector component', () => {
     });
 
     expect(mockGetByPidWrapper.execute).toHaveBeenCalledWith('111-111-111');
+    expect(setSelectProperty).toHaveBeenCalledWith(property);
+    expect(screen.queryByText('No property was found in Core Inventory or PMBC.')).toBeNull();
   });
 
   it('displays an error modal when the property is not owned', async () => {

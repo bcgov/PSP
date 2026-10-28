@@ -37,6 +37,8 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
               handleOk: () => setDisplayModal(false),
             });
             setDisplayModal(true);
+          } else if (result?.foundInPims && result?.property) {
+            setSelectProperty(result.property);
           } else if (result?.foundInPims === false && result?.property) {
             setModalContent({
               variant: 'info',
