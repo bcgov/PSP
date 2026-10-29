@@ -218,8 +218,7 @@ namespace Pims.Api.Services
                         stakeholder.PersonId.HasValue
                             ? stakeholder.Person.GetFullName()
                             : stakeholder.Organization?.Name)
-                    .Where(name => !string.IsNullOrWhiteSpace(name))
-            );
+                    .Where(name => !string.IsNullOrWhiteSpace(name)));
         }
 
         private async Task<EmailRequest> GenerateEmailRequest(PimsNotificationUserOutput userNotification)
