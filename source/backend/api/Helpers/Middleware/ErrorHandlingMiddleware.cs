@@ -236,8 +236,9 @@ namespace Pims.Api.Helpers.Middleware
             }
             else if (ex is AuthenticationException authenticationException)
             {
+                code = HttpStatusCode.Unauthorized;
                 message = authenticationException.Message;
-                details = authenticationException.InnerException?.Message ?? string.Empty;
+                details = string.Empty;
 
                 _logger.LogError(authenticationException, "Unable to validate authentication information.");
             }

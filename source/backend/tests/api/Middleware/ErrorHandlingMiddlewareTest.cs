@@ -14,7 +14,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Pims.Api.Helpers.Middleware;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
+using Pims.Dal.Exceptions;
 using Xunit;
 
 namespace Pims.Api.Test.Middleware
@@ -70,6 +72,10 @@ namespace Pims.Api.Test.Middleware
         new object[] { new BusinessRuleViolationException("rule"), HttpStatusCode.BadRequest },
         new object[] { new InvalidOperationException("bad"), HttpStatusCode.BadRequest },
         new object[] { new Exception("boom"), HttpStatusCode.InternalServerError },
+        new object[] { new LtsaException("LTSA service is not available"), HttpStatusCode.InternalServerError },
+        new object[] { new AuthenticationException("auth failed"), HttpStatusCode.Unauthorized },
+        new object[] { new UserOverrideException("User override is required. Approve?"), HttpStatusCode.Conflict },
+        new object[] { new ConcurrencyControlNumberMissingException(), HttpStatusCode.BadRequest },
     };
 
         [Theory]
