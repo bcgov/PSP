@@ -158,23 +158,21 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, "Invalid operation or bad request details.");
             }
-            else if (ex is UserOverrideException)
+            else if (ex is UserOverrideException uiException)
             {
-                var exception = ex as UserOverrideException;
                 code = HttpStatusCode.Conflict;
-                message = exception.Message;
-                errorCode = (ex as UserOverrideException).UserOverride?.Code;
+                message = uiException.Message;
+                errorCode = uiException.UserOverride?.Code;
 
-                _logger.LogError(ex, "User override required to complete this action.");
+                _logger.LogError(uiException, "User override required to complete this action.");
             }
-            else if (ex is ForeignKeyDependencyException)
+            else if (ex is ForeignKeyDependencyException fkdException)
             {
-                var exception = ex as ForeignKeyDependencyException;
                 code = HttpStatusCode.Conflict;
-                message = exception.Message;
+                message = fkdException.Message;
                 errorCode = null;
 
-                _logger.LogError(ex, "User deleting a foreign key dependency");
+                _logger.LogError(fkdException, "User attempted to delete a foreign key dependency");
             }
             else if (ex is ContractorNotInTeamException)
             {
@@ -183,19 +181,18 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, ex.Message);
             }
-            else if (ex is ApiHttpRequestException)
+            else if (ex is ApiHttpRequestException apiException)
             {
-                var exception = ex as ApiHttpRequestException;
-                code = exception.StatusCode ?? HttpStatusCode.InternalServerError;
-                message = ex.Message;
+                code = apiException.StatusCode ?? HttpStatusCode.InternalServerError;
+                message = apiException.Message;
 
                 try
                 {
-                    using var responseStream = await exception?.Response.Content.ReadAsStreamAsync();
+                    using var responseStream = await apiException?.Response.Content.ReadAsStreamAsync(context.RequestAborted);
                     responseStream.Position = 0;
                     using var readStream = new StreamReader(responseStream, Encoding.UTF8);
                     details = readStream.ReadToEnd(); // TODO: PSP-4419 Rewrite this logic.
-                    _logger.LogError(ex, details);
+                    _logger.LogError(apiException, details);
                 }
                 catch (Exception streamEx)
                 {
@@ -218,19 +215,18 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, "clamav unhandled exception.");
             }
-            else if (ex is HttpClientRequestException || ex is ProxyRequestException)
+            else if (ex is HttpClientRequestException httpException)
             {
-                var exception = ex as HttpClientRequestException;
-                code = exception.StatusCode ?? HttpStatusCode.InternalServerError;
-                message = ex.Message;
+                code = httpException.StatusCode ?? HttpStatusCode.InternalServerError;
+                message = httpException.Message;
 
                 try
                 {
-                    using var responseStream = await exception?.Response.Content.ReadAsStreamAsync();
+                    using var responseStream = await httpException?.Response.Content.ReadAsStreamAsync(context.RequestAborted);
                     responseStream.Position = 0;
                     using var readStream = new StreamReader(responseStream, Encoding.UTF8);
                     details = readStream.ReadToEnd(); // TODO: PSP-4419 Rewrite this logic.
-                    _logger.LogError(ex, details);
+                    _logger.LogError(httpException, details);
                 }
                 catch (Exception streamEx)
                 {
@@ -238,13 +234,12 @@ namespace Pims.Api.Helpers.Middleware
                     _logger.LogError(streamEx, $"Failed to read the {nameof(HttpClientRequestException)} error stream.");
                 }
             }
-            else if (ex is AuthenticationException)
+            else if (ex is AuthenticationException authenticationException)
             {
-                var exception = ex as AuthenticationException;
-                message = exception.Message;
-                details = exception.InnerException?.Message ?? string.Empty;
+                message = authenticationException.Message;
+                details = authenticationException.InnerException?.Message ?? string.Empty;
 
-                _logger.LogError(ex, "Unable to validate authentication information.");
+                _logger.LogError(authenticationException, "Unable to validate authentication information.");
             }
             else
             {
@@ -256,12 +251,12 @@ namespace Pims.Api.Helpers.Middleware
                 var result = JsonSerializer.Serialize(new Models.ErrorResponseModel(_env, ex, message, details, errorCode), _options.JsonSerializerOptions);
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)code;
-                await context.Response.WriteAsync(result);
+                await context.Response.WriteAsync(result, context.RequestAborted);
             }
             else
             {
                 // Had to do this because odd errors were occurring when bearer tokens were failing.
-                await context.Response.WriteAsync(string.Empty);
+                await context.Response.WriteAsync(string.Empty, context.RequestAborted);
             }
         }
         #endregion
