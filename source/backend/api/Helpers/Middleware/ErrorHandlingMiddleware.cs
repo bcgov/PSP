@@ -188,7 +188,7 @@ namespace Pims.Api.Helpers.Middleware
 
                 try
                 {
-                    using var responseStream = await apiException?.Response.Content.ReadAsStreamAsync(context.RequestAborted);
+                    using var responseStream = await apiException.Response.Content.ReadAsStreamAsync(context.RequestAborted);
                     responseStream.Position = 0;
                     using var readStream = new StreamReader(responseStream, Encoding.UTF8);
                     details = readStream.ReadToEnd(); // TODO: PSP-4419 Rewrite this logic.
@@ -222,7 +222,7 @@ namespace Pims.Api.Helpers.Middleware
 
                 try
                 {
-                    using var responseStream = await httpException?.Response.Content.ReadAsStreamAsync(context.RequestAborted);
+                    using var responseStream = await httpException.Response.Content.ReadAsStreamAsync(context.RequestAborted);
                     responseStream.Position = 0;
                     using var readStream = new StreamReader(responseStream, Encoding.UTF8);
                     details = readStream.ReadToEnd(); // TODO: PSP-4419 Rewrite this logic.
