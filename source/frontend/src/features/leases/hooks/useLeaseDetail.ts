@@ -5,7 +5,6 @@ import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
-import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
@@ -39,11 +38,8 @@ export function useLeaseDetail(leaseId?: number) {
   const {
     getLeaseChecklist: { execute: getLeaseChecklist, loading: getLeaseChecklistLoading },
     getLeaseRenewals: { execute: getLeaseRenewals, loading: getLeaseRenewalsLoading },
+    getLeaseProject: { execute: getLeaseProject, loading: getLeaseProjectLoading },
   } = useLeaseRepository();
-
-  const {
-    getProject: { execute: getProjectFunction },
-  } = useProjectProvider();
 
   const getApiLeaseById = useApiRequestWrapper({
     requestFunction: getApiLease,
@@ -82,7 +78,7 @@ export function useLeaseDetail(leaseId?: number) {
 
       if (exists(leaseResponse)) {
         if (isValidId(leaseResponse.projectId)) {
-          leaseResponse.project = await getProjectFunction(leaseResponse.projectId);
+          leaseResponse.project = (await getLeaseProject(leaseId)) ?? null;
         }
 
         const mergedLeases: ApiGen_Concepts_Lease = {
@@ -114,7 +110,7 @@ export function useLeaseDetail(leaseId?: number) {
     getLeaseRenewals,
     setLease,
     setFile,
-    getProjectFunction,
+    getLeaseProject,
   ]);
 
   const loading =
@@ -123,7 +119,8 @@ export function useLeaseDetail(leaseId?: number) {
     getLeaseStakeholdersLoading ||
     leasePeriodsLoading ||
     getLeaseRenewalsLoading ||
-    getLeaseChecklistLoading;
+    getLeaseChecklistLoading ||
+    getLeaseProjectLoading;
 
   useDeepCompareEffect(() => {
     if (!lease) {
