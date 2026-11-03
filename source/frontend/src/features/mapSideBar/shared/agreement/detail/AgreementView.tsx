@@ -45,6 +45,8 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   const history = useHistory();
   const match = useRouteMatch();
   const { setModalContent, setDisplayModal } = useModalContext();
+  console.log('Has Agreement View:', keycloak.hasClaim(Claims.AGREEMENT_VIEW));
+  console.log('Has Disposition Edit:', keycloak.hasClaim(Claims.DISPOSITION_EDIT));
 
   return (
     <StyledSummarySection>
@@ -255,9 +257,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             </Section>
           </StyledAgreementBorder>
         ))}
-        {agreements.length === 0 && (
-          <p>There are no agreements indicated in this acquisition file.</p>
-        )}
+        {agreements.length === 0 && <p>There are no agreements indicated in this file.</p>}
       </Section>
     </StyledSummarySection>
   );

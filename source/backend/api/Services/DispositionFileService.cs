@@ -368,13 +368,12 @@ namespace Pims.Api.Services
 
         public PimsDispositionAppraisal AddDispositionFileAppraisal(long dispositionFileId, PimsDispositionAppraisal dispositionAppraisal)
         {
-            _logger.LogInformation("Adding disposition file offer to Disposition File with Id: {id}", dispositionFileId);
+            _logger.LogInformation("Adding disposition file appraisal to Disposition File with Id: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
-            dispositionFileParent.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
-            if (dispositionFileId != dispositionAppraisal.DispositionFileId || dispositionFileParent is null)
+            if (dispositionFileParent is null || dispositionFileId != dispositionAppraisal.DispositionFileId)
             {
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
@@ -389,6 +388,8 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+
+            dispositionFileParent.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             var newAppraisal = _dispositionFileRepository.AddDispositionFileAppraisal(dispositionAppraisal);
             _dispositionFileRepository.CommitTransaction();

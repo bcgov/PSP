@@ -14,6 +14,19 @@ import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/genera
 const onEdit = vi.fn();
 
 const mockDispositionFileApi = mockDispositionFileResponse();
+vi.mock('@/hooks/repositories/useNoteRepository', () => ({
+  useNoteRepository: () => ({
+    getAllNotes: {
+      execute: vi.fn(),
+      loading: false,
+      response: [],
+    },
+    deleteNote: {
+      execute: vi.fn(),
+      loading: false,
+    },
+  }),
+}));
 
 describe('DispositionSummaryView component', () => {
   // render component under test
@@ -73,6 +86,20 @@ describe('DispositionSummaryView component', () => {
     const editButton = queryByTitle('Edit disposition file');
     expect(editButton).toBeNull();
     expect(icon).toBeNull();
+  });
+
+  it('does not render the edit button for users who receive a canEdit flag as false from backend', async () => {
+    const { queryByTitle, queryByTestId } = setup(
+      {
+        dispositionFile: { ...mockDispositionFileResponse(), canEdit: false },
+      },
+      { claims: [Claims.DISPOSITION_EDIT] },
+    );
+    await waitForEffects();
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    const editButton = queryByTitle('Edit disposition file');
+    expect(editButton).toBeNull();
+    expect(icon).toBeVisible();
   });
 
   it('renders the warning icon for disposition files in non-editable status', async () => {

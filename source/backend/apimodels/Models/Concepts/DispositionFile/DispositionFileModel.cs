@@ -128,7 +128,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// <summary>
         /// get/set - Indicates if the disposition file can be edited.
         /// </summary>
-        public bool CanEdit { get; set; }
+        public bool? CanEdit { get; set; }
 
         #endregion
     }
