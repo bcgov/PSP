@@ -117,7 +117,7 @@ describe('Disposition Offer Detail View component', () => {
     expect(icon).toBeNull();
   });
 
-   it('hides the edit button for Appraisal for users without edit permissions', async () => {
+  it('hides the edit button for Appraisal for users without edit permissions', async () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile: {
@@ -205,7 +205,7 @@ describe('Disposition Offer Detail View component', () => {
     expect(icon).toBeNull();
   });
 
-   it('hides the edit button for Sale for users without edit permissions', async () => {
+  it('hides the edit button for Sale for users without edit permissions', async () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: { dispositionFile: { ...mockDispositionFileResponse(), canEdit: false } },
       claims: [Claims.DISPOSITION_EDIT],

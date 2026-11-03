@@ -166,19 +166,19 @@ describe('DispositionView component', () => {
     );
 
     vi.mocked(useNoteRepository).mockReturnValue({
-    addNote: { execute: vi.fn() },
-    getNote: { execute: vi.fn() },
-    updateNote: { execute: vi.fn() },
-    getAllNotes: {
-      execute: vi.fn().mockResolvedValue([]),
-      loading: false,
-      response: [],
-    },
-    deleteNote: {
-      execute: vi.fn(),
-      loading: false,
-    },
-  } as unknown as ReturnType<typeof useNoteRepository>);
+      addNote: { execute: vi.fn() },
+      getNote: { execute: vi.fn() },
+      updateNote: { execute: vi.fn() },
+      getAllNotes: {
+        execute: vi.fn().mockResolvedValue([]),
+        loading: false,
+        response: [],
+      },
+      deleteNote: {
+        execute: vi.fn(),
+        loading: false,
+      },
+    } as unknown as ReturnType<typeof useNoteRepository>);
     vi.mocked(useApiNotes).mockImplementation(
       () =>
         ({
