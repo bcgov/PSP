@@ -30,8 +30,8 @@ objects:
                   touch /usr/config/psp/source/database/mssql/.env;
                   PATH="/opt/mssql-tools/bin:$PATH"; cd
                   /usr/config/psp;
-                  git fetch origin ${GIT_BRANCH};
-                  git reset --h origin/${GIT_BRANCH};
+                  git fetch --depth 1 --no-tags origin ${GIT_BRANCH};
+                  git reset --hard FETCH_HEAD;
                   cd /usr/config/psp/source/database/mssql/scripts/dbscripts;
                   chmod 777 upgrade.sh;
                   chmod 777 db-deploy-transaction.sh;

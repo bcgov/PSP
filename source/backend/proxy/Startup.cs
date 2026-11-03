@@ -294,10 +294,11 @@ namespace Pims.Proxy
             app.Use(
             async (context, next) =>
             {
-                context.Response.Headers.Add("Strict-Transport-Security", "max-age=86400; includeSubDomains");
-                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-                context.Response.Headers.Add("X-XSS-Protection", "1");
-                context.Response.Headers.Add("X-Frame-Options", " DENY");
+                // ASP0015: Use strongly-typed properties for built-in, standard system headers
+                context.Response.Headers.StrictTransportSecurity = "max-age=86400; includeSubDomains";
+                context.Response.Headers.XContentTypeOptions = "nosniff";
+                context.Response.Headers.XXSSProtection = "1";
+                context.Response.Headers.XFrameOptions = "DENY";
                 await next().ConfigureAwait(true);
             });
         }

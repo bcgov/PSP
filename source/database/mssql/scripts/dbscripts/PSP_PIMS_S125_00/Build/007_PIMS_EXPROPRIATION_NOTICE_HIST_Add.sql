@@ -1,0 +1,52 @@
+-- *****************************************************************************
+-- Add the PIMS_EXPROPRIATION_NOTICE_HIST table back into the database.
+-- *****************************************************************************
+
+-- Add table dbo.PIMS_EXPROPRIATION_NOTICE_HIST
+PRINT N'Add table dbo.PIMS_EXPROPRIATION_NOTICE_HIST'
+GO
+
+CREATE SEQUENCE [dbo].[PIMS_EXPROPRIATION_NOTICE_H_ID_SEQ]
+	AS bigint
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	NO CYCLE
+	CACHE 50
+GO
+
+CREATE TABLE [dbo].[PIMS_EXPROPRIATION_NOTICE_HIST]  ( 
+  [_EXPROPRIATION_NOTICE_HIST_ID] 	bigint NOT NULL DEFAULT (NEXT VALUE FOR [PIMS_EXPROPRIATION_NOTICE_H_ID_SEQ]),
+  [EFFECTIVE_DATE_HIST]           	datetime NOT NULL DEFAULT (getutcdate()),
+  [END_DATE_HIST]                 	datetime NULL,
+  [EXPROPRIATION_NOTICE_ID]       	bigint NOT NULL,
+  [ACQUISITION_FILE_ID]           	bigint NOT NULL,
+  [COMPENSATION_REQUISITION_ID]   	bigint NULL,
+  [ACQUISITION_OWNER_ID]          	bigint NULL,
+  [INTEREST_HOLDER_ID]            	bigint NULL,
+  [EXPROP_NOTICE_SERVED_DT]       	date NOT NULL,
+  [CONCURRENCY_CONTROL_NUMBER]    	bigint NOT NULL,
+  [APP_CREATE_TIMESTAMP]          	datetime NOT NULL,
+  [APP_CREATE_USERID]             	nvarchar(30) NOT NULL,
+  [APP_CREATE_USER_GUID]          	uniqueidentifier NULL,
+  [APP_CREATE_USER_DIRECTORY]     	nvarchar(30) NOT NULL,
+  [APP_LAST_UPDATE_TIMESTAMP]     	datetime NOT NULL,
+  [APP_LAST_UPDATE_USERID]        	nvarchar(30) NOT NULL,
+  [APP_LAST_UPDATE_USER_GUID]     	uniqueidentifier NULL,
+  [APP_LAST_UPDATE_USER_DIRECTORY]	nvarchar(30) NOT NULL,
+  [DB_CREATE_TIMESTAMP]           	datetime NOT NULL,
+  [DB_CREATE_USERID]              	nvarchar(30) NOT NULL,
+  [DB_LAST_UPDATE_TIMESTAMP]      	datetime NOT NULL,
+  [DB_LAST_UPDATE_USERID]         	nvarchar(30) NOT NULL,
+  CONSTRAINT [PIMS_EXPNOT_H_PK] PRIMARY KEY CLUSTERED([_EXPROPRIATION_NOTICE_HIST_ID])
+)
+GO
+
+ALTER TABLE [dbo].[PIMS_EXPROPRIATION_NOTICE_HIST]
+	ADD CONSTRAINT [PIMS_EXPNOT_H_UK]
+	UNIQUE ([_EXPROPRIATION_NOTICE_HIST_ID], [END_DATE_HIST]) 
+	WITH (
+		DATA_COMPRESSION = NONE
+	) ON [PRIMARY]
+GO

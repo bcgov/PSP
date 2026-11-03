@@ -9,6 +9,18 @@ import ExpropriationEventHistoryView, {
   IExpropriationEventHistoryViewProps,
 } from './ExpropriationEventHistoryView';
 import { ExpropriationEventRow } from './models';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
+
+vi.mock('@/features/notifications/ReminderContainer', () => ({
+  default: (props: any) => (
+    <div
+      data-testid={`reminder-${props.notificationType}`}
+      data-key-date={props.keyDate}
+      data-expropiation-owner-id={props.notificationSource.ExpropOwnerHistoryId}
+      data-acquisition-file-id={props.notificationSource.acquisitionFileId}
+    />
+  ),
+}));
 
 describe('ExpropriationEventHistoryView', () => {
   const setup = (
@@ -136,7 +148,7 @@ describe('ExpropriationEventHistoryView', () => {
     });
 
     expect(
-      await screen.findByRole('button', { name: 'Reminder for Appraisal effective date' }),
+      screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT}`),
     ).toBeVisible();
   });
 
@@ -151,12 +163,12 @@ describe('ExpropriationEventHistoryView', () => {
     ).toBeNull();
   });
 
-  it('does not display the reminder button when the event type is Appraisal effective date but there is no event date', async () => {
+  it('does not display the reminder button when the event type is Expropriation advanced payment and there is no event date', async () => {
     const apiEvent = {
       ...getMockExpropriationEvent(),
       eventType: {
         ...getMockExpropriationEvent().eventType,
-        id: ApiGen_CodeTypes_ExpropiationOwnerHistoryType.APPEFFCTVDT,
+        id: ApiGen_CodeTypes_ExpropiationOwnerHistoryType.ADVPMTSRVDDT,
       },
       eventDate: null,
     };
@@ -166,7 +178,56 @@ describe('ExpropriationEventHistoryView', () => {
     });
 
     expect(
-      screen.queryByRole('button', { name: 'Reminder for Appraisal effective date' }),
+      screen.queryByRole('button', { name: 'Reminder for Advance payment served date' }),
     ).toBeNull();
+  });
+
+  it('displays the reminder button when the event type is Expropriation advanced payment and an event date is set', async () => {
+    const apiEvent = {
+      ...getMockExpropriationEvent(),
+      eventType: {
+        ...getMockExpropriationEvent().eventType,
+        id: ApiGen_CodeTypes_ExpropiationOwnerHistoryType.ADVPMTSRVDDT,
+      },
+      eventDate: '2025-01-21',
+    };
+    setup({
+      props: { eventRows: [ExpropriationEventRow.fromApi(apiEvent)] },
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(
+      await screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.EXPROPH_ADVPYSVDT}`),
+    ).toBeVisible();
+  });
+
+  it('does not display the reminder button when the event type is not Expropriation vesting date', async () => {
+    setup({
+      props: { eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())] },
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(
+      screen.queryByRole('button', { name: 'Reminder for Expropriation vesting date' }),
+    ).toBeNull();
+  });
+
+  it('displays the reminder button when the event type is Expropriation vesting date and an event date is set', async () => {
+    const apiEvent = {
+      ...getMockExpropriationEvent(),
+      eventType: {
+        ...getMockExpropriationEvent().eventType,
+        id: ApiGen_CodeTypes_ExpropiationOwnerHistoryType.EXPRVSTNGDT,
+      },
+      eventDate: '2025-01-21',
+    };
+    setup({
+      props: { eventRows: [ExpropriationEventRow.fromApi(apiEvent)] },
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(
+      await screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.EXPROPH_VESTDT}`),
+    ).toBeVisible();
   });
 });

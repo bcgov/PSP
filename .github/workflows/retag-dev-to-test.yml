@@ -244,20 +244,20 @@ jobs:
             -o /workspace/${{ matrix.service.name }}_predeploy_scan.sarif
       - name: Upload SARIF to Security tab
         if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: ${{ matrix.service.name }}_predeploy_scan.sarif
           category: test-${{ matrix.service.name }}-predeploy
       - name: Upload SARIF files as artifacts
         if: always()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: test-predeploy-sarif-${{ matrix.service.name }}
           path: ${{ matrix.service.name }}_predeploy_scan.sarif
           retention-days: 14
       - name: Upload scan reports
         if: failure()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: test-predeploy-scan-${{ matrix.service.name }}
           path: ${{ matrix.service.name }}_predeploy_scan.txt
