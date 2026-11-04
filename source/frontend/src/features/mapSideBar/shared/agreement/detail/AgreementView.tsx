@@ -29,6 +29,7 @@ export interface IAgreementViewProps {
   agreements: ApiGen_Concepts_Agreement[];
   isFileFinalStatus?: boolean;
   isSection3?: boolean;
+  canEdit?: boolean;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
 }
@@ -38,6 +39,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   agreements,
   isFileFinalStatus,
   isSection3,
+  canEdit,
   onGenerate,
   onDelete,
 }) => {
@@ -45,8 +47,6 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   const history = useHistory();
   const match = useRouteMatch();
   const { setModalContent, setDisplayModal } = useModalContext();
-  console.log('Has Agreement View:', keycloak.hasClaim(Claims.AGREEMENT_VIEW));
-  console.log('Has Disposition Edit:', keycloak.hasClaim(Claims.DISPOSITION_EDIT));
 
   return (
     <StyledSummarySection>
@@ -62,7 +62,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             onButtonAction={() => {
               history.push(`${match.url}/add`);
             }}
-            isAddEnabled={!isFileFinalStatus}
+            isAddEnabled={!isFileFinalStatus && canEdit}
             cannotAddComponent={
               <TooltipIcon toolTipId={`agreement-cannot-add-tooltip`} toolTip={cannotEditMessage} />
             }
@@ -93,42 +93,45 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                             </StyledAddButton>
 
-                            {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
-                              <>
-                                <EditButton
-                                  title="Edit Agreement"
-                                  data-testId={`agreements[${index}].edit-btn`}
-                                  onClick={() =>
-                                    history.push(`${match.url}/${agreement.agreementId}/update`)
-                                  }
-                                  icon={<FaEdit size={'2rem'} />}
-                                />
-                                <RemoveIconButton
-                                  title="Delete Agreement"
-                                  data-testId={`agreements[${index}].delete-btn`}
-                                  icon={<FaTrash size={'1.75rem'} />}
-                                  onRemove={() => {
-                                    setModalContent({
-                                      ...getDeleteModalProps(),
-                                      variant: 'error',
-                                      title: 'Delete Agreement',
-                                      message: `You have selected to delete this Agreement.
+                            {keycloak.hasClaim(
+                              Claims.ACQUISITION_EDIT || Claims.DISPOSITION_EDIT,
+                            ) &&
+                              canEdit && (
+                                <>
+                                  <EditButton
+                                    title="Edit Agreement"
+                                    data-testId={`agreements[${index}].edit-btn`}
+                                    onClick={() =>
+                                      history.push(`${match.url}/${agreement.agreementId}/update`)
+                                    }
+                                    icon={<FaEdit size={'2rem'} />}
+                                  />
+                                  <RemoveIconButton
+                                    title="Delete Agreement"
+                                    data-testId={`agreements[${index}].delete-btn`}
+                                    icon={<FaTrash size={'1.75rem'} />}
+                                    onRemove={() => {
+                                      setModalContent({
+                                        ...getDeleteModalProps(),
+                                        variant: 'error',
+                                        title: 'Delete Agreement',
+                                        message: `You have selected to delete this Agreement.
                                         Do you want to proceed?`,
-                                      okButtonText: 'Yes',
-                                      cancelButtonText: 'No',
-                                      handleOk: async () => {
-                                        agreement.agreementId && onDelete(agreement.agreementId);
-                                        setDisplayModal(false);
-                                      },
-                                      handleCancel: () => {
-                                        setDisplayModal(false);
-                                      },
-                                    });
-                                    setDisplayModal(true);
-                                  }}
-                                />
-                              </>
-                            )}
+                                        okButtonText: 'Yes',
+                                        cancelButtonText: 'No',
+                                        handleOk: async () => {
+                                          agreement.agreementId && onDelete(agreement.agreementId);
+                                          setDisplayModal(false);
+                                        },
+                                        handleCancel: () => {
+                                          setDisplayModal(false);
+                                        },
+                                      });
+                                      setDisplayModal(true);
+                                    }}
+                                  />
+                                </>
+                              )}
                           </>
                         )}
                       </StyledButtonContainer>
