@@ -10,6 +10,7 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { ApiGen_Concepts_LeaseAssociation } from '@/models/api/generated/ApiGen_Concepts_LeaseAssociation';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { ApiGen_Concepts_LeaseFileTeam } from './../../models/api/generated/ApiGen_Concepts_LeaseFileTeam';
@@ -77,6 +78,8 @@ export const useApiLeases = () => {
         }),
       getLeaseRenewals: (leaseId: number) =>
         api.get<ApiGen_Concepts_LeaseRenewal[]>(`/leases/${leaseId}/renewals`),
+      getLeaseProject: (leaseId: number) =>
+        api.get<ApiGen_Concepts_Project>(`/leases/${leaseId}/project`),
       getLeaseChecklist: (leaseId: number) =>
         api.get<ApiGen_Concepts_FileChecklistItem[]>(`/leases/${leaseId}/checklist`),
       putLeaseChecklist: (lease: ApiGen_Concepts_FileWithChecklist) =>

@@ -9,6 +9,8 @@ namespace Pims.Api.Services
     {
         PimsLease GetById(long leaseId);
 
+        PimsProject GetProjectByLeaseId(long leaseId);
+
         IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds);
 
         LastUpdatedByModel GetLastUpdateInformation(long leaseId);

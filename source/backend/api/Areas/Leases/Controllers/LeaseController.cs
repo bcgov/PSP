@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Lease;
+using Pims.Api.Models.Concepts.Project;
 using Pims.Api.Services;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Policies;
@@ -80,6 +81,27 @@ namespace Pims.Api.Areas.Lease.Controllers
             var mapped = _mapper.Map<LeaseModel>(lease);
             mapped.CanEdit = _leaseService.CanEdit(lease);
             return new JsonResult(mapped);
+        }
+
+        [HttpGet("{id:long}/project")]
+        [HasPermission(Permissions.LeaseView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetProjectByLeaseId(long id)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseController),
+                nameof(GetProjectByLeaseId),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var leaseProject = _leaseService.GetProjectByLeaseId(id);
+            var response = _mapper.Map<ProjectModel>(leaseProject);
+
+            return new JsonResult(response);
         }
 
         /// <summary>
