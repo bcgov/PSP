@@ -36,6 +36,7 @@ describe('AgreementView component', () => {
         onDelete={mockViewProps.onDelete}
         isSection3={renderOptions?.props?.isSection3 ?? false}
         isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
+        canEdit={renderOptions?.props?.canEdit ?? true}
       />,
       {
         store: {

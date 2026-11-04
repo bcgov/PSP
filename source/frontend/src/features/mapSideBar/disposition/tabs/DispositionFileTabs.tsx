@@ -105,6 +105,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
             deleteAgreement={deleteAgreement}
             statusSolver={statusSolver}
             isAcquisition={false}
+            canEdit={dispositionFile?.canEdit}
           />
         ) : null,
       key: FileTabType.AGREEMENTS,
@@ -127,7 +128,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
     content: (
       <ChecklistView
         onEdit={() => setIsEditing(true)}
-        showEditButton={true}
+        showEditButton={dispositionFile?.canEdit ?? true}
         sectionTypeName={API.DISPOSITION_CHECKLIST_SECTION_TYPES}
         editClaim={Claims.DISPOSITION_EDIT}
         prefix="dsp"
@@ -146,6 +147,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
           fileId={dispositionFile.id}
           relationshipType={ApiGen_CodeTypes_DocumentRelationType.DispositionFiles}
           onSuccess={onChildSuccess}
+          canEdit={dispositionFile?.canEdit === true}
         />
       ),
       key: FileTabType.DOCUMENTS,
@@ -161,6 +163,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
           entityId={dispositionFile?.id}
           onSuccess={onChildSuccess}
           View={NoteListView}
+          canEdit={dispositionFile?.canEdit === true}
         />
       ),
       key: FileTabType.NOTES,

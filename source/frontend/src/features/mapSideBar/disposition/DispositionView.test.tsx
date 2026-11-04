@@ -134,7 +134,7 @@ describe('DispositionView component', () => {
         <DispositionView
           {...{
             ...props,
-            dispositionFile: {
+            dispositionFile: props.dispositionFile ?? {
               ...mockDispositionFileResponse(),
               fileProperties: mockDispositionFilePropertyResponse() as any,
             },
@@ -165,14 +165,20 @@ describe('DispositionView component', () => {
       http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
     );
 
-    vi.mocked(useNoteRepository).mockImplementation(
-      () =>
-        ({
-          addNote: { execute: vi.fn() },
-          getNote: { execute: vi.fn() },
-          updateNote: { execute: vi.fn() },
-        } as unknown as ReturnType<typeof useNoteRepository>),
-    );
+    vi.mocked(useNoteRepository).mockReturnValue({
+      addNote: { execute: vi.fn() },
+      getNote: { execute: vi.fn() },
+      updateNote: { execute: vi.fn() },
+      getAllNotes: {
+        execute: vi.fn().mockResolvedValue([]),
+        loading: false,
+        response: [],
+      },
+      deleteNote: {
+        execute: vi.fn(),
+        loading: false,
+      },
+    } as unknown as ReturnType<typeof useNoteRepository>);
     vi.mocked(useApiNotes).mockImplementation(
       () =>
         ({
@@ -232,6 +238,15 @@ describe('DispositionView component', () => {
     expect(queryByTitle('Change properties')).toBeNull();
   });
 
+  it('should not display the Edit Properties button if the user does not have access to the disposition file', async () => {
+    const testDispositionFile = { ...mockDispositionFileResponse(), canEdit: false };
+    const { queryByTitle } = await setup(
+      { ...DEFAULT_PROPS, dispositionFile: testDispositionFile },
+      { claims: [Claims.DISPOSITION_EDIT] },
+    );
+    expect(queryByTitle('Change properties')).toBeNull();
+  });
+
   it('should display the notes tab if the user has permissions', async () => {
     const { getAllByText } = await setup(undefined, { claims: [Claims.NOTE_VIEW] });
     expect(getAllByText(/Notes/)[0]).toBeVisible();
@@ -240,6 +255,19 @@ describe('DispositionView component', () => {
   it('should not display the notes tab if the user does not have permissions', async () => {
     const { queryByText } = await setup(undefined, { claims: [] });
     expect(queryByText('Notes')).toBeNull();
+  });
+
+  it('should not display the Add New Note if the user does not have access to the disposition file', async () => {
+    const testDispositionFile = { ...mockDispositionFileResponse(), canEdit: false };
+    const { queryByText, getByRole, queryAllByRole } = await setup(
+      { ...DEFAULT_PROPS, dispositionFile: testDispositionFile },
+      { claims: [Claims.DISPOSITION_EDIT, Claims.NOTE_VIEW] },
+    );
+
+    const notesTab = getByRole('tab', { name: 'Notes' });
+
+    await act(async () => userEvent.click(notesTab));
+    expect(queryByText('Add New Note')).toBeNull();
   });
 
   it('should display the File Details tab by default', async () => {
