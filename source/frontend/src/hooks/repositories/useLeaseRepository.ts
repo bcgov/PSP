@@ -9,6 +9,7 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { ApiGen_Concepts_LeaseAssociation } from '@/models/api/generated/ApiGen_Concepts_LeaseAssociation';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import {
   useAxiosErrorHandler,
@@ -30,6 +31,7 @@ export const useLeaseRepository = () => {
     putLeaseChecklist,
     getLeaseChecklist,
     getLeaseRenewals,
+    getLeaseProject,
     getLeaseStakeholderTypes,
     getAllLeaseFileTeamMembers,
     getLeaseAtTime,
@@ -111,6 +113,18 @@ export const useLeaseRepository = () => {
     throwError: true,
   });
 
+  const getLeaseProjectApi = useApiRequestWrapper<
+    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_Project, any>>
+  >({
+    requestFunction: useCallback(
+      async (leaseId: number) => await getLeaseProject(leaseId),
+      [getLeaseProject],
+    ),
+    requestName: 'getLeaseProjectApi',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve lease project.'),
+  });
+
   const getLeaseStakeholderTypesApi = useApiRequestWrapper<
     () => Promise<AxiosResponse<ApiGen_Concepts_LeaseStakeholderType[], any>>
   >({
@@ -165,6 +179,7 @@ export const useLeaseRepository = () => {
       updateLease: updateApiLease,
       getLease: getLease,
       getLeaseRenewals: getLeaseRenewalsApi,
+      getLeaseProject: getLeaseProjectApi,
       getLeaseChecklist: getLeaseChecklistApi,
       putLeaseChecklist: updateLeaseChecklistApi,
       getLeaseStakeholderTypes: getLeaseStakeholderTypesApi,
@@ -177,6 +192,7 @@ export const useLeaseRepository = () => {
       updateApiLease,
       getLease,
       getLeaseRenewalsApi,
+      getLeaseProjectApi,
       getLeaseChecklistApi,
       updateLeaseChecklistApi,
       getLeaseStakeholderTypesApi,
