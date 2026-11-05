@@ -523,7 +523,7 @@ namespace Pims.Api
                 {
                     Predicate = r => r.Tags.Contains(SYSTEMCHECK),
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
-                });
+                }).RequireAuthorization();
 
                 // Enable the /metrics page to export Prometheus metrics
                 config.MapMetrics();
