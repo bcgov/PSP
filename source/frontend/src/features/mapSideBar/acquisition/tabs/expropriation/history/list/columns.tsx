@@ -14,6 +14,26 @@ import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGe
 
 import { ExpropriationEventRow } from '../models';
 
+const reminderConfig: Partial<
+  Record<
+    ApiGen_CodeTypes_ExpropiationOwnerHistoryType,
+    { label: string; notificationType: ApiGen_CodeTypes_NotificationTypes }
+  >
+> = {
+  [ApiGen_CodeTypes_ExpropiationOwnerHistoryType.APPEFFCTVDT]: {
+    label: 'Appraisal effective date',
+    notificationType: ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT,
+  },
+  [ApiGen_CodeTypes_ExpropiationOwnerHistoryType.ADVPMTSRVDDT]: {
+    label: 'Advance payment served date',
+    notificationType: ApiGen_CodeTypes_NotificationTypes.EXPROPH_ADVPYSVDT,
+  },
+  [ApiGen_CodeTypes_ExpropiationOwnerHistoryType.EXPRVSTNGDT]: {
+    label: 'Expropriation vesting date',
+    notificationType: ApiGen_CodeTypes_NotificationTypes.EXPROPH_VESTDT,
+  },
+};
+
 export const getExpropriationEventColumns = (
   onUpdate: (expropriationEventId: number) => void,
   onDelete: (expropriationEventId: number) => void,
@@ -53,56 +73,44 @@ export const getExpropriationEventColumns = (
         const { hasClaim } = useKeycloakWrapper();
         const event = props.row.original;
 
-        if (hasClaim(Claims.ACQUISITION_EDIT)) {
-          return (
-            <ExpropriationActionsDiv>
-              {event.eventType === ApiGen_CodeTypes_ExpropiationOwnerHistoryType.APPEFFCTVDT &&
-                event.eventDate && (
-                  <ReminderContainer
-                    keyDate={event.eventDate}
-                    keyDateLabel="Appraisal effective date"
-                    notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT}
-                    notificationSource={{
-                      acquisitionFileId: event.acquisitionFileId,
-                      expropOwnerHistoryId: event.id,
-                    }}
-                    View={ReminderView}
-                  />
-                )}
+        const canEdit = hasClaim(Claims.ACQUISITION_EDIT);
+        const config = reminderConfig[event.eventType];
 
-              <EditButton
-                title="edit expropriation event"
-                data-testId={`edit-expropriation-event-${props.row.index}`}
-                onClick={() => onUpdate(event.id)}
-              />
-              <RemoveIconButton
-                title="delete expropriation event"
-                data-testId={`delete-expropriation-event-${props.row.index}`}
-                onRemove={() => onDelete(event.id)}
-              />
-            </ExpropriationActionsDiv>
-          );
-        } else if (
-          event.eventType === ApiGen_CodeTypes_ExpropiationOwnerHistoryType.APPEFFCTVDT &&
-          event.eventDate
-        ) {
-          return (
-            <ExpropriationActionsDiv>
+        if (!canEdit && !(config && event.eventDate)) {
+          return null;
+        }
+
+        return (
+          <ExpropriationActionsDiv>
+            {config && event.eventDate && (
               <ReminderContainer
                 keyDate={event.eventDate}
-                keyDateLabel="Appraisal effective date"
-                notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT}
+                keyDateLabel={config.label}
+                notificationType={config.notificationType}
                 notificationSource={{
                   acquisitionFileId: event.acquisitionFileId,
                   expropOwnerHistoryId: event.id,
                 }}
                 View={ReminderView}
               />
-            </ExpropriationActionsDiv>
-          );
-        } else {
-          return null;
-        }
+            )}
+
+            {canEdit && (
+              <>
+                <EditButton
+                  title="edit expropriation event"
+                  data-testId={`edit-expropriation-event-${props.row.index}`}
+                  onClick={() => onUpdate(event.id)}
+                />
+                <RemoveIconButton
+                  title="delete expropriation event"
+                  data-testId={`delete-expropriation-event-${props.row.index}`}
+                  onRemove={() => onDelete(event.id)}
+                />
+              </>
+            )}
+          </ExpropriationActionsDiv>
+        );
       },
     },
   ];

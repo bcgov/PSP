@@ -210,4 +210,7 @@ public partial class PimsDispositionSale
 
     [InverseProperty("DispositionSale")]
     public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchasers { get; set; } = new List<PimsDispositionPurchaser>();
+
+    [InverseProperty("DispositionSale")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
 }

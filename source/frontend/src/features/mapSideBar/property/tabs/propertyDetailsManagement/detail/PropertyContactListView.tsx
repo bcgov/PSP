@@ -49,9 +49,7 @@ export const PropertyContactListView: React.FunctionComponent<IPropertyContactLi
               history.push(`${path}/${PropertyEditForms.UpdateContactContainer}?edit=true`);
             } else {
               const path = generatePath(matchPropertyFile.path, {
-                id: matchPropertyFile.params.id,
-                filePropertyId: matchPropertyFile.params.filePropertyId,
-                menuIndex: matchPropertyFile.params.menuIndex,
+                ...matchPropertyFile.params,
                 tab: InventoryTabNames.management,
               });
               history.push(`${path}/${PropertyEditForms.UpdateContactContainer}?edit=true`);
@@ -74,8 +72,7 @@ export const PropertyContactListView: React.FunctionComponent<IPropertyContactLi
             );
           } else {
             const path = generatePath(matchPropertyFile.path, {
-              id: matchPropertyFile.params.id,
-              menuIndex: matchPropertyFile.params.menuIndex,
+              ...matchPropertyFile.params,
               tab: InventoryTabNames.management,
             });
             history.push(

@@ -66,6 +66,8 @@ export const getNotificationDeepLink = (
         ? DeepLinkGenerator.showFile(ApiGen_CodeTypes_FileTypes.Lease, notification.leaseId)
         : null;
     case ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT:
+    case ApiGen_CodeTypes_NotificationTypes.EXPROPH_ADVPYSVDT:
+    case ApiGen_CodeTypes_NotificationTypes.EXPROPH_VESTDT:
       return isValidId(notification.acquisitionFileId)
         ? DeepLinkGenerator.showDetails(
             ApiGen_CodeTypes_FileTypes.Acquisition,
@@ -87,6 +89,16 @@ export const getNotificationDeepLink = (
             ApiGen_CodeTypes_FileTypes.Management,
             notification.managementFileId,
             'fileDetails',
+          )
+        : null;
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT:
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT:
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT:
+      return isValidId(notification.acquisitionFileId)
+        ? DeepLinkGenerator.showDetails(
+            ApiGen_CodeTypes_FileTypes.Acquisition,
+            notification.acquisitionFileId,
+            'agreements',
           )
         : null;
     default:

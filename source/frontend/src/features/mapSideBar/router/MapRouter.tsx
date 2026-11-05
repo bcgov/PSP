@@ -204,10 +204,10 @@ export const MapRouter: React.FunctionComponent = memo(() => {
         title={'Create Research File'}
       />
       <AppRoute
-        path={`/mapview/sidebar/research/:researchId`}
+        path={`/mapview/sidebar/research/:id`}
         customRender={({ match }) => (
           <ResearchContainer
-            researchFileId={Number(match.params.researchId)}
+            researchFileId={Number(match.params.id)}
             onClose={onClose}
             View={ResearchView}
           />

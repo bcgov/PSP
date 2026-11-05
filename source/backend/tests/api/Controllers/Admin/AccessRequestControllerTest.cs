@@ -144,7 +144,7 @@ namespace Pims.Api.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<AccessRequestModel>(actionResult.Value);
-            mapper.Map<AccessRequestModel>(accessRequest1).Should().BeEquivalentTo(actualResult);
+            mapper.Map<AccessRequestModel>(accessRequest1).Should().BeEquivalentTo(actualResult, options => options.IgnoringCyclicReferences());
             repository.Verify(m => m.Delete(It.IsAny<Entity.PimsAccessRequest>()), Times.Once());
         }
         #endregion

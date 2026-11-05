@@ -83,6 +83,18 @@ exclude: # exclude matching issues
     id: high-entropy
     paths:
       - ".github/workflows/**"
+  - message: Ignore pinned container image digests in backend Dockerfiles
+    id: high-entropy
+    pattern: 'sha256:[0-9a-f]{64}'
+    paths:
+      - source/backend/Dockerfile
+      - source/backend/Dockerfile.proxy
+      - source/backend/Dockerfile.scheduler
+  - message: Ignore documented OpenShift builder image digest
+    id: high-entropy
+    pattern: '39f09c87b0b44e3430c788fd6a775423f5aa78eefabe2854b677528392013358'
+    paths:
+      - source/backend/README.md
 
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
 #

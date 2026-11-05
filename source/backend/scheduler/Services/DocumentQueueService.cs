@@ -180,7 +180,14 @@ namespace Pims.Scheduler.Services
                         throw new InvalidOperationException($"Document {qd.Id} not found in database.");
                     }
                     var currentDocumentQueue = currentDocumentResponse.Result.Payload;
-                    _logger.LogError("Received error response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, currentDocumentQueue?.Id, response?.Result?.Status, response?.Result?.Message);
+                    if (currentDocumentQueue == null)
+                    {
+                        _logger.LogError(
+                            "Received error response from {HttpMethodName}. The document queue payload was completely null. Status: {Status}, Message: {Message}", httpMethodName, response?.Result?.Status, response?.Result?.Message);
+
+                        return;
+                    }
+                    _logger.LogError("Received error response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, currentDocumentQueue.Id, response?.Result?.Status, response?.Result?.Message);
                     currentDocumentQueue.DocumentQueueStatusType.Id = DocumentQueueStatusTypes.PIMS_ERROR.ToString();
                     currentDocumentQueue.MayanError = $"Document {httpMethodName} failed: {response?.Result?.Message}".Truncate(4000);
                     _ = _pimsDocumentQueueRepository.UpdateQueuedDocument(currentDocumentQueue.Id, currentDocumentQueue);

@@ -6,33 +6,30 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <ProjectGuid>{89A99CC5-ADFB-4FC2-9136-7B0029EEA2D8}</ProjectGuid>
     <Configurations>Debug;Release</Configurations>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.11.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.11.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.11.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Workspaces" Version="4.11.0" />
-    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
-    <PackageReference Include="Microsoft.OpenApi" Version="1.6.22" />
-    <PackageReference Include="Polly.Extensions" Version="8.5.1" />
-    <PackageReference Include="Serilog" Version="4.2.0" />
-    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
-    <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.9.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.9.0" />
-    <PackageReference Include="System.Text.Json" Version="8.0.6" />
+    <PackageReference Include="Macross.Json.Extensions" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Workspaces" />
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" />
+    <PackageReference Include="Microsoft.OpenApi" />
+    <PackageReference Include="Polly.Extensions" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Serilog.Enrichers.Environment" />
+    <PackageReference Include="Serilog.Sinks.Debug" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
     
     <!-- Transitive dependency overrides for security vulnerabilities -->
-    <PackageReference Include="Azure.Identity" Version="1.13.1" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
-    <PackageReference Include="System.Formats.Asn1" Version="8.0.2" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\apimodels\Pims.Api.Models.csproj" />

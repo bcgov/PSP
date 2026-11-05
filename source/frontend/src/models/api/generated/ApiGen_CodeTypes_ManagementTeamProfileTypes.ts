@@ -4,4 +4,6 @@
  */
 export enum ApiGen_CodeTypes_ManagementTeamProfileTypes {
   KEYCNTCT = 'KEYCNTCT',
+  MINSTAFF = 'MINSTAFF',
+  CONTRACT = 'CONTRACT',
 }

@@ -32,7 +32,10 @@ const ManagementTeamSubForm: React.FunctionComponent<IManagementTeamSubFormProps
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const teamProfileTypes = getOptionsByType(API.MANAGEMENT_TEAM_PROFILE_TYPES);
-  const PIMS_USER_ONLY_PROFILES: string[] = [ApiGen_CodeTypes_ManagementTeamProfileTypes.KEYCNTCT];
+  const PIMS_USER_ONLY_PROFILES: string[] = [
+    ApiGen_CodeTypes_ManagementTeamProfileTypes.KEYCNTCT,
+    ApiGen_CodeTypes_ManagementTeamProfileTypes.MINSTAFF,
+  ];
 
   return (
     <FieldArray

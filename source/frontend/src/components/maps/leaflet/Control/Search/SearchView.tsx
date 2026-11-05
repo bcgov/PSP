@@ -1,5 +1,5 @@
 import { chain } from 'lodash';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -52,6 +52,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
   const onCreateManagementFile = props.onCreateManagementFile;
   const onCreateResearchFile = props.onCreateResearchFile;
   const keycloak = useKeycloakWrapper();
+  const [openMenu, setOpenMenu] = useState<'PMBC' | 'PIMS' | null>(null);
 
   const propertyProjections = useMemo(() => {
     const fallbackFeatures = props.searchResult?.fullyAttributedFeatures?.features ?? [];
@@ -188,6 +189,8 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           <SimpleSectionHeader title="Results (PMBC)">
             <MoreOptionsMenu
               options={pmbcMenuOptions}
+              show={openMenu === 'PMBC'}
+              onToggle={isOpen => setOpenMenu(isOpen ? 'PMBC' : null)}
               ariaLabel="search pmbc results more options"
             />
           </SimpleSectionHeader>
@@ -204,6 +207,8 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           <SimpleSectionHeader title="Results (PIMS)">
             <MoreOptionsMenu
               options={pimsMenuOptions}
+              show={openMenu === 'PIMS'}
+              onToggle={isOpen => setOpenMenu(isOpen ? 'PIMS' : null)}
               ariaLabel="search pims results more options"
             />
           </SimpleSectionHeader>

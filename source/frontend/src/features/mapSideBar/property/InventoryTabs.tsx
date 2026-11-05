@@ -47,7 +47,6 @@ export const InventoryTabs: React.FunctionComponent<
     pin: string;
     menuIndex: string;
     id: string;
-    researchId: string;
     filePropertyId: string;
     lat: string;
     lng: string;
@@ -62,19 +61,12 @@ export const InventoryTabs: React.FunctionComponent<
           match.path.includes('acquisition') ||
           match.path.includes('disposition') ||
           match.path.includes('management') ||
-          match.path.includes('lease')
+          match.path.includes('lease') ||
+          match.path.includes('research')
         ) {
           const path = generatePath(match.path, {
             menuIndex: match.params.menuIndex,
             id: match.params.id,
-            filePropertyId: match.params.filePropertyId,
-            tab,
-          });
-          history.push(path);
-        } else if (match.path.includes('research')) {
-          const path = generatePath(match.path, {
-            menuIndex: match.params.menuIndex,
-            researchId: match.params.researchId,
             filePropertyId: match.params.filePropertyId,
             tab,
           });
