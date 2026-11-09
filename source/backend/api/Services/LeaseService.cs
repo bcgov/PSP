@@ -93,6 +93,20 @@ namespace Pims.Api.Services
             return lease;
         }
 
+        public PimsProject GetProjectByLeaseId(long leaseId)
+        {
+            _logger.LogInformation("Getting project for lease {leaseId}", leaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
+
+            var lease = GetById(leaseId);
+            var project = lease.ProjectId.HasValue
+                ? _projectRepository.TryGet(lease.ProjectId.Value)
+                : null;
+
+            return project;
+        }
+
         public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds)
         {
             _logger.LogInformation("Getting all leases with ids {leaseIds}", leaseIds);

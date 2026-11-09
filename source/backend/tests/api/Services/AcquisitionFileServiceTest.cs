@@ -41,6 +41,78 @@ namespace Pims.Api.Test.Services
             return this._helper.Create<AcquisitionFileService>(user);
         }
 
+        [Theory]
+        [InlineData(true, false, true, true)]
+        [InlineData(false, true, true, true)]
+        [InlineData(true, true, true, true)]
+        [InlineData(false, false, true, false)]
+        [InlineData(true, false, false, false)]
+        [InlineData(false, true, false, false)]
+        public void GetProjectByAcquisitionId_ContractorAccess(bool onFileTeam, bool onProjectTeam, bool inRegion, bool allowed)
+        {
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.ProjectView);
+            var file = EntityHelper.CreateAcquisitionFile();
+            file.RegionCode = 1;
+            file.ProjectId = 10;
+            file.PimsAcquisitionFileTeams.Clear();
+            var contractor = EntityHelper.CreateUser("Contractor", isContractor: true);
+            contractor.PersonId = 123;
+            contractor.PimsRegionUsers.Clear();
+            contractor.PimsRegionUsers.Add(new PimsRegionUser { RegionCode = (short)(inRegion ? 1 : 2) });
+            if (onFileTeam)
+            {
+                file.PimsAcquisitionFileTeams.Add(new() { PersonId = contractor.PersonId });
+            }
+
+            var project = new PimsProject { Internal_Id = 10 };
+            if (onProjectTeam)
+            {
+                project.PimsProjectPeople.Add(new() { PersonId = contractor.PersonId });
+            }
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetById(1)).Returns(file);
+            this._helper.GetService<Mock<IUserRepository>>()
+                .Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractor);
+            this._helper.GetService<Mock<IProjectRepository>>()
+                .Setup(x => x.TryGet(10)).Returns(project);
+
+            if (allowed)
+            {
+                service.GetProjectByAcquisitionId(1).Should().BeSameAs(project);
+            }
+            else
+            {
+                Action act = () => service.GetProjectByAcquisitionId(1);
+                act.Should().Throw<NotAuthorizedException>();
+            }
+        }
+
+        [Fact]
+        public void GetProjectByAcquisitionId_NoPermission_Denied()
+        {
+            var service = this.CreateAcquisitionServiceWithPermissions();
+            Action act = () => service.GetProjectByAcquisitionId(1);
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetProjectByAcquisitionId_NoProject_ReturnsNull()
+        {
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+            var file = EntityHelper.CreateAcquisitionFile();
+            file.ProjectId = null;
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetById(1)).Returns(file);
+            this._helper.GetService<Mock<IUserRepository>>()
+                .Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>()))
+                .Returns(EntityHelper.CreateUser("Staff"));
+
+            service.GetProjectByAcquisitionId(1).Should().BeNull();
+            this._helper.GetService<Mock<IProjectRepository>>()
+                .Verify(x => x.TryGet(It.IsAny<long>()), Times.Never);
+        }
+
         #region Add
         [Fact]
         public void Add_Success()
