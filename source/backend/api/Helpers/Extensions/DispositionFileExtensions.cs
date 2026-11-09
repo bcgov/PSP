@@ -101,16 +101,7 @@ namespace Pims.Api.Helpers.Extensions
         private static bool IsUserAssignedToDispositionFileRegion(this PimsDispositionFile dispositionFile, PimsUser pimsUser)
         {
             ArgumentNullException.ThrowIfNull(dispositionFile);
-
-            if (pimsUser is null)
-            {
-                return false;
-            }
-            else
-            {
-                // Contractors can only access leases with a valid region
-                return pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == dispositionFile.RegionCode);
-            }
+            return pimsUser?.PimsRegionUsers.Any(ur => ur.RegionCode == dispositionFile.RegionCode) ?? false;
         }
 
         private static bool CanEditDispositionFile(this PimsDispositionFile dispositionFile, PimsUser pimsUser, PimsProject project, short? cannotDetermineRegionCode)

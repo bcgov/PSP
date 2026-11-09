@@ -99,6 +99,9 @@ namespace Pims.Api.Services
             Logger.LogInformation("Adding note for disposition file with Id: {Id}", dispositionFileNote.ParentId);
             User.ThrowIfNotAuthorized(Permissions.NoteAdd);
 
+            var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileNote.ParentId) ?? throw new InvalidDataException("Invalid disposition file");
+            currentDispositionFile?.ThrowIfCannotEditDispositionFile(User, _userRepository, _projectRepository, _lookupRepository);
+
             return AddNoteRelationship(dispositionFileNote, _dispositionFileNoteRepository);
         }
 

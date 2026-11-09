@@ -121,7 +121,7 @@ describe('Disposition Offer Detail View component', () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
+          ...mockDispositionFileResponse(),
           canEdit: false,
         },
       },

@@ -93,7 +93,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
   };
 
   const editDocumentsEnabled =
-    props.canEdit && (!props.statusSolver || props.statusSolver?.canEditDocuments());
+    (!props.statusSolver || props.statusSolver?.canEditDocuments()) && props.canEdit !== false;
 
   return (
     <DocumentListView

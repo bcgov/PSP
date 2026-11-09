@@ -55,14 +55,14 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
       <Section
         header={
           <SectionListHeader
-            claims={[Claims.ACQUISITION_EDIT]}
+            claims={[Claims.ACQUISITION_EDIT, Claims.DISPOSITION_EDIT]}
             title="Agreements"
             addButtonText="Add Agreement"
             addButtonIcon={<FaPlus size={'2rem'} />}
             onButtonAction={() => {
               history.push(`${match.url}/add`);
             }}
-            isAddEnabled={!isFileFinalStatus && canEdit}
+            isAddEnabled={!isFileFinalStatus && canEdit !== false}
             cannotAddComponent={
               <TooltipIcon toolTipId={`agreement-cannot-add-tooltip`} toolTip={cannotEditMessage} />
             }
@@ -93,10 +93,8 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                             </StyledAddButton>
 
-                            {keycloak.hasClaim(
-                              Claims.ACQUISITION_EDIT || Claims.DISPOSITION_EDIT,
-                            ) &&
-                              canEdit && (
+                            {keycloak.hasClaim(Claims.ACQUISITION_EDIT) ||
+                              (keycloak.hasClaim(Claims.DISPOSITION_EDIT) && canEdit !== false && (
                                 <>
                                   <EditButton
                                     title="Edit Agreement"
@@ -131,7 +129,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                                     }}
                                   />
                                 </>
-                              )}
+                              ))}
                           </>
                         )}
                       </StyledButtonContainer>

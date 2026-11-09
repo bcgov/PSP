@@ -259,7 +259,7 @@ describe('DispositionView component', () => {
 
   it('should not display the Add New Note if the user does not have access to the disposition file', async () => {
     const testDispositionFile = { ...mockDispositionFileResponse(), canEdit: false };
-    const { queryByText, getByRole, queryAllByRole } = await setup(
+    const { queryByText, getByRole } = await setup(
       { ...DEFAULT_PROPS, dispositionFile: testDispositionFile },
       { claims: [Claims.DISPOSITION_EDIT, Claims.NOTE_VIEW] },
     );

@@ -447,7 +447,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
-            currentDispositionFile.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+            currentDispositionFile?.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
             var currentDispositionStatus = _dispositionStatusSolver.GetCurrentDispositionStatus(currentDispositionFile?.DispositionFileStatusTypeCode);
             if (!_dispositionStatusSolver.CanEditChecklists(currentDispositionStatus))
             {
@@ -552,7 +552,7 @@ namespace Pims.Api.Services
             MatchProperties(dispositionFile, userOverrides, existingPropertyIds);
 
             ValidatePropertyRegions(dispositionFile);
-            currentDispositionFile.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+            currentDispositionFile?.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
