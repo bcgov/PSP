@@ -93,8 +93,9 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                             </StyledAddButton>
 
-                            {keycloak.hasClaim(Claims.ACQUISITION_EDIT) ||
-                              (keycloak.hasClaim(Claims.DISPOSITION_EDIT) && canEdit !== false && (
+                            {(keycloak.hasClaim(Claims.ACQUISITION_EDIT) ||
+                              keycloak.hasClaim(Claims.DISPOSITION_EDIT)) &&
+                              canEdit !== false && (
                                 <>
                                   <EditButton
                                     title="Edit Agreement"
@@ -129,7 +130,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                                     }}
                                   />
                                 </>
-                              ))}
+                              )}
                           </>
                         )}
                       </StyledButtonContainer>

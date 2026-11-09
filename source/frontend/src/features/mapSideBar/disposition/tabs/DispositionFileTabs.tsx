@@ -105,7 +105,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
             deleteAgreement={deleteAgreement}
             statusSolver={statusSolver}
             isAcquisition={false}
-            canEdit={dispositionFile?.canEdit ?? true}
+            canEdit={dispositionFile.canEdit === true}
           />
         ) : null,
       key: FileTabType.AGREEMENTS,
@@ -147,7 +147,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
           fileId={dispositionFile.id}
           relationshipType={ApiGen_CodeTypes_DocumentRelationType.DispositionFiles}
           onSuccess={onChildSuccess}
-          canEdit={dispositionFile?.canEdit ?? true}
+          canEdit={dispositionFile.canEdit === true}
         />
       ),
       key: FileTabType.DOCUMENTS,
@@ -163,7 +163,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
           entityId={dispositionFile?.id}
           onSuccess={onChildSuccess}
           View={NoteListView}
-          canEdit={dispositionFile?.canEdit ?? true}
+          canEdit={dispositionFile.canEdit === true}
         />
       ),
       key: FileTabType.NOTES,

@@ -91,7 +91,7 @@ export const AgreementContainer: React.FunctionComponent<
       onGenerate={generateAgreement}
       onDelete={handleAgreementDeleted}
       isSection3={isSection3}
-      canEdit={canEdit}
+      canEdit={canEdit !== false}
       isFileFinalStatus={!statusSolver.canEditOrDeleteAgreement()}
     />
   ) : null;

@@ -867,6 +867,77 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_Should_Fail_UserOutsideRegion()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(
+                Permissions.DispositionEdit);
+
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.RegionCode = 2;
+            dispositionFile.ConcurrencyControlNumber = 1;
+            dispositionFile.PimsDispositionFileTeams = new List<PimsDispositionFileTeam>();
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(2);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository
+                .Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>()))
+                .Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
+            var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
+            statusMock
+                .Setup(x => x.CanEditDetails(It.IsAny<DispositionFileStatusTypes>()))
+                .Returns(true);
+
+            // Act
+            Action act = () => service.Update(
+                1,
+                dispositionFile,
+                new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+
+            repository.Verify(
+                x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()),
+                Times.Never);
+
+            repository.Verify(
+                x => x.CommitTransaction(),
+                Times.Never);
+        }
+
+        [Fact]
+        public void GetById_Success_UserOutsideRegion()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(
+                Permissions.DispositionView);
+
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.RegionCode = 2;
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetById(1)).Returns(dispositionFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository
+                .Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>()))
+                .Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
+            // Act
+            var result = service.GetById(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.RegionCode.Should().Be(2);
+        }
+
+        [Fact]
         public void Update_Success_FinalButAdmin()
         {
             // Arrange

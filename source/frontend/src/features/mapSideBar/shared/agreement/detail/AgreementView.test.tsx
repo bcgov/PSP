@@ -36,7 +36,7 @@ describe('AgreementView component', () => {
         onDelete={mockViewProps.onDelete}
         isSection3={renderOptions?.props?.isSection3 ?? false}
         isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
-        canEdit={renderOptions?.props?.canEdit ?? true}
+        canEdit={renderOptions?.props?.canEdit}
       />,
       {
         store: {
@@ -96,17 +96,13 @@ describe('AgreementView component', () => {
   });
 
   it('displays warning tooltips instead of edit/add buttons when file in final status', async () => {
-    const { queryByText } = setup({
+    const {} = setup({
       claims: [Claims.ACQUISITION_EDIT],
       props: { isFileFinalStatus: true },
     });
 
-    const removeButton = queryByText(/Delete Agreement/i);
-    expect(removeButton).toBeNull();
-
-    const editButton = queryByText(/Edit Agreement/i);
-    expect(removeButton).toBeNull();
-
+    expect(screen.queryByTitle('Delete Agreement')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Edit Agreement')).not.toBeInTheDocument();
     expect(screen.getByTestId(/tooltip-icon-agreement-cannot-add-tooltip/i)).toBeVisible();
   });
 
@@ -220,4 +216,53 @@ describe('AgreementView component', () => {
       screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT}`),
     ).not.toBeInTheDocument();
   });
+
+
+  it('allows Acquisition users to edit and delete agreements when canEdit is omitted', () => {
+    setup({
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(screen.getAllByTitle('Edit Agreement')).toHaveLength(2);
+    expect(screen.getAllByTitle('Delete Agreement')).toHaveLength(2);
+  });
+
+  it('allows Disposition users to edit and delete agreements when canEdit is true', () => {
+    setup({
+      claims: [Claims.DISPOSITION_EDIT],
+      props: { canEdit: true },
+    });
+
+    expect(screen.getAllByTitle('Edit Agreement')).toHaveLength(2);
+    expect(screen.getAllByTitle('Delete Agreement')).toHaveLength(2);
+  });
+
+  it('hides editing controls for read-only Disposition agreements', () => {
+    setup({
+      claims: [Claims.DISPOSITION_EDIT],
+      props: { canEdit: false },
+    });
+
+    expect(screen.queryByTitle('Edit Agreement')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Delete Agreement')).not.toBeInTheDocument();
+
+    // Agreements remain visible.
+    expect(screen.getByText(/License Of Occupation/i)).toBeVisible();
+
+    // Add Agreement is unavailable.
+    expect(
+      screen.getByTestId('tooltip-icon-agreement-cannot-add-tooltip'),
+    ).toBeVisible();
+  });
+
+  it('does not allow Acquisition claims to bypass read-only restrictions', () => {
+    setup({
+      claims: [Claims.ACQUISITION_EDIT, Claims.DISPOSITION_EDIT],
+      props: { canEdit: false },
+    });
+
+    expect(screen.queryByTitle('Edit Agreement')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Delete Agreement')).not.toBeInTheDocument();
+  });
+
 });
