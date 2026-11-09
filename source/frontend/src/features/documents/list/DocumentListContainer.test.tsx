@@ -1,4 +1,3 @@
-
 import { act, screen } from '@testing-library/react';
 
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -8,9 +7,7 @@ import DocumentListContainer from './DocumentListContainer';
 
 vi.mock('./DocumentListView', () => ({
   default: ({ canEditDocuments }: { canEditDocuments: boolean }) => (
-    <div data-testid="document-edit-status">
-      {canEditDocuments ? 'editable' : 'read-only'}
-    </div>
+    <div data-testid="document-edit-status">{canEditDocuments ? 'editable' : 'read-only'}</div>
   ),
 }));
 
@@ -57,4 +54,3 @@ describe('DocumentListContainer edit permissions', () => {
     expect(screen.getByTestId('document-edit-status')).toHaveTextContent('read-only');
   });
 });
-

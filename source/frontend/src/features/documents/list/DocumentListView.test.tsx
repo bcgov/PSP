@@ -236,95 +236,89 @@ describe('Document List View', () => {
     expect(onSuccess).toHaveBeenCalled();
   });
 
+  it('does not allow editing document details when canEditDocuments is false', async () => {
+    setup({
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.DispositionFiles,
+      documentResults: mockDocumentRowResponse(),
+      canEditDocuments: false,
+      claims: [
+        Claims.DOCUMENT_VIEW,
+        Claims.DOCUMENT_EDIT,
+        Claims.DOCUMENT_ADD,
+        Claims.DOCUMENT_DELETE,
+      ],
+    });
 
-it('does not allow editing document details when canEditDocuments is false', async () => {
-  setup({
-    relationshipType: ApiGen_CodeTypes_DocumentRelationType.DispositionFiles,
-    documentResults: mockDocumentRowResponse(),
-    canEditDocuments: false,
-    claims: [
-      Claims.DOCUMENT_VIEW,
-      Claims.DOCUMENT_EDIT,
-      Claims.DOCUMENT_ADD,
-      Claims.DOCUMENT_DELETE,
-    ],
+    // Cannot add documents
+    expect(screen.queryByTestId('add-document-btn')).not.toBeInTheDocument();
+
+    // Cannot delete documents
+    expect(screen.queryByTestId('document-delete-button-0')).not.toBeInTheDocument();
+
+    // Can still view document details
+    expect(screen.getByTestId('document-view-button-0')).toBeInTheDocument();
   });
 
-  // Cannot add documents
-  expect(screen.queryByTestId('add-document-btn')).not.toBeInTheDocument();
+  it('hides Delete for documents with upload errors when editing is disabled', () => {
+    const documentRows = mockDocumentRowResponse();
 
-  // Cannot delete documents
-  expect(screen.queryByTestId('document-delete-button-0')).not.toBeInTheDocument();
+    // Use the actual error queue status code from your generated enum.
+    documentRows[0].queueStatusTypeCode = {
+      id: ApiGen_CodeTypes_DocumentQueueStatusTypes.PIMS_ERROR,
+      description: 'Error',
+      isDisabled: false,
+      displayOrder: null,
+    };
 
-  // Can still view document details
-  expect(screen.getByTestId('document-view-button-0')).toBeInTheDocument();
-});
+    setup({
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.DispositionFiles,
+      documentResults: documentRows,
+      canEditDocuments: false,
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
+    });
 
-
-it('hides Delete for documents with upload errors when editing is disabled', () => {
-  const documentRows = mockDocumentRowResponse();
-
-  // Use the actual error queue status code from your generated enum.
-  documentRows[0].queueStatusTypeCode = {
-    id: ApiGen_CodeTypes_DocumentQueueStatusTypes.PIMS_ERROR,
-    description: 'Error',
-    isDisabled: false,
-    displayOrder: null,
-  };
-
-  setup({
-    relationshipType: ApiGen_CodeTypes_DocumentRelationType.DispositionFiles,
-    documentResults: documentRows,
-    canEditDocuments: false,
-    claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
+    expect(screen.queryByTestId('document-delete-button-0')).not.toBeInTheDocument();
   });
 
-  expect(screen.queryByTestId('document-delete-button-0')).not.toBeInTheDocument();
-});
+  it('shows document editing controls when editing is enabled', () => {
+    const documentRows = mockDocumentRowResponse();
 
+    setup({
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
+      documentResults: documentRows,
+      canEditDocuments: true,
+      claims: [
+        Claims.DOCUMENT_VIEW,
+        Claims.DOCUMENT_ADD,
+        Claims.DOCUMENT_EDIT,
+        Claims.DOCUMENT_DELETE,
+      ],
+    });
 
-it('shows document editing controls when editing is enabled', () => {
-  const documentRows = mockDocumentRowResponse();
-
-  setup({
-    relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
-    documentResults: documentRows,
-    canEditDocuments: true,
-    claims: [
-      Claims.DOCUMENT_VIEW,
-      Claims.DOCUMENT_ADD,
-      Claims.DOCUMENT_EDIT,
-      Claims.DOCUMENT_DELETE,
-    ],
+    expect(screen.getByTestId('add-document-btn')).toBeInTheDocument();
+    expect(screen.getByTestId('document-delete-button-0')).toBeInTheDocument();
   });
 
-  expect(screen.getByTestId('add-document-btn')).toBeInTheDocument();
-  expect(screen.getByTestId('document-delete-button-0')).toBeInTheDocument();
-});
+  it('allows viewing document details without allowing edits', async () => {
+    const documentRows = mockDocumentRowResponse();
+    documentRows[0].documentType = {
+      ...documentRows[0].documentType,
+      mayanId: 123,
+    };
 
+    setup({
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.DispositionFiles,
+      documentResults: documentRows,
+      canEditDocuments: false,
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
+    });
 
-it('allows viewing document details without allowing edits', async () => {
-  const documentRows = mockDocumentRowResponse();
-  documentRows[0].documentType = {
-  ...documentRows[0].documentType,
-  mayanId: 123,
-};
+    await act(async () => {
+      await userEvent.click(screen.getByTestId('document-view-button-0'));
+    });
 
-  setup({
-    relationshipType: ApiGen_CodeTypes_DocumentRelationType.DispositionFiles,
-    documentResults: documentRows,
-    canEditDocuments: false,
-    claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
+    expect(await screen.findByText('View Document Information')).toBeVisible();
+
+    expect(screen.queryByTitle('Edit document information')).not.toBeInTheDocument();
   });
-
-  await act(async () => {
-    await userEvent.click(screen.getByTestId('document-view-button-0'));
-  });
-
-  expect(await screen.findByText('View Document Information')).toBeVisible();
-
-  expect(screen.queryByTitle('Edit document information')).not.toBeInTheDocument();
-});
-
-
 });

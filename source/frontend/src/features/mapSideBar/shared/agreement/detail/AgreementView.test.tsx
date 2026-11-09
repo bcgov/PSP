@@ -217,7 +217,6 @@ describe('AgreementView component', () => {
     ).not.toBeInTheDocument();
   });
 
-
   it('allows Acquisition users to edit and delete agreements when canEdit is omitted', () => {
     setup({
       claims: [Claims.ACQUISITION_EDIT],
@@ -250,9 +249,7 @@ describe('AgreementView component', () => {
     expect(screen.getByText(/License Of Occupation/i)).toBeVisible();
 
     // Add Agreement is unavailable.
-    expect(
-      screen.getByTestId('tooltip-icon-agreement-cannot-add-tooltip'),
-    ).toBeVisible();
+    expect(screen.getByTestId('tooltip-icon-agreement-cannot-add-tooltip')).toBeVisible();
   });
 
   it('does not allow Acquisition claims to bypass read-only restrictions', () => {
@@ -264,5 +261,4 @@ describe('AgreementView component', () => {
     expect(screen.queryByTitle('Edit Agreement')).not.toBeInTheDocument();
     expect(screen.queryByTitle('Delete Agreement')).not.toBeInTheDocument();
   });
-
 });
