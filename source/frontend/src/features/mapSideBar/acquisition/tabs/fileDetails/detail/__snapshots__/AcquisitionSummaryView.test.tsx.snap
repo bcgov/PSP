@@ -6,14 +6,14 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c7 {
+  .c8 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c6 {
+.c7 {
   padding: 0 0.4rem;
   display: block;
 }
@@ -54,11 +54,11 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c8 {
+.c9 {
   white-space: pre-line;
 }
 
-.c9 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -69,7 +69,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
   align-items: center;
 }
 
-.c10 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -420,7 +420,16 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           <div
             class="c5 text-left col"
           >
-            Jul 29, 2022
+            <div
+              class="c6"
+            >
+              Jul 29, 2022
+              <div
+                data-acquisition-file-id="1"
+                data-key-date="2022-07-29T00:00:00"
+                data-testid="reminder-ACQ_DLVDT"
+              />
+            </div>
           </div>
         </div>
         <div
@@ -688,7 +697,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
             data-testid="teamMember[0]"
           >
             <a
-              class="c6"
+              class="c7"
               href="/contact/P1"
               rel="noopener noreferrer"
               target="_blank"
@@ -730,7 +739,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
             data-testid="teamMember[0]"
           >
             <a
-              class="c6"
+              class="c7"
               href="/contact/P3"
               rel="noopener noreferrer"
               target="_blank"
@@ -777,7 +786,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
         class="collapse show"
       >
         <p
-          class="c7"
+          class="c8"
         >
           Each property in this file should be owned by the owner(s) in this section
         </p>
@@ -888,7 +897,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
               class="c5 text-left col"
             >
               <div
-                class="c8"
+                class="c9"
               >
                 456 Souris Street
 PO Box 250
@@ -1042,7 +1051,7 @@ Canada
               class="c5 text-left col"
             >
               <div
-                class="c8"
+                class="c9"
               >
                 123 Main Street
 PO Box 123
@@ -1106,7 +1115,7 @@ Canada
             data-testid="teamMember[0]"
           >
             <a
-              class="c6"
+              class="c7"
               href="/contact/O1"
               rel="noopener noreferrer"
               target="_blank"
@@ -1148,7 +1157,7 @@ Canada
             data-testid="primaryContact[0]"
           >
             <a
-              class="c6"
+              class="c7"
               href="/contact/P1"
               rel="noopener noreferrer"
               target="_blank"
@@ -1189,7 +1198,7 @@ Canada
             class="c5 text-left col"
           >
             <a
-              class="c9"
+              class="c10"
               href="/contact/P2"
               rel="noopener noreferrer"
               target="_blank"
@@ -1267,7 +1276,7 @@ Canada
             class="c5 text-left col"
           >
             <div
-              class="c10"
+              class="c6"
             />
           </div>
         </div>

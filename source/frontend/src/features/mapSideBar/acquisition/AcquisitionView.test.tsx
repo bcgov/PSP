@@ -51,6 +51,10 @@ vi.mocked(usePropertyOperationRepository).mockReturnValue({
   >,
 } as unknown as ReturnType<typeof usePropertyOperationRepository>);
 
+vi.mock('@/features/notifications/ReminderContainer', () => ({
+  default: () => <div data-testid="mock-reminder" />,
+}));
+
 const onClose = vi.fn();
 const onSave = vi.fn();
 const onCancel = vi.fn();

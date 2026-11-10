@@ -777,6 +777,19 @@ namespace Pims.Dal.Repositories
                 .Select(n => n.NotificationId)
                 .ToList();
 
+            //Remove reminders from Schedule - Delivery Date in case the delivery date is cleared.
+            var scheduledDeliveryDate = acquisitionFile.DeliveryDate;
+            if (!scheduledDeliveryDate.HasValue)
+            {
+                var notificationIds = Context.PimsNotifications
+                    .Where(n => n.AcquisitionFileId == acquisitionFile.Internal_Id
+                        && n.NotificationTypeCode == "ACQ_DLVDT")
+                    .Select(n => n.NotificationId)
+                    .ToList();
+
+                deletedNotificationIds.AddRange(notificationIds);
+            }
+
             foreach (var notificationId in deletedNotificationIds)
             {
                 _notificationRepository.Delete(notificationId);
