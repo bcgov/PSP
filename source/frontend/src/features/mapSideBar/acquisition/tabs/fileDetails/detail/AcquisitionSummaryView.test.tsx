@@ -12,7 +12,15 @@ import { mockProjects } from '@/mocks/projects.mock';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { act, cleanup, render, RenderOptions, userEvent, waitForEffects, screen } from '@/utils/test-utils';
+import {
+  act,
+  cleanup,
+  render,
+  RenderOptions,
+  userEvent,
+  waitForEffects,
+  screen,
+} from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
 import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
@@ -717,7 +725,7 @@ describe('AcquisitionSummaryView component', () => {
     });
 
     it('displays the reminder button when schedule delivery date is set', async () => {
-      const {getByTestId} = setup(
+      const { getByTestId } = setup(
         {
           acquisitionFile: {
             ...mockAcquisitionFileResponse(),
@@ -733,8 +741,7 @@ describe('AcquisitionSummaryView component', () => {
     });
 
     it('does not display the reminder button when the schedule delivery date is not set', () => {
-
-    const {} = setup(
+      const {} = setup(
         {
           acquisitionFile: {
             ...mockAcquisitionFileResponse(),
@@ -744,7 +751,8 @@ describe('AcquisitionSummaryView component', () => {
         { claims: [Claims.ACQUISITION_EDIT] },
       );
 
-      expect(screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`),
+      expect(
+        screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`),
       ).not.toBeInTheDocument();
     });
   });
