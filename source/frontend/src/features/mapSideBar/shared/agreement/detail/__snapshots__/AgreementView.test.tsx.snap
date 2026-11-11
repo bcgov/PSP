@@ -605,7 +605,15 @@ exports[`AgreementView component > renders as expected 1`] = `
                 </div>
                 <div
                   class="c10 text-left col"
-                />
+                >
+                  <div
+                    class="c11"
+                  >
+                    <span
+                      class="c12"
+                    />
+                  </div>
+                </div>
               </div>
               <div
                 class="c13"
@@ -933,7 +941,21 @@ exports[`AgreementView component > renders as expected 1`] = `
                 <div
                   class="c10 text-left col"
                 >
-                  Apr 5, 2023
+                  <div
+                    class="c11"
+                  >
+                    <span
+                      class="c12"
+                    >
+                      Apr 5, 2023
+                    </span>
+                    <div
+                      agreement-id="2"
+                      data-acquisition-file-id="1"
+                      data-key-date="2023-04-05T21:00:00.0"
+                      data-testid="reminder-AGMT_POSNDT"
+                    />
+                  </div>
                 </div>
               </div>
               <div

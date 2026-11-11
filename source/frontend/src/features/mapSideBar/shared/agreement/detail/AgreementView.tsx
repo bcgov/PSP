@@ -29,6 +29,7 @@ export interface IAgreementViewProps {
   agreements: ApiGen_Concepts_Agreement[];
   isFileFinalStatus?: boolean;
   isSection3?: boolean;
+  isAcquisition?: boolean;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
 }
@@ -40,11 +41,27 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   isSection3,
   onGenerate,
   onDelete,
+  isAcquisition,
 }) => {
   const keycloak = useKeycloakWrapper();
   const history = useHistory();
   const match = useRouteMatch();
   const { setModalContent, setDisplayModal } = useModalContext();
+  const editClaim = isAcquisition ? Claims.ACQUISITION_EDIT : Claims.DISPOSITION_EDIT;
+
+  const notificationTypes = isAcquisition
+    ? {
+        agreement: ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT,
+        completion: ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT,
+        termination: ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT,
+        possession: ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT,
+      }
+    : {
+        agreement: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_AGMTDT,
+        completion: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_COMPTDT,
+        termination: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_TERMDT,
+        possession: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_POSNDT,
+      };
 
   return (
     <StyledSummarySection>
@@ -53,7 +70,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
       <Section
         header={
           <SectionListHeader
-            claims={[Claims.ACQUISITION_EDIT]}
+            claims={[editClaim]}
             title="Agreements"
             addButtonText="Add Agreement"
             addButtonIcon={<FaPlus size={'2rem'} />}
@@ -91,7 +108,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                             </StyledAddButton>
 
-                            {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
+                            {keycloak.hasClaim(editClaim) && (
                               <>
                                 <EditButton
                                   title="Edit Agreement"
@@ -179,10 +196,12 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.agreementDate}
                       keyDateLabel="Agreement date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT}
+                      notificationType={notificationTypes.agreement}
                       notificationSource={{
-                        acquisitionFileId: agreement.fileId,
                         agreementId: agreement.agreementId,
+                        ...(isAcquisition
+                          ? { acquisitionFileId: agreement.fileId }
+                          : { dispositionFileId: agreement.fileId }),
                       }}
                       View={ReminderView}
                     />
@@ -201,10 +220,12 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.completionDate}
                       keyDateLabel="Completion date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT}
+                      notificationType={notificationTypes.completion}
                       notificationSource={{
-                        acquisitionFileId: agreement.fileId,
                         agreementId: agreement.agreementId,
+                        ...(isAcquisition
+                          ? { acquisitionFileId: agreement.fileId }
+                          : { dispositionFileId: agreement.fileId }),
                       }}
                       View={ReminderView}
                     />
@@ -218,10 +239,12 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.terminationDate}
                       keyDateLabel="Termination date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT}
+                      notificationType={notificationTypes.termination}
                       notificationSource={{
-                        acquisitionFileId: agreement.fileId,
                         agreementId: agreement.agreementId,
+                        ...(isAcquisition
+                          ? { acquisitionFileId: agreement.fileId }
+                          : { dispositionFileId: agreement.fileId }),
                       }}
                       View={ReminderView}
                     />
@@ -229,7 +252,23 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                 </StyledReminderContent>
               </SectionField>
               <SectionField labelWidth={{ xs: 6 }} label="Possession date">
-                {prettyFormatDate(agreement.possessionDate)}
+                <StyledReminderContent>
+                  <StyledDate>{prettyFormatDate(agreement.possessionDate)}</StyledDate>
+                  {agreement.possessionDate && (
+                    <ReminderContainer
+                      keyDate={agreement.possessionDate}
+                      keyDateLabel="Possession date"
+                      notificationType={notificationTypes.possession}
+                      notificationSource={{
+                        agreementId: agreement.agreementId,
+                        ...(isAcquisition
+                          ? { acquisitionFileId: agreement.fileId }
+                          : { dispositionFileId: agreement.fileId }),
+                      }}
+                      View={ReminderView}
+                    />
+                  )}
+                </StyledReminderContent>
               </SectionField>
 
               <StyledAgreementSubheader>Financial</StyledAgreementSubheader>

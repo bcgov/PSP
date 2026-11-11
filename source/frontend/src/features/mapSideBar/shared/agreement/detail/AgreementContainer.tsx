@@ -90,6 +90,7 @@ export const AgreementContainer: React.FunctionComponent<
       onDelete={handleAgreementDeleted}
       isSection3={isSection3}
       isFileFinalStatus={!statusSolver.canEditOrDeleteAgreement()}
+      isAcquisition={isAcquisition}
     />
   ) : null;
 };

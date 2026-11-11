@@ -119,16 +119,24 @@ namespace Pims.Dal.Repositories
             if (!agreement.AgreementDate.HasValue)
             {
                 notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_AGMTDT));
+                notificationTypesToDelete.Add(nameof(NotificationTypes.DSP_AGMT_AGMTDT));
             }
 
             if (!agreement.CompletionDate.HasValue)
             {
                 notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_COMPTDT));
+                notificationTypesToDelete.Add(nameof(NotificationTypes.DSP_AGMT_COMPTDT));
             }
 
             if (!agreement.TerminationDate.HasValue)
             {
                 notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_TERMINDT));
+                notificationTypesToDelete.Add(nameof(NotificationTypes.DSP_AGMT_TERMDT));
+            }
+            if (!agreement.PossessionDate.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_POSNDT));
+                notificationTypesToDelete.Add(nameof(NotificationTypes.DSP_AGMT_POSNDT));
             }
 
             var notificationIds = Context.PimsNotifications.Where(n => n.AgreementId == agreement.AgreementId && notificationTypesToDelete.Contains(n.NotificationTypeCode))
