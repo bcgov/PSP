@@ -137,7 +137,7 @@ describe('AgreementView component', () => {
         expect(editButtons).toHaveLength(0);
       }
     },
-);
+  );
 
   it('displays warning tooltips instead of edit/add buttons when file in final status', async () => {
     const { queryByText } = setup({
@@ -292,8 +292,6 @@ describe('AgreementView component', () => {
     ).not.toBeInTheDocument();
   });
 
-
-
   it('disposition agreement - displays the reminder button when the agreement date is set', async () => {
     const {} = setup({
       claims: [Claims.DISPOSITION_EDIT],
@@ -313,7 +311,7 @@ describe('AgreementView component', () => {
 
     setup({
       claims: [Claims.DISPOSITION_EDIT],
-      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false  },
+      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
     });
 
     expect(
@@ -324,7 +322,7 @@ describe('AgreementView component', () => {
   it('disposition agreement - displays the reminder button when the agreement completion date is set', async () => {
     const {} = setup({
       claims: [Claims.DISPOSITION_EDIT],
-      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false  },
+      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
     });
 
     expect(
@@ -340,7 +338,7 @@ describe('AgreementView component', () => {
 
     setup({
       claims: [Claims.DISPOSITION_EDIT],
-      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false  },
+      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
     });
 
     expect(
@@ -351,7 +349,7 @@ describe('AgreementView component', () => {
   it('disposition agreement - displays the reminder button when the agreement termination date is set', async () => {
     const {} = setup({
       claims: [Claims.DISPOSITION_EDIT],
-      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false  },
+      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
     });
 
     expect(
@@ -367,7 +365,7 @@ describe('AgreementView component', () => {
 
     setup({
       claims: [Claims.DISPOSITION_EDIT],
-      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false  },
+      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
     });
 
     expect(
@@ -378,7 +376,7 @@ describe('AgreementView component', () => {
   it('disposition agreement - displays the reminder button when the agreement possession date is set', async () => {
     const {} = setup({
       claims: [Claims.DISPOSITION_EDIT],
-      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false  },
+      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
     });
 
     expect(
@@ -394,7 +392,7 @@ describe('AgreementView component', () => {
 
     setup({
       claims: [Claims.DISPOSITION_EDIT],
-      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false  },
+      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
     });
 
     expect(
