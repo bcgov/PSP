@@ -29,6 +29,7 @@ export interface IAgreementViewProps {
   agreements: ApiGen_Concepts_Agreement[];
   isFileFinalStatus?: boolean;
   isSection3?: boolean;
+  isAcquisition?: boolean;
   canEdit?: boolean;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
@@ -42,11 +43,27 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   canEdit,
   onGenerate,
   onDelete,
+  isAcquisition,
 }) => {
   const keycloak = useKeycloakWrapper();
   const history = useHistory();
   const match = useRouteMatch();
   const { setModalContent, setDisplayModal } = useModalContext();
+  const editClaim = isAcquisition ? Claims.ACQUISITION_EDIT : Claims.DISPOSITION_EDIT;
+
+  const notificationTypes = isAcquisition
+    ? {
+        agreement: ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT,
+        completion: ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT,
+        termination: ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT,
+        possession: ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT,
+      }
+    : {
+        agreement: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_AGMTDT,
+        completion: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_COMPTDT,
+        termination: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_TERMDT,
+        possession: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_POSNDT,
+      };
 
   return (
     <StyledSummarySection>
@@ -55,7 +72,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
       <Section
         header={
           <SectionListHeader
-            claims={[Claims.ACQUISITION_EDIT, Claims.DISPOSITION_EDIT]}
+            claims={[editClaim]}
             title="Agreements"
             addButtonText="Add Agreement"
             addButtonIcon={<FaPlus size={'2rem'} />}
@@ -93,28 +110,26 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                             </StyledAddButton>
 
-                            {(keycloak.hasClaim(Claims.ACQUISITION_EDIT) ||
-                              keycloak.hasClaim(Claims.DISPOSITION_EDIT)) &&
-                              canEdit !== false && (
-                                <>
-                                  <EditButton
-                                    title="Edit Agreement"
-                                    data-testId={`agreements[${index}].edit-btn`}
-                                    onClick={() =>
-                                      history.push(`${match.url}/${agreement.agreementId}/update`)
-                                    }
-                                    icon={<FaEdit size={'2rem'} />}
-                                  />
-                                  <RemoveIconButton
-                                    title="Delete Agreement"
-                                    data-testId={`agreements[${index}].delete-btn`}
-                                    icon={<FaTrash size={'1.75rem'} />}
-                                    onRemove={() => {
-                                      setModalContent({
-                                        ...getDeleteModalProps(),
-                                        variant: 'error',
-                                        title: 'Delete Agreement',
-                                        message: `You have selected to delete this Agreement.
+                            {keycloak.hasClaim(editClaim) && canEdit !== false &&  (
+                              <>
+                                <EditButton
+                                  title="Edit Agreement"
+                                  data-testId={`agreements[${index}].edit-btn`}
+                                  onClick={() =>
+                                    history.push(`${match.url}/${agreement.agreementId}/update`)
+                                  }
+                                  icon={<FaEdit size={'2rem'} />}
+                                />
+                                <RemoveIconButton
+                                  title="Delete Agreement"
+                                  data-testId={`agreements[${index}].delete-btn`}
+                                  icon={<FaTrash size={'1.75rem'} />}
+                                  onRemove={() => {
+                                    setModalContent({
+                                      ...getDeleteModalProps(),
+                                      variant: 'error',
+                                      title: 'Delete Agreement',
+                                      message: `You have selected to delete this Agreement.
                                         Do you want to proceed?`,
                                         okButtonText: 'Yes',
                                         cancelButtonText: 'No',
@@ -183,10 +198,12 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.agreementDate}
                       keyDateLabel="Agreement date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT}
+                      notificationType={notificationTypes.agreement}
                       notificationSource={{
-                        acquisitionFileId: agreement.fileId,
                         agreementId: agreement.agreementId,
+                        ...(isAcquisition
+                          ? { acquisitionFileId: agreement.fileId }
+                          : { dispositionFileId: agreement.fileId }),
                       }}
                       View={ReminderView}
                     />
@@ -205,10 +222,12 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.completionDate}
                       keyDateLabel="Completion date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT}
+                      notificationType={notificationTypes.completion}
                       notificationSource={{
-                        acquisitionFileId: agreement.fileId,
                         agreementId: agreement.agreementId,
+                        ...(isAcquisition
+                          ? { acquisitionFileId: agreement.fileId }
+                          : { dispositionFileId: agreement.fileId }),
                       }}
                       View={ReminderView}
                     />
@@ -222,10 +241,12 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.terminationDate}
                       keyDateLabel="Termination date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT}
+                      notificationType={notificationTypes.termination}
                       notificationSource={{
-                        acquisitionFileId: agreement.fileId,
                         agreementId: agreement.agreementId,
+                        ...(isAcquisition
+                          ? { acquisitionFileId: agreement.fileId }
+                          : { dispositionFileId: agreement.fileId }),
                       }}
                       View={ReminderView}
                     />
@@ -239,10 +260,12 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.possessionDate}
                       keyDateLabel="Possession date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT}
+                      notificationType={notificationTypes.possession}
                       notificationSource={{
-                        acquisitionFileId: agreement.fileId,
                         agreementId: agreement.agreementId,
+                        ...(isAcquisition
+                          ? { acquisitionFileId: agreement.fileId }
+                          : { dispositionFileId: agreement.fileId }),
                       }}
                       View={ReminderView}
                     />
