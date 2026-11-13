@@ -62,5 +62,7 @@ namespace Pims.Api.Services
         PimsDispositionAgreement UpdateDispositionFileAgreement(long dispositionFileId, PimsDispositionAgreement dispositionAgreement);
 
         bool DeleteDispositionFileAgreement(long dispositionFileId, long agreementId);
+
+        bool CanEdit(PimsDispositionFile dispositionFile);
     }
 }

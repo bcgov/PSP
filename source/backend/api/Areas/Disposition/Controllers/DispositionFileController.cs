@@ -76,7 +76,9 @@ namespace Pims.Api.Areas.Disposition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
 
             var dispositionFile = _dispositionService.GetById(id);
-            return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
+            var mapped = _mapper.Map<DispositionFileModel>(dispositionFile);
+            mapped.CanEdit = _dispositionService.CanEdit(dispositionFile);
+            return new JsonResult(mapped);
         }
 
         /// <summary>
