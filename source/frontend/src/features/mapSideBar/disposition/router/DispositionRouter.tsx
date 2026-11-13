@@ -88,7 +88,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
           exact
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/add`}
           customRender={() =>
-            props.dispositionFile?.id ? (
+            props.dispositionFile?.id && props.dispositionFile.canEdit === true ? (
               <AddAgreementContainer
                 fileId={props.dispositionFile?.id}
                 View={UpdateAgreementForm}
@@ -98,7 +98,9 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
                 onCreateAgreement={postDispositionAgreement}
                 isCreatingAgreement={loadingDispositionAgreement}
               />
-            ) : null
+            ) : (
+              <Redirect to={`${stripTrailingSlash(url)}/${FileTabType.AGREEMENTS}`} />
+            )
           }
           claim={Claims.DISPOSITION_EDIT}
           key={'agreement'}
@@ -107,7 +109,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
         <AppRoute
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/:agreementId/update`}
           customRender={({ match }) =>
-            props.dispositionFile?.id ? (
+            props.dispositionFile?.id && props.dispositionFile.canEdit === true ? (
               <UpdateAgreementContainer
                 fileId={props.dispositionFile?.id}
                 agreementId={match.params.agreementId}
@@ -119,9 +121,11 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
                 getAgreement={agreementProvider.getDispositionAgreementById.execute}
                 fetchingAgreement={agreementProvider.getDispositionAgreementById.loading}
               />
-            ) : null
+            ) : (
+              <Redirect to={`${stripTrailingSlash(url)}/${FileTabType.AGREEMENTS}`} />
+            )
           }
-          claim={Claims.ACQUISITION_EDIT}
+          claim={Claims.DISPOSITION_EDIT}
           key={'updateAgreement'}
           title={'Update Agreement'}
         />

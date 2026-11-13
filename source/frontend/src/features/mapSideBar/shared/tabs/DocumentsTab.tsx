@@ -8,6 +8,7 @@ interface IDocumentsTabProps {
   title?: string;
   statusSolver?: IUpdateDocumentsStrategy;
   onSuccess?: () => void;
+  canEdit?: boolean;
 }
 
 const DocumentsTab: React.FunctionComponent<IDocumentsTabProps> = ({
@@ -16,6 +17,7 @@ const DocumentsTab: React.FunctionComponent<IDocumentsTabProps> = ({
   statusSolver,
   title = 'File Documents',
   onSuccess,
+  canEdit,
 }) => {
   return (
     <DocumentListContainer
@@ -24,6 +26,7 @@ const DocumentsTab: React.FunctionComponent<IDocumentsTabProps> = ({
       relationshipType={relationshipType}
       statusSolver={statusSolver}
       onSuccess={onSuccess}
+      canEdit={canEdit}
     />
   );
 };

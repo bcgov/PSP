@@ -238,7 +238,7 @@ const renderActions = (
             title={original.queueStatusTypeCode.description}
           />
 
-          {hasClaim(Claims.DOCUMENT_DELETE) && !showParentInformation && (
+          {hasClaim(Claims.DOCUMENT_DELETE) && !showParentInformation && canEditDocuments && (
             <StyledRemoveLinkButton
               data-testid={`document-delete-button-${index}`}
               icon={<FaTrash id={`document-delete-${index}`} size={21} title="document delete" />}
