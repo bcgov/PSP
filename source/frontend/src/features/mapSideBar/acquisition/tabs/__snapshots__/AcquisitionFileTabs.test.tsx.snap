@@ -82,14 +82,14 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c9 {
+.c10 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c8 {
+.c9 {
   padding: 0 0.4rem;
   display: block;
 }
@@ -105,7 +105,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
   font-weight: bold;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -116,7 +116,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
   align-items: center;
 }
 
-.c11 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -537,7 +537,14 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 <div
                   class="c7 text-left col"
                 >
-                  Jul 29, 2022
+                  <div
+                    class="c8"
+                  >
+                    Jul 29, 2022
+                    <div
+                      data-testid="mock-reminder"
+                    />
+                  </div>
                 </div>
               </div>
               <div
@@ -805,7 +812,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   data-testid="teamMember[0]"
                 >
                   <a
-                    class="c8"
+                    class="c9"
                     href="/contact/P1"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -847,7 +854,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   data-testid="teamMember[0]"
                 >
                   <a
-                    class="c8"
+                    class="c9"
                     href="/contact/P3"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -894,7 +901,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               class="collapse show"
             >
               <p
-                class="c9"
+                class="c10"
               >
                 Each property in this file should be owned by the owner(s) in this section
               </p>
@@ -915,7 +922,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   data-testid="teamMember[0]"
                 >
                   <a
-                    class="c8"
+                    class="c9"
                     href="/contact/O1"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -975,7 +982,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 >
                   <a
-                    class="c10"
+                    class="c11"
                     href="/contact/P2"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -1053,7 +1060,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 >
                   <div
-                    class="c11"
+                    class="c8"
                   />
                 </div>
               </div>

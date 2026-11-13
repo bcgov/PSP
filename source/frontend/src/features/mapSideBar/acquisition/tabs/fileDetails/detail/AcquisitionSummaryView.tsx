@@ -176,7 +176,20 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
           label="Delivery date"
           tooltip="Date for delivery of the property to the project"
         >
-          {prettyFormatDate(detail.deliveryDate)}
+          <StyledReminderContent>
+            {prettyFormatDate(detail.deliveryDate)}
+            {detail.deliveryDate && (
+              <ReminderContainer
+                keyDate={detail.deliveryDate}
+                keyDateLabel="Delivery date"
+                notificationType={ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}
+                notificationSource={{
+                  acquisitionFileId: acquisitionFile.id,
+                }}
+                View={ReminderView}
+              />
+            )}
+          </StyledReminderContent>
         </SectionField>
         <SectionField
           label="Estimated date"

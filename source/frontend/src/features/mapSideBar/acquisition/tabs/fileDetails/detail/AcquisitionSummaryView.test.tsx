@@ -12,9 +12,18 @@ import { mockProjects } from '@/mocks/projects.mock';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  cleanup,
+  render,
+  RenderOptions,
+  userEvent,
+  waitForEffects,
+  screen,
+} from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 
 // mock auth library
 
@@ -37,6 +46,16 @@ vi.mocked(useApiAcquisitionFile).mockImplementation(
       getAcquisitionFileOwners: getAcquisitionFileOwnersFn,
     } as unknown as ReturnType<typeof useApiAcquisitionFile>),
 );
+
+vi.mock('@/features/notifications/ReminderContainer', () => ({
+  default: (props: any) => (
+    <div
+      data-testid={`reminder-${props.notificationType}`}
+      data-key-date={props.keyDate}
+      data-acquisition-file-id={props.notificationSource.acquisitionFileId}
+    />
+  ),
+}));
 
 describe('AcquisitionSummaryView component', () => {
   // render component under test
@@ -703,6 +722,38 @@ describe('AcquisitionSummaryView component', () => {
       expect((await findAllByText(/Management team member/))[0]).toBeVisible();
       expect(await findByText(/John A Doe/)).toBeVisible();
       expect(await findByText(/Jane B Smith/)).toBeVisible();
+    });
+
+    it('displays the reminder button when schedule delivery date is set', async () => {
+      const { getByTestId } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+          },
+        },
+        { claims: [Claims.ACQUISITION_EDIT] },
+      );
+
+      await waitForEffects();
+      expect(
+        await getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`),
+      ).toBeVisible();
+    });
+
+    it('does not display the reminder button when the schedule delivery date is not set', () => {
+      const {} = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            deliveryDate: null,
+          },
+        },
+        { claims: [Claims.ACQUISITION_EDIT] },
+      );
+
+      expect(
+        screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`),
+      ).not.toBeInTheDocument();
     });
   });
 });

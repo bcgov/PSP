@@ -75,6 +75,10 @@ vi.mocked(useNoteRepository, { partial: true }).mockImplementation(() => ({
   deleteNote: getMockRepositoryObj(),
 }));
 
+vi.mock('@/features/notifications/ReminderContainer', () => ({
+  default: () => <div data-testid="mock-reminder" />,
+}));
+
 describe('AcquisitionFileTabs component', () => {
   // render component under test
   const setup = (
