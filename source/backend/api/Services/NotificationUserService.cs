@@ -113,6 +113,7 @@ namespace Pims.Api.Services
                 or nameof(NotificationTypes.AGMT_AGMTDT)
                 or nameof(NotificationTypes.AGMT_COMPTDT)
                 or nameof(NotificationTypes.AGMT_TERMINDT)
+                or nameof(NotificationTypes.AGMT_POSNDT)
                 or nameof(NotificationTypes.ACQ_DLVDT)
                 or nameof(NotificationTypes.NOC) when notification.AcquisitionFile is not null
                     => $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}",

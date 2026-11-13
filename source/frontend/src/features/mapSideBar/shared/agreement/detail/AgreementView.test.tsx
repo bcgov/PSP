@@ -201,6 +201,39 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
+  it('displays the reminder button when the possession date is set', () => {
+    setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: false, isSection3: false },
+    });
+
+    const reminder = screen.getByTestId(
+      `reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT}`,
+    );
+    const agreement = mockViewProps.agreements.find(agreement => agreement.possessionDate);
+
+    expect(reminder).toBeVisible();
+    expect(reminder).toHaveAttribute('data-key-date', agreement.possessionDate);
+    expect(reminder).toHaveAttribute('agreement-id', String(agreement.agreementId));
+    expect(reminder).toHaveAttribute('data-acquisition-file-id', String(agreement.fileId));
+  });
+
+  it('does not display the reminder button when the possession date is not set', () => {
+    mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
+      ...agreement,
+      possessionDate: null,
+    }));
+
+    setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: false, isSection3: false },
+    });
+
+    expect(
+      screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT}`),
+    ).not.toBeInTheDocument();
+  });
+
   it('does not display the reminder button when the termination date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,

@@ -95,6 +95,7 @@ export const getNotificationDeepLink = (
     case ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT:
     case ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT:
     case ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT:
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT:
       return isValidId(notification.acquisitionFileId)
         ? DeepLinkGenerator.showDetails(
             ApiGen_CodeTypes_FileTypes.Acquisition,

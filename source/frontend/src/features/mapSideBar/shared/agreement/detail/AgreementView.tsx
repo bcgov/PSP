@@ -233,7 +233,21 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                 </StyledReminderContent>
               </SectionField>
               <SectionField labelWidth={{ xs: 6 }} label="Possession date">
-                {prettyFormatDate(agreement.possessionDate)}
+                <StyledReminderContent>
+                  <StyledDate>{prettyFormatDate(agreement.possessionDate)}</StyledDate>
+                  {agreement.possessionDate && (
+                    <ReminderContainer
+                      keyDate={agreement.possessionDate}
+                      keyDateLabel="Possession date"
+                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT}
+                      notificationSource={{
+                        acquisitionFileId: agreement.fileId,
+                        agreementId: agreement.agreementId,
+                      }}
+                      View={ReminderView}
+                    />
+                  )}
+                </StyledReminderContent>
               </SectionField>
 
               <StyledAgreementSubheader>Financial</StyledAgreementSubheader>
