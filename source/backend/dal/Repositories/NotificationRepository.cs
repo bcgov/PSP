@@ -195,7 +195,6 @@ namespace Pims.Dal.Repositories
             var deletedEntity = Context.PimsNotifications
                 .Include(n => n.PimsNotificationUsers)
                     .ThenInclude(nu => nu.PimsNotificationUserOutputs)
-                .AsNoTracking()
                 .FirstOrDefault(n => n.NotificationId == notificationId &&
                                      n.PimsNotificationUsers.Any(nu => nu.UserId == userId));
 
@@ -204,36 +203,21 @@ namespace Pims.Dal.Repositories
                 return true;
             }
 
-            foreach (var notificationUser in deletedEntity.PimsNotificationUsers.Where(nu => nu.UserId == userId))
-            {
-                foreach (var output in notificationUser.PimsNotificationUserOutputs)
-                {
-                    Context.PimsNotificationUserOutputs.Remove(
-                        new PimsNotificationUserOutput
-                        {
-                            NotificationUserOutputId = output.NotificationUserOutputId,
-                        });
-                }
+            var usersToDelete = deletedEntity.PimsNotificationUsers.Where(nu => nu.UserId == userId).ToList();
+            var outputsToDelete = usersToDelete.SelectMany(nu => nu.PimsNotificationUserOutputs).ToList();
 
-                Context.PimsNotificationUsers.Remove(
-                    new PimsNotificationUser
-                    {
-                        NotificationUserId = notificationUser.NotificationUserId,
-                    });
-            }
+            // Check if other users are attached to this notification
+            bool hasOtherLinks = deletedEntity.PimsNotificationUsers.Any(nu => nu.UserId != userId);
+
+            Context.PimsNotificationUserOutputs.RemoveRange(outputsToDelete);
+            Context.PimsNotificationUsers.RemoveRange(usersToDelete);
 
             // Only remove the parent if no other users are linked
-            bool hasOtherLinks = deletedEntity.PimsNotificationUsers.Any(nu => nu.UserId != userId);
             if (!hasOtherLinks)
             {
-                Context.PimsNotifications.Remove(
-                    new PimsNotification
-                    {
-                        NotificationId = notificationId,
-                    });
+                Context.PimsNotifications.Remove(deletedEntity);
             }
 
-            Context.SaveChanges();
             return true;
         }
 
@@ -245,7 +229,7 @@ namespace Pims.Dal.Repositories
         /// <exception cref="KeyNotFoundException">Thrown when the notification with the specified ID is not found.</exception>
         public bool Delete(long notificationId)
         {
-            var deletedEntity = Context.PimsNotifications.AsNoTracking()
+            var deletedEntity = Context.PimsNotifications
                 .Include(n => n.PimsNotificationUsers)
                     .ThenInclude(nu => nu.PimsNotificationUserOutputs)
                 .FirstOrDefault(n => n.NotificationId == notificationId);
@@ -255,31 +239,13 @@ namespace Pims.Dal.Repositories
                 return true;
             }
 
-            foreach (var notificationUser in deletedEntity.PimsNotificationUsers)
-            {
-                foreach (var output in notificationUser.PimsNotificationUserOutputs)
-                {
-                    Context.PimsNotificationUserOutputs.Remove(
-                            new PimsNotificationUserOutput
-                            {
-                                NotificationUserOutputId = output.NotificationUserOutputId,
-                            });
-                }
+            var usersToDelete = deletedEntity.PimsNotificationUsers.ToList();
+            var outputsToDelete = usersToDelete.SelectMany(nu => nu.PimsNotificationUserOutputs).ToList();
 
-                Context.PimsNotificationUsers.Remove(
-                        new PimsNotificationUser
-                        {
-                            NotificationUserId = notificationUser.NotificationUserId,
-                        });
-            }
+            Context.PimsNotificationUserOutputs.RemoveRange(outputsToDelete);
+            Context.PimsNotificationUsers.RemoveRange(usersToDelete);
+            Context.PimsNotifications.Remove(deletedEntity);
 
-            Context.PimsNotifications.Remove(
-                new PimsNotification
-                {
-                    NotificationId = notificationId,
-                });
-
-            Context.SaveChanges();
             return true;
         }
 
