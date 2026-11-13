@@ -188,6 +188,7 @@ export const mockDispositionFileResponse = (
   appCreateUserGuid: '5c01a037-8595-4f9c-b2d3-7d26b0095d36',
   rowVersion: rowVersion,
   fileChecklistItems: [],
+  canEdit: true,
 });
 
 export const mockDispositionFilePropertyResponse = () => [

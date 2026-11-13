@@ -139,6 +139,11 @@ namespace Pims.Dal.Repositories
                 notificationTypesToDelete.Add(nameof(NotificationTypes.DSP_AGMT_POSNDT));
             }
 
+            if (!agreement.PossessionDate.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_POSNDT));
+            }
+
             var notificationIds = Context.PimsNotifications.Where(n => n.AgreementId == agreement.AgreementId && notificationTypesToDelete.Contains(n.NotificationTypeCode))
             .Select(n => n.NotificationId)
             .ToList();
@@ -159,6 +164,14 @@ namespace Pims.Dal.Repositories
             var deletedEntity = Context.PimsAgreements.Where(x => x.AcquisitionFileId == acquisitionFileId && x.AgreementId == agreementId).FirstOrDefault();
             if (deletedEntity is not null)
             {
+                var notificationIds = Context.PimsNotifications
+                    .Where(n => n.AgreementId == agreementId)
+                    .Select(n => n.NotificationId)
+                    .ToList();
+                foreach (var notificationId in notificationIds)
+                {
+                    _notificationRepository.Delete(notificationId);
+                }
                 Context.PimsAgreements.Remove(deletedEntity);
 
                 return true;

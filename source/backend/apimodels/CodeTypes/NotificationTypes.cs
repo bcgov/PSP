@@ -56,6 +56,7 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "AGMT_TERMINDT")]
         AGMT_TERMINDT,
+        
         [EnumMember(Value = "AGMT_POSNDT")]
         AGMT_POSNDT,
 

@@ -30,6 +30,7 @@ export interface IAgreementViewProps {
   isFileFinalStatus?: boolean;
   isSection3?: boolean;
   isAcquisition?: boolean;
+  canEdit?: boolean;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
 }
@@ -39,6 +40,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   agreements,
   isFileFinalStatus,
   isSection3,
+  canEdit,
   onGenerate,
   onDelete,
   isAcquisition,
@@ -77,7 +79,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             onButtonAction={() => {
               history.push(`${match.url}/add`);
             }}
-            isAddEnabled={!isFileFinalStatus}
+            isAddEnabled={!isFileFinalStatus && canEdit !== false}
             cannotAddComponent={
               <TooltipIcon toolTipId={`agreement-cannot-add-tooltip`} toolTip={cannotEditMessage} />
             }
@@ -108,7 +110,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                             </StyledAddButton>
 
-                            {keycloak.hasClaim(editClaim) && (
+                            {keycloak.hasClaim(editClaim) && canEdit !== false &&  (
                               <>
                                 <EditButton
                                   title="Edit Agreement"
@@ -129,21 +131,21 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                                       title: 'Delete Agreement',
                                       message: `You have selected to delete this Agreement.
                                         Do you want to proceed?`,
-                                      okButtonText: 'Yes',
-                                      cancelButtonText: 'No',
-                                      handleOk: async () => {
-                                        agreement.agreementId && onDelete(agreement.agreementId);
-                                        setDisplayModal(false);
-                                      },
-                                      handleCancel: () => {
-                                        setDisplayModal(false);
-                                      },
-                                    });
-                                    setDisplayModal(true);
-                                  }}
-                                />
-                              </>
-                            )}
+                                        okButtonText: 'Yes',
+                                        cancelButtonText: 'No',
+                                        handleOk: async () => {
+                                          agreement.agreementId && onDelete(agreement.agreementId);
+                                          setDisplayModal(false);
+                                        },
+                                        handleCancel: () => {
+                                          setDisplayModal(false);
+                                        },
+                                      });
+                                      setDisplayModal(true);
+                                    }}
+                                  />
+                                </>
+                              )}
                           </>
                         )}
                       </StyledButtonContainer>
@@ -294,9 +296,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             </Section>
           </StyledAgreementBorder>
         ))}
-        {agreements.length === 0 && (
-          <p>There are no agreements indicated in this acquisition file.</p>
-        )}
+        {agreements.length === 0 && <p>There are no agreements indicated in this file.</p>}
       </Section>
     </StyledSummarySection>
   );

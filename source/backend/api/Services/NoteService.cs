@@ -27,6 +27,7 @@ namespace Pims.Api.Services
         private readonly ILookupRepository _lookupRepository;
         private readonly IProjectRepository _projectRepository;
         private readonly ILeaseRepository _leaseRepository;
+        private readonly IDispositionFileRepository _dispositionFileRepository;
 
 
         /// <summary>
@@ -56,7 +57,8 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             ILookupRepository lookupRepository,
             IProjectRepository projectRepository,
-            ILeaseRepository leaseRepository)
+            ILeaseRepository leaseRepository,
+            IDispositionFileRepository dispositionFileRepository)
             : base(user, logger)
         {
             _noteRepository = noteRepository;
@@ -67,6 +69,7 @@ namespace Pims.Api.Services
             _projectNoteRepository = projectNoteRepository;
             _propertyNoteRepository = propertyNoteRepository;
             _researchFileNoteRepository = researchFileNoteRepository;
+            _dispositionFileRepository = dispositionFileRepository;
             _userRepository = userRepository;
             _lookupRepository = lookupRepository;
             _projectRepository = projectRepository;
@@ -95,6 +98,9 @@ namespace Pims.Api.Services
             dispositionFileNote.ThrowIfNull(nameof(dispositionFileNote));
             Logger.LogInformation("Adding note for disposition file with Id: {Id}", dispositionFileNote.ParentId);
             User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+
+            var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileNote.ParentId) ?? throw new InvalidDataException("Invalid disposition file");
+            currentDispositionFile.ThrowIfCannotEditDispositionFile(User, _userRepository, _projectRepository, _lookupRepository);
 
             return AddNoteRelationship(dispositionFileNote, _dispositionFileNoteRepository);
         }
@@ -154,6 +160,7 @@ namespace Pims.Api.Services
             User.ThrowIfNotAuthorized(Permissions.NoteEdit);
 
             ThrowIfCannotEditLeaseNote(note.Internal_Id);
+            ThrowIfCannotEditDispositionNote(note.Internal_Id);
 
             ValidateVersion(note.Internal_Id, note.ConcurrencyControlNumber);
 
@@ -176,9 +183,15 @@ namespace Pims.Api.Services
             User.ThrowIfNotAuthorized(Permissions.NoteDelete);
             bool deleted = false;
 
-            if (type == NoteType.Lease_File)
+            switch (type)
             {
-                ThrowIfCannotEditLeaseNote(noteId);
+                case NoteType.Lease_File:
+                    ThrowIfCannotEditLeaseNote(noteId);
+                    break;
+
+                case NoteType.Disposition_File:
+                    ThrowIfCannotEditDispositionNote(noteId);
+                    break;
             }
 
             deleted = type switch
@@ -257,6 +270,20 @@ namespace Pims.Api.Services
             var currentLease = _leaseRepository.GetNoTracking(leaseNote.LeaseId) ?? throw new InvalidDataException("Invalid lease");
 
             currentLease.ThrowIfCannotEditLeaseFile(User, _userRepository, _projectRepository, _lookupRepository);
+        }
+
+        private void ThrowIfCannotEditDispositionNote(long noteId)
+        {
+            var dispositionFileNote = _dispositionFileNoteRepository.GetByNoteId(noteId);
+
+            if (dispositionFileNote == null)
+            {
+                return;
+            }
+
+            var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileNote.ParentId) ?? throw new InvalidDataException("Invalid disposition file");
+
+            currentDispositionFile.ThrowIfCannotEditDispositionFile(User, _userRepository, _projectRepository, _lookupRepository);
         }
     }
 }

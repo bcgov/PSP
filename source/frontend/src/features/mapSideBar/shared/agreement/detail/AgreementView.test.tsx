@@ -38,6 +38,7 @@ describe('AgreementView component', () => {
         isSection3={renderOptions?.props?.isSection3 ?? false}
         isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
         isAcquisition={renderOptions?.props?.isAcquisition ?? true}
+        canEdit={renderOptions?.props?.canEdit}
       />,
       {
         store: {
@@ -140,17 +141,13 @@ describe('AgreementView component', () => {
   );
 
   it('displays warning tooltips instead of edit/add buttons when file in final status', async () => {
-    const { queryByText } = setup({
+    const {} = setup({
       claims: [Claims.ACQUISITION_EDIT],
       props: { isFileFinalStatus: true },
     });
 
-    const removeButton = queryByText(/Delete Agreement/i);
-    expect(removeButton).toBeNull();
-
-    const editButton = queryByText(/Edit Agreement/i);
-    expect(removeButton).toBeNull();
-
+    expect(screen.queryByTitle('Delete Agreement')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Edit Agreement')).not.toBeInTheDocument();
     expect(screen.getByTestId(/tooltip-icon-agreement-cannot-add-tooltip/i)).toBeVisible();
   });
 
@@ -184,7 +181,7 @@ describe('AgreementView component', () => {
     expect(agreementSignedDate).not.toBeInTheDocument();
   });
 
-  it('acquisition agreement - displays the reminder button when the agreement date is set', async () => {
+  it('displays the reminder button when the Acquisition agreement date is set', async () => {
     const {} = setup({
       claims: [Claims.ACQUISITION_EDIT],
       props: { isFileFinalStatus: false, isSection3: false, isAcquisition: true },
@@ -195,7 +192,7 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-  it('acquisition agreement - does not display the reminder button when the Acquisition agreement date is not set', () => {
+  it('does not display the reminder button when the Acquisition agreement date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       agreementDate: null,
@@ -211,7 +208,7 @@ describe('AgreementView component', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('acquisition agreement - displays the reminder button when the agreement completion date is set', async () => {
+  it('displays the reminder button when the Acquisition agreement completion date is set', async () => {
     const {} = setup({
       claims: [Claims.ACQUISITION_EDIT],
       props: { isFileFinalStatus: false, isSection3: false, isAcquisition: true },
@@ -222,7 +219,7 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-  it('acquisition agreement - does not display the reminder button when the agreement completion date is not set', () => {
+  it('does not display the reminder button when the Acquisition agreement completion date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       completionDate: null,
@@ -238,7 +235,7 @@ describe('AgreementView component', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('acquisition agreement - displays the reminder button when the agreement termination date is set', async () => {
+  it('displays the reminder button when the Acquisition termination date is set', async () => {
     const {} = setup({
       claims: [Claims.ACQUISITION_EDIT],
       props: { isFileFinalStatus: false, isSection3: false, isAcquisition: true },
@@ -249,7 +246,7 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-  it('acquisition agreement - does not display the reminder button when the agreement termination date is not set', () => {
+ it('does not display the reminder button when the Acquisition termination date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       terminationDate: null,
@@ -265,18 +262,24 @@ describe('AgreementView component', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('acquisition agreement - displays the reminder button when the agreement possession date is set', async () => {
-    const {} = setup({
+  it('displays the reminder button when the Acquisition possession date is set', () => {
+    setup({
       claims: [Claims.ACQUISITION_EDIT],
       props: { isFileFinalStatus: false, isSection3: false },
     });
 
-    expect(
-      await screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT}`),
-    ).toBeVisible();
+    const reminder = screen.getByTestId(
+      `reminder-${ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT}`,
+    );
+    const agreement = mockViewProps.agreements.find(agreement => agreement.possessionDate);
+
+    expect(reminder).toBeVisible();
+    expect(reminder).toHaveAttribute('data-key-date', agreement.possessionDate);
+    expect(reminder).toHaveAttribute('agreement-id', String(agreement.agreementId));
+    expect(reminder).toHaveAttribute('data-acquisition-file-id', String(agreement.fileId));
   });
 
-  it('acquisition agreement - does not display the reminder button when the agreement possession date is not set', () => {
+  it('does not display the reminder button when the Acquisition possession date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       possessionDate: null,
@@ -284,7 +287,7 @@ describe('AgreementView component', () => {
 
     setup({
       claims: [Claims.ACQUISITION_EDIT],
-      props: { isFileFinalStatus: false, isSection3: false, isAcquisition: true },
+      props: { isFileFinalStatus: false, isSection3: false },
     });
 
     expect(
@@ -292,7 +295,7 @@ describe('AgreementView component', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('disposition agreement - displays the reminder button when the agreement date is set', async () => {
+  it('displays the reminder button when the Disposition agreement date is set', async () => {
     const {} = setup({
       claims: [Claims.DISPOSITION_EDIT],
       props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
@@ -303,7 +306,7 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-  it('disposition agreement - does not display the reminder button when the agreement date is not set', () => {
+  it('does not display the reminder button when the Disposition agreement date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       agreementDate: null,
@@ -319,7 +322,7 @@ describe('AgreementView component', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('disposition agreement - displays the reminder button when the agreement completion date is set', async () => {
+  it('displays the reminder button when the Disposition agreement completion date is set', async () => {
     const {} = setup({
       claims: [Claims.DISPOSITION_EDIT],
       props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
@@ -330,7 +333,7 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-  it('disposition agreement - does not display the reminder button when the agreement completion date is not set', () => {
+  it('does not display the reminder button when the Disposition agreement completion date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       completionDate: null,
@@ -346,7 +349,7 @@ describe('AgreementView component', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('disposition agreement - displays the reminder button when the agreement termination date is set', async () => {
+  it('displays the reminder button when the Disposition agreement termination date is set', async () => {
     const {} = setup({
       claims: [Claims.DISPOSITION_EDIT],
       props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
@@ -357,7 +360,7 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-  it('disposition agreement - does not display the reminder button when the agreement termination date is not set', () => {
+  it('does not display the reminder button when the Disposition agreement termination date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       terminationDate: null,
@@ -373,7 +376,7 @@ describe('AgreementView component', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('disposition agreement - displays the reminder button when the agreement possession date is set', async () => {
+  it('displays the reminder button when the Disposition agreement possession date is set', async () => {
     const {} = setup({
       claims: [Claims.DISPOSITION_EDIT],
       props: { isFileFinalStatus: false, isSection3: false, isAcquisition: false },
@@ -384,7 +387,7 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
-  it('disposition agreement - does not display the reminder button when the agreement possession date is not set', () => {
+  it('does not display the reminder button when the Disposition agreement possession date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       possessionDate: null,
@@ -398,5 +401,48 @@ describe('AgreementView component', () => {
     expect(
       screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_POSNDT}`),
     ).not.toBeInTheDocument();
+  it('allows Acquisition users to edit and delete agreements when canEdit is omitted', () => {
+    setup({
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(screen.getAllByTitle('Edit Agreement')).toHaveLength(2);
+    expect(screen.getAllByTitle('Delete Agreement')).toHaveLength(2);
+  });
+
+  it('allows Disposition users to edit and delete agreements when canEdit is true', () => {
+    setup({
+      claims: [Claims.DISPOSITION_EDIT],
+      props: { canEdit: true },
+    });
+
+    expect(screen.getAllByTitle('Edit Agreement')).toHaveLength(2);
+    expect(screen.getAllByTitle('Delete Agreement')).toHaveLength(2);
+  });
+
+  it('hides editing controls for read-only Disposition agreements', () => {
+    setup({
+      claims: [Claims.DISPOSITION_EDIT],
+      props: { canEdit: false },
+    });
+
+    expect(screen.queryByTitle('Edit Agreement')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Delete Agreement')).not.toBeInTheDocument();
+
+    // Agreements remain visible.
+    expect(screen.getByText(/License Of Occupation/i)).toBeVisible();
+
+    // Add Agreement is unavailable.
+    expect(screen.getByTestId('tooltip-icon-agreement-cannot-add-tooltip')).toBeVisible();
+  });
+
+  it('does not allow Acquisition claims to bypass read-only restrictions', () => {
+    setup({
+      claims: [Claims.ACQUISITION_EDIT, Claims.DISPOSITION_EDIT],
+      props: { canEdit: false },
+    });
+
+    expect(screen.queryByTitle('Edit Agreement')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Delete Agreement')).not.toBeInTheDocument();
   });
 });

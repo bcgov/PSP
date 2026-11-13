@@ -152,7 +152,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
               <FileMenuView
                 file={dispositionFile}
                 currentFilePropertyId={currentPropertyId}
-                canEdit={hasClaim(Claims.DISPOSITION_EDIT)}
+                canEdit={hasClaim(Claims.DISPOSITION_EDIT) && dispositionFile?.canEdit === true}
                 isInNonEditableState={!statusSolver.canEditProperties()}
                 onSelectFileSummary={onSelectFileSummary}
                 onSelectProperty={onSelectProperty}
