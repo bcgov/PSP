@@ -21,12 +21,11 @@ import {
   waitForEffects,
   screen,
 } from '@/utils/test-utils';
-
-import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
 import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
+import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
+
 
 // mock auth library
-
 const onEdit = vi.fn();
 
 vi.mock('@/hooks/pims-api/useApiContacts');
@@ -736,12 +735,12 @@ describe('AcquisitionSummaryView component', () => {
 
       await waitForEffects();
       expect(
-        await getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`),
+        getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`),
       ).toBeVisible();
     });
 
-    it('does not display the reminder button when the schedule delivery date is not set', () => {
-      const {} = setup(
+    it('does not display the reminder button when the schedule delivery date is not set', async() => {
+      setup(
         {
           acquisitionFile: {
             ...mockAcquisitionFileResponse(),
@@ -751,6 +750,7 @@ describe('AcquisitionSummaryView component', () => {
         { claims: [Claims.ACQUISITION_EDIT] },
       );
 
+      await waitForEffects();
       expect(
         screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`),
       ).not.toBeInTheDocument();

@@ -783,7 +783,7 @@ namespace Pims.Dal.Repositories
             {
                 var notificationIds = Context.PimsNotifications
                     .Where(n => n.AcquisitionFileId == acquisitionFile.Internal_Id
-                        && n.NotificationTypeCode == "ACQ_DLVDT")
+                        && n.NotificationTypeCode == nameof(NotificationTypes.ACQ_DLVDT))
                     .Select(n => n.NotificationId)
                     .ToList();
 
