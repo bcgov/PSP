@@ -75,6 +75,7 @@ export const getNotificationDeepLink = (
             'expropriation',
           )
         : null;
+
     case ApiGen_CodeTypes_NotificationTypes.NOC:
       // NOC applies to Acquisition or Management files; Acquisition takes precedence when both are set.
       if (isValidId(notification.acquisitionFileId)) {
@@ -88,6 +89,14 @@ export const getNotificationDeepLink = (
         ? DeepLinkGenerator.showDetails(
             ApiGen_CodeTypes_FileTypes.Management,
             notification.managementFileId,
+            'fileDetails',
+          )
+        : null;
+    case ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT:
+      return isValidId(notification.acquisitionFileId)
+        ? DeepLinkGenerator.showDetails(
+            ApiGen_CodeTypes_FileTypes.Acquisition,
+            notification.acquisitionFileId,
             'fileDetails',
           )
         : null;
