@@ -24,7 +24,6 @@ import {
 import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
 
-
 // mock auth library
 const onEdit = vi.fn();
 
@@ -734,12 +733,10 @@ describe('AcquisitionSummaryView component', () => {
       );
 
       await waitForEffects();
-      expect(
-        getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`),
-      ).toBeVisible();
+      expect(getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`)).toBeVisible();
     });
 
-    it('does not display the reminder button when the schedule delivery date is not set', async() => {
+    it('does not display the reminder button when the schedule delivery date is not set', async () => {
       setup(
         {
           acquisitionFile: {
