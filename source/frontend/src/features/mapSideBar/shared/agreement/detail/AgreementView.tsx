@@ -110,7 +110,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                             </StyledAddButton>
 
-                            {keycloak.hasClaim(editClaim) && canEdit !== false &&  (
+                            {keycloak.hasClaim(editClaim) && canEdit !== false && (
                               <>
                                 <EditButton
                                   title="Edit Agreement"
@@ -131,21 +131,21 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                                       title: 'Delete Agreement',
                                       message: `You have selected to delete this Agreement.
                                         Do you want to proceed?`,
-                                        okButtonText: 'Yes',
-                                        cancelButtonText: 'No',
-                                        handleOk: async () => {
-                                          agreement.agreementId && onDelete(agreement.agreementId);
-                                          setDisplayModal(false);
-                                        },
-                                        handleCancel: () => {
-                                          setDisplayModal(false);
-                                        },
-                                      });
-                                      setDisplayModal(true);
-                                    }}
-                                  />
-                                </>
-                              )}
+                                      okButtonText: 'Yes',
+                                      cancelButtonText: 'No',
+                                      handleOk: async () => {
+                                        agreement.agreementId && onDelete(agreement.agreementId);
+                                        setDisplayModal(false);
+                                      },
+                                      handleCancel: () => {
+                                        setDisplayModal(false);
+                                      },
+                                    });
+                                    setDisplayModal(true);
+                                  }}
+                                />
+                              </>
+                            )}
                           </>
                         )}
                       </StyledButtonContainer>
@@ -199,12 +199,17 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                       keyDate={agreement.agreementDate}
                       keyDateLabel="Agreement date"
                       notificationType={notificationTypes.agreement}
-                      notificationSource={{
-                        agreementId: agreement.agreementId,
-                        ...(isAcquisition
-                          ? { acquisitionFileId: agreement.fileId }
-                          : { dispositionFileId: agreement.fileId }),
-                      }}
+                      notificationSource={
+                        isAcquisition
+                          ? {
+                              acquisitionFileId: agreement.fileId,
+                              agreementId: agreement.agreementId,
+                            }
+                          : {
+                              dispositionFileId: agreement.fileId,
+                              dispositionAgreementId: agreement.agreementId,
+                            }
+                      }
                       View={ReminderView}
                     />
                   )}
@@ -223,12 +228,17 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                       keyDate={agreement.completionDate}
                       keyDateLabel="Completion date"
                       notificationType={notificationTypes.completion}
-                      notificationSource={{
-                        agreementId: agreement.agreementId,
-                        ...(isAcquisition
-                          ? { acquisitionFileId: agreement.fileId }
-                          : { dispositionFileId: agreement.fileId }),
-                      }}
+                      notificationSource={
+                        isAcquisition
+                          ? {
+                              acquisitionFileId: agreement.fileId,
+                              agreementId: agreement.agreementId,
+                            }
+                          : {
+                              dispositionFileId: agreement.fileId,
+                              dispositionAgreementId: agreement.agreementId,
+                            }
+                      }
                       View={ReminderView}
                     />
                   )}
@@ -242,12 +252,17 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                       keyDate={agreement.terminationDate}
                       keyDateLabel="Termination date"
                       notificationType={notificationTypes.termination}
-                      notificationSource={{
-                        agreementId: agreement.agreementId,
-                        ...(isAcquisition
-                          ? { acquisitionFileId: agreement.fileId }
-                          : { dispositionFileId: agreement.fileId }),
-                      }}
+                      notificationSource={
+                        isAcquisition
+                          ? {
+                              acquisitionFileId: agreement.fileId,
+                              agreementId: agreement.agreementId,
+                            }
+                          : {
+                              dispositionFileId: agreement.fileId,
+                              dispositionAgreementId: agreement.agreementId,
+                            }
+                      }
                       View={ReminderView}
                     />
                   )}
@@ -261,12 +276,17 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                       keyDate={agreement.possessionDate}
                       keyDateLabel="Possession date"
                       notificationType={notificationTypes.possession}
-                      notificationSource={{
-                        agreementId: agreement.agreementId,
-                        ...(isAcquisition
-                          ? { acquisitionFileId: agreement.fileId }
-                          : { dispositionFileId: agreement.fileId }),
-                      }}
+                      notificationSource={
+                        isAcquisition
+                          ? {
+                              acquisitionFileId: agreement.fileId,
+                              agreementId: agreement.agreementId,
+                            }
+                          : {
+                              dispositionFileId: agreement.fileId,
+                              dispositionAgreementId: agreement.agreementId,
+                            }
+                      }
                       View={ReminderView}
                     />
                   )}

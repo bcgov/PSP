@@ -854,8 +854,8 @@ exports[`AgreementView component > renders as expected 1`] = `
                       Apr 5, 2023
                     </span>
                     <div
-                      agreement-id="2"
                       data-acquisition-file-id="1"
+                      data-agreement-id="2"
                       data-key-date="2023-04-05T21:00:00.0"
                       data-testid="reminder-AGMT_AGMTDT"
                     />
@@ -886,8 +886,8 @@ exports[`AgreementView component > renders as expected 1`] = `
                       Apr 5, 2023
                     </span>
                     <div
-                      agreement-id="2"
                       data-acquisition-file-id="1"
+                      data-agreement-id="2"
                       data-key-date="2023-04-05T21:00:00.0"
                       data-testid="reminder-AGMT_COMPTDT"
                     />
@@ -918,8 +918,8 @@ exports[`AgreementView component > renders as expected 1`] = `
                       Apr 5, 2023
                     </span>
                     <div
-                      agreement-id="2"
                       data-acquisition-file-id="1"
+                      data-agreement-id="2"
                       data-key-date="2023-04-05T21:00:00.0"
                       data-testid="reminder-AGMT_TERMINDT"
                     />
@@ -950,8 +950,8 @@ exports[`AgreementView component > renders as expected 1`] = `
                       Apr 5, 2023
                     </span>
                     <div
-                      agreement-id="2"
                       data-acquisition-file-id="1"
+                      data-agreement-id="2"
                       data-key-date="2023-04-05T21:00:00.0"
                       data-testid="reminder-AGMT_POSNDT"
                     />

@@ -20,7 +20,8 @@ vi.mock('@/features/notifications/ReminderContainer', () => ({
     <div
       data-testid={`reminder-${props.notificationType}`}
       data-key-date={props.keyDate}
-      agreement-id={props.notificationSource.agreementId}
+      data-agreement-id={props.notificationSource.agreementId}
+      data-disposition-agreement-id={props.notificationSource.dispositionAgreementId}
       data-acquisition-file-id={props.notificationSource.acquisitionFileId}
       data-disposition-file-id={props.notificationSource.dispositionFileId}
     />
@@ -275,7 +276,7 @@ describe('AgreementView component', () => {
 
     expect(reminder).toBeVisible();
     expect(reminder).toHaveAttribute('data-key-date', agreement.possessionDate);
-    expect(reminder).toHaveAttribute('agreement-id', String(agreement.agreementId));
+    expect(reminder).toHaveAttribute('data-agreement-id', String(agreement.agreementId));
     expect(reminder).toHaveAttribute('data-acquisition-file-id', String(agreement.fileId));
   });
 
@@ -401,6 +402,8 @@ describe('AgreementView component', () => {
     expect(
       screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_POSNDT}`),
     ).not.toBeInTheDocument();
+  });
+
   it('allows Acquisition users to edit and delete agreements when canEdit is omitted', () => {
     setup({
       claims: [Claims.ACQUISITION_EDIT],
@@ -413,7 +416,11 @@ describe('AgreementView component', () => {
   it('allows Disposition users to edit and delete agreements when canEdit is true', () => {
     setup({
       claims: [Claims.DISPOSITION_EDIT],
-      props: { canEdit: true },
+      props: {
+        isAcquisition: false,
+        canEdit: true,
+        isFileFinalStatus: false,
+      },
     });
 
     expect(screen.getAllByTitle('Edit Agreement')).toHaveLength(2);
@@ -423,7 +430,7 @@ describe('AgreementView component', () => {
   it('hides editing controls for read-only Disposition agreements', () => {
     setup({
       claims: [Claims.DISPOSITION_EDIT],
-      props: { canEdit: false },
+      props: { canEdit: false, isAcquisition: false },
     });
 
     expect(screen.queryByTitle('Edit Agreement')).not.toBeInTheDocument();
@@ -444,5 +451,76 @@ describe('AgreementView component', () => {
 
     expect(screen.queryByTitle('Edit Agreement')).not.toBeInTheDocument();
     expect(screen.queryByTitle('Delete Agreement')).not.toBeInTheDocument();
+  });
+
+  it.each([
+    ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT,
+    ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT,
+    ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT,
+    ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT,
+  ])('preserves acquisition agreement IDs for %s', notificationType => {
+    setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isAcquisition: true },
+    });
+
+    const reminders = screen.getAllByTestId(`reminder-${notificationType}`);
+
+    reminders.forEach(reminder => {
+      expect(reminder).toHaveAttribute('data-agreement-id');
+      expect(reminder).toHaveAttribute('data-acquisition-file-id');
+
+      expect(reminder).not.toHaveAttribute('data-disposition-agreement-id');
+      expect(reminder).not.toHaveAttribute('data-disposition-file-id');
+    });
+  });
+
+  it.each([
+    ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_AGMTDT,
+    ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_COMPTDT,
+    ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_TERMDT,
+    ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_POSNDT,
+  ])('passes the correct disposition agreement IDs for %s', notificationType => {
+    setup({
+      claims: [Claims.DISPOSITION_EDIT],
+      props: { isAcquisition: false },
+    });
+
+    const reminders = screen.getAllByTestId(`reminder-${notificationType}`);
+
+    reminders.forEach(reminder => {
+      expect(reminder).toHaveAttribute('data-disposition-agreement-id');
+      expect(reminder).toHaveAttribute('data-disposition-file-id');
+
+      expect(reminder).not.toHaveAttribute('data-agreement-id');
+      expect(reminder).not.toHaveAttribute('data-acquisition-file-id');
+    });
+  });
+
+    it('passes the correct agreement ID to Disposition reminders', () => {
+    setup({
+      claims: [Claims.DISPOSITION_EDIT],
+      props: { isAcquisition: false },
+    });
+
+    const agreement = mockViewProps.agreements.find(
+      agreement => agreement.possessionDate,
+    );
+
+    const reminder = screen.getByTestId(
+      `reminder-${ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_POSNDT}`,
+    );
+
+    expect(reminder).toHaveAttribute(
+      'data-disposition-agreement-id',
+      String(agreement?.agreementId),
+    );
+
+    expect(reminder).toHaveAttribute(
+      'data-disposition-file-id',
+      String(agreement?.fileId),
+    );
+
+    expect(reminder).not.toHaveAttribute('data-agreement-id');
   });
 });

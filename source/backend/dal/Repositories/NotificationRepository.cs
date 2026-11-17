@@ -103,6 +103,10 @@ namespace Pims.Dal.Repositories
             {
                 predicate = predicate.And(n => n.AgreementId == criteria.AgreementId.Value);
             }
+            if (criteria.DispositionAgreementId.HasValue)
+            {
+                predicate = predicate.And(n => n.DispositionAgreementId == criteria.DispositionAgreementId.Value);
+            }
 
             return Context.PimsNotifications
                 .AsNoTracking()
