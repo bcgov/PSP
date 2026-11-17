@@ -247,7 +247,7 @@ describe('AgreementView component', () => {
     ).toBeVisible();
   });
 
- it('does not display the reminder button when the Acquisition termination date is not set', () => {
+  it('does not display the reminder button when the Acquisition termination date is not set', () => {
     mockViewProps.agreements = mockAgreementsResponse().map(agreement => ({
       ...agreement,
       terminationDate: null,
@@ -497,15 +497,13 @@ describe('AgreementView component', () => {
     });
   });
 
-    it('passes the correct agreement ID to Disposition reminders', () => {
+  it('passes the correct agreement ID to Disposition reminders', () => {
     setup({
       claims: [Claims.DISPOSITION_EDIT],
       props: { isAcquisition: false },
     });
 
-    const agreement = mockViewProps.agreements.find(
-      agreement => agreement.possessionDate,
-    );
+    const agreement = mockViewProps.agreements.find(agreement => agreement.possessionDate);
 
     const reminder = screen.getByTestId(
       `reminder-${ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_POSNDT}`,
@@ -516,10 +514,7 @@ describe('AgreementView component', () => {
       String(agreement?.agreementId),
     );
 
-    expect(reminder).toHaveAttribute(
-      'data-disposition-file-id',
-      String(agreement?.fileId),
-    );
+    expect(reminder).toHaveAttribute('data-disposition-file-id', String(agreement?.fileId));
 
     expect(reminder).not.toHaveAttribute('data-agreement-id');
   });
