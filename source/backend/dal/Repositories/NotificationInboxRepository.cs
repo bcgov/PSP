@@ -79,7 +79,6 @@ namespace Pims.Dal.Repositories
 
             // This attaches the entity and marks ONLY the main row as modified, leaving the rest of the graph untouched.
             Context.Entry(existing).State = EntityState.Modified;
-            Context.SaveChanges();
 
             return existing;
         }
@@ -97,7 +96,6 @@ namespace Pims.Dal.Repositories
                 Context.Entry(notificationOutput).State = EntityState.Modified;
             }
 
-            Context.SaveChanges();
         }
 
         /// <inheritdoc />
@@ -116,7 +114,6 @@ namespace Pims.Dal.Repositories
                     NotificationUserOutputId = outputId,
                 });
 
-            Context.SaveChanges();
             return true;
         }
 

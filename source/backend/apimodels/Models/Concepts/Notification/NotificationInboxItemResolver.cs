@@ -71,6 +71,7 @@ namespace Pims.Api.Models.Concepts.Notification
                 nameof(NotificationTypes.TAKE_LTC) => notification.Take?.LtcEndDt.ToNullableDateTime() ?? null,
                 nameof(NotificationTypes.TAKE_LPYBLE) => notification.Take?.ActiveLeaseEndDt.ToNullableDateTime() ?? null,
                 nameof(NotificationTypes.AGMT_SIGND) => null, // TODO: confirm column
+                nameof(NotificationTypes.AGMT_POSNDT) => notification.Agreement?.PossessionDate.ToNullableDateTime(),
                 nameof(NotificationTypes.EXPROPH_APPEFFDT) => notification.ExpropOwnerHistory?.EventDt ?? null,
 
                 // Lease sub-entities
