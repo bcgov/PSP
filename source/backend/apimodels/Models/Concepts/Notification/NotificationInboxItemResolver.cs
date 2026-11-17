@@ -66,7 +66,7 @@ namespace Pims.Api.Models.Concepts.Notification
             return notification.NotificationTypeCode switch
             {
                 // Acquisition sub-entities
-                //nameof(NotificationTypes.DLVRYDT) => notification.AcquisitionFile?.DeliveryDate ?? null,
+                nameof(NotificationTypes.ACQ_DLVDT) => notification.AcquisitionFile?.DeliveryDate ?? null,
                 nameof(NotificationTypes.TAKE_SRW) => notification.Take?.SrwEndDt.ToNullableDateTime() ?? null,
                 nameof(NotificationTypes.TAKE_LAT) => notification.Take?.LandActEndDt.ToNullableDateTime() ?? null,
                 nameof(NotificationTypes.TAKE_LTC) => notification.Take?.LtcEndDt.ToNullableDateTime() ?? null,
