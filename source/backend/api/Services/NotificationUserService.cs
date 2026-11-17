@@ -133,6 +133,12 @@ namespace Pims.Api.Services
                 nameof(NotificationTypes.L_CONSULTFN)
                     => GetConsultationSource(notification),
 
+                nameof(NotificationTypes.DSP_AGMT_AGMTDT)
+                or nameof(NotificationTypes.DSP_AGMT_COMPTDT)
+                or nameof(NotificationTypes.DSP_AGMT_POSNDT)
+                or nameof(NotificationTypes.DSP_AGMT_TERMDT) when notification.DispositionFile is not null
+                    => $"Disposition File #: D-{notification.DispositionFile.FileNumber}",
+
                 _ => string.Empty,
             };
         }

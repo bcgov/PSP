@@ -130,7 +130,6 @@ namespace Pims.Dal.Repositories
             {
                 notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_TERMINDT));
             }
-
             if (!agreement.PossessionDate.HasValue)
             {
                 notificationTypesToDelete.Add(nameof(NotificationTypes.AGMT_POSNDT));

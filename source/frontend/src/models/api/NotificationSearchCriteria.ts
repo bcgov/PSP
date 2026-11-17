@@ -12,4 +12,5 @@ export interface Api_NotificationSearchCriteria {
   leaseRenewalId?: number | null;
   expropOwnerHistoryId?: number | null;
   agreementId?: number | null;
+  dispositionAgreementId?: number | null;
 }

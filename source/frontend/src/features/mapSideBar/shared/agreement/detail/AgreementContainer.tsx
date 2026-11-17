@@ -93,6 +93,7 @@ export const AgreementContainer: React.FunctionComponent<
       isSection3={isSection3}
       canEdit={canEdit !== false}
       isFileFinalStatus={!statusSolver.canEditOrDeleteAgreement()}
+      isAcquisition={isAcquisition}
     />
   ) : null;
 };

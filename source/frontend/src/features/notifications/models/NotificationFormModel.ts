@@ -17,6 +17,7 @@ export interface INotificationSource {
   leaseRenewalId?: number | null;
   expropOwnerHistoryId?: number | null;
   agreementId?: number | null;
+  dispositionAgreementId?: number;
 }
 
 export class NotificationFormModel {
@@ -38,6 +39,7 @@ export class NotificationFormModel {
   leaseRenewalId: number | null;
   expropOwnerHistoryId: number | null;
   agreementId: number | null;
+  dispositionAgreementId: number | null;
 
   toApi(): ApiGen_Concepts_Notification {
     return {
@@ -58,6 +60,9 @@ export class NotificationFormModel {
       leaseRenewalId: isValidId(this.leaseRenewalId) ? this.leaseRenewalId : null,
       expropOwnerHistoryId: isValidId(this.expropOwnerHistoryId) ? this.expropOwnerHistoryId : null,
       agreementId: isValidId(this.agreementId) ? this.agreementId : null,
+      dispositionAgreementId: isValidId(this.dispositionAgreementId)
+        ? this.dispositionAgreementId
+        : null,
     };
   }
 
@@ -82,6 +87,7 @@ export class NotificationFormModel {
     notification.leaseRenewalId = model.leaseRenewalId ?? null;
     notification.expropOwnerHistoryId = model.expropOwnerHistoryId ?? null;
     notification.agreementId = model.agreementId ?? null;
+    notification.dispositionAgreementId = model.dispositionAgreementId ?? null;
     return notification;
   }
 
@@ -103,6 +109,7 @@ export class NotificationFormModel {
     notification.leaseRenewalId = options.leaseRenewalId ?? null;
     notification.expropOwnerHistoryId = options.expropOwnerHistoryId ?? null;
     notification.agreementId = options.agreementId ?? null;
+    notification.dispositionAgreementId = options.dispositionAgreementId ?? null;
 
     return notification;
   }

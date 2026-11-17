@@ -66,12 +66,16 @@ namespace Pims.Api.Models.Concepts.Notification
             return notification.NotificationTypeCode switch
             {
                 // Acquisition sub-entities
+                nameof(NotificationTypes.ACQ_DLVDT) => notification.AcquisitionFile?.DeliveryDate ?? null,
                 nameof(NotificationTypes.TAKE_SRW) => notification.Take?.SrwEndDt.ToNullableDateTime() ?? null,
                 nameof(NotificationTypes.TAKE_LAT) => notification.Take?.LandActEndDt.ToNullableDateTime() ?? null,
                 nameof(NotificationTypes.TAKE_LTC) => notification.Take?.LtcEndDt.ToNullableDateTime() ?? null,
                 nameof(NotificationTypes.TAKE_LPYBLE) => notification.Take?.ActiveLeaseEndDt.ToNullableDateTime() ?? null,
-                nameof(NotificationTypes.AGMT_SIGND) => null, // TODO: confirm column
-                nameof(NotificationTypes.AGMT_POSNDT) => notification.Agreement?.PossessionDate.ToNullableDateTime(),
+                nameof(NotificationTypes.AGMT_SIGND) => notification.Agreement?.SignedDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.AGMT_AGMTDT) => notification.Agreement?.AgreementDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.AGMT_COMPTDT) => notification.Agreement?.CompletionDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.AGMT_POSNDT) => notification.Agreement?.PossessionDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.AGMT_TERMINDT) => notification.Agreement?.TerminationDate.ToNullableDateTime() ?? null,
                 nameof(NotificationTypes.EXPROPH_APPEFFDT) => notification.ExpropOwnerHistory?.EventDt ?? null,
 
                 // Lease sub-entities
@@ -82,6 +86,13 @@ namespace Pims.Api.Models.Concepts.Notification
 
                 // Notice of Claim sub-entity (can be in either Acquisition of Management files)
                 nameof(NotificationTypes.NOC) => notification.NoticeOfClaim?.ReceivedDt.ToNullableDateTime() ?? null,
+
+                // Disposition sub-entities
+                nameof(NotificationTypes.DSP_AGMT_AGMTDT) => notification.DispositionAgreement.AgreementDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.DSP_AGMT_COMPTDT) => notification.DispositionAgreement.CompletionDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.DSP_AGMT_TERMDT) => notification.DispositionAgreement.TerminationDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.DSP_AGMT_POSNDT) => notification.DispositionAgreement.PossessionDate.ToNullableDateTime() ?? null,
+
                 _ => null,
             };
         }
