@@ -161,7 +161,6 @@ namespace Pims.Dal.Repositories
 
             Logger.LogInformation("Adding notification to context: {@Notification}", notification);
             Context.Add(notification);
-            Context.SaveChanges();
 
             return notification;
         }
@@ -183,7 +182,6 @@ namespace Pims.Dal.Repositories
             existing.NotificationTriggerDate = notification.NotificationTriggerDate;
             existing.NotificationMessage = notification.NotificationMessage;
 
-            Context.SaveChanges();
             return existing;
         }
 

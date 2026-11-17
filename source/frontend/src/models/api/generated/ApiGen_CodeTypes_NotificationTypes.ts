@@ -25,4 +25,5 @@ export enum ApiGen_CodeTypes_NotificationTypes {
   DSP_AGMT_COMPTDT = 'DSP_AGMT_COMPTDT',
   DSP_AGMT_POSNDT = 'DSP_AGMT_POSNDT',
   DSP_AGMT_TERMDT = 'DSP_AGMT_TERMDT',
+  ACQ_DLVDT = 'ACQ_DLVDT',
 }

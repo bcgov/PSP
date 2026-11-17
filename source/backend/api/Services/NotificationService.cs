@@ -112,7 +112,10 @@ namespace Pims.Api.Services
             }
             notification.ThrowIfInvalidFileAndSubId(_validatorFactory);
 
-            return _notificationRepository.Update(notification, user.UserId);
+            var updatedNotification = _notificationRepository.Update(notification, user.UserId);
+            _notificationRepository.CommitTransaction();
+
+            return updatedNotification;
         }
 
         public bool Delete(long notificationId, string username)
