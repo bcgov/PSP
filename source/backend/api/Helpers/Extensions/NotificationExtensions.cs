@@ -29,6 +29,7 @@ namespace Pims.Api.Helpers.Extensions
             {
                 notification.TakeId,
                 notification.AgreementId,
+                notification.DispositionAgreementId,
                 notification.LeaseConsultationId,
                 notification.LeaseRenewalId,
                 notification.NoticeOfClaimId,

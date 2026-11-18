@@ -134,6 +134,20 @@ namespace Pims.Api.Services
                 }).ToList();
         }
 
+        public PimsProject GetProjectByAcquisitionId(long acquisitionFileId)
+        {
+            _logger.LogInformation(
+                "GetProjectByAcquisitionId: acquisitionFileId={AcquisitionFileId}",
+                acquisitionFileId);
+
+            var acquisitionFile = GetById(acquisitionFileId);
+            var project = acquisitionFile.ProjectId.HasValue
+                ? _projectRepository.TryGet(acquisitionFile.ProjectId.Value)
+                : null;
+
+            return project;
+        }
+
         public PimsAcquisitionFile GetById(long id)
         {
             _logger.LogInformation("Getting acquisition file with id {id}", id);

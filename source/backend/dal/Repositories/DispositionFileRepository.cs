@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -22,6 +23,7 @@ namespace Pims.Dal.Repositories
         private const string FILENUMBERSEQUENCETABLE = "dbo.PIMS_DISPOSITION_FILE_NO_SEQ";
 
         private readonly ISequenceRepository _sequenceRepository;
+        private readonly INotificationRepository _notificationRepository;
 
         #region Constructors
 
@@ -31,10 +33,11 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public DispositionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<DispositionFileRepository> logger, ISequenceRepository sequenceRepository)
+        public DispositionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<DispositionFileRepository> logger, ISequenceRepository sequenceRepository, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
             _sequenceRepository = sequenceRepository;
+            _notificationRepository = notificationRepository;
         }
 
         #endregion
@@ -764,8 +767,39 @@ namespace Pims.Dal.Repositories
             var existingAgreement = Context.PimsDispositionAgreements
                 .FirstOrDefault(x => x.DispositionAgreementId.Equals(dispositionAgreement.DispositionAgreementId)) ?? throw new KeyNotFoundException();
 
-            Context.Entry(existingAgreement).CurrentValues.SetValues(dispositionAgreement);
+            var notificationTypesToDelete = new List<string>();
 
+            if (!dispositionAgreement.AgreementDate.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.DSP_AGMT_AGMTDT));
+            }
+
+            if (!dispositionAgreement.CompletionDate.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.DSP_AGMT_COMPTDT));
+            }
+
+            if (!dispositionAgreement.TerminationDate.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.DSP_AGMT_TERMDT));
+            }
+            if (!dispositionAgreement.PossessionDate.HasValue)
+            {
+                notificationTypesToDelete.Add(nameof(NotificationTypes.DSP_AGMT_POSNDT));
+            }
+
+            if(notificationTypesToDelete.Count > 0)
+            {
+                var notificationIds = Context.PimsNotifications.Where(n => n.DispositionAgreementId == existingAgreement.DispositionAgreementId && notificationTypesToDelete.Contains(n.NotificationTypeCode))
+                .Select(n => n.NotificationId).ToList();
+
+                foreach (var notificationId in notificationIds)
+                {
+                    _notificationRepository.Delete(notificationId);
+                }
+            }
+
+            Context.Entry(existingAgreement).CurrentValues.SetValues(dispositionAgreement);
             return existingAgreement;
         }
 
@@ -776,8 +810,16 @@ namespace Pims.Dal.Repositories
             var deletedEntity = Context.PimsDispositionAgreements.Where(x => x.DispositionFileId == dispositionFileId && x.DispositionAgreementId == agreementId).FirstOrDefault();
             if (deletedEntity is not null)
             {
-                Context.PimsDispositionAgreements.Remove(deletedEntity);
+                var notificationIds = Context.PimsNotifications
+                    .Where(n => n.DispositionAgreementId == agreementId)
+                    .Select(n => n.NotificationId)
+                    .ToList();
+                foreach (var notificationId in notificationIds)
+                {
+                    _notificationRepository.Delete(notificationId);
+                }
 
+                Context.PimsDispositionAgreements.Remove(deletedEntity);
                 return true;
             }
 

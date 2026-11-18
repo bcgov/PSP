@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.ExpropriationPayment;
+using Pims.Api.Models.Concepts.Project;
 using Pims.Api.Services;
 using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
@@ -84,6 +85,33 @@ namespace Pims.Api.Areas.Acquisition.Controllers
 
             var acqFile = _acquisitionService.GetById(id);
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acqFile));
+        }
+
+        /// <summary>
+        /// Gets the project by acquisition ID.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/project")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetProjectByAcquisitionId(long id)
+        {
+            // RECOMMENDED - Add valuable metadata to logs
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(AcquisitionFileController),
+                nameof(GetProjectByAcquisitionId),
+                User.GetUsername(),
+                DateTime.Now);
+
+            // RECOMMENDED - Log communications between components
+            _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
+
+            var acqProject = _acquisitionService.GetProjectByAcquisitionId(id);
+            return new JsonResult(_mapper.Map<ProjectModel>(acqProject));
         }
 
         /// <summary>

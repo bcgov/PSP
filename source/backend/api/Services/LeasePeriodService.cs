@@ -25,7 +25,6 @@ namespace Pims.Api.Services
         private readonly ILookupRepository _lookupRepository;
         private readonly IProjectRepository _projectRepository;
 
-
         public LeasePeriodService(ILeasePeriodRepository leasePeriodRepository, IUserRepository userRepository, ClaimsPrincipal user, ILogger<LeasePeriodService> logger, ILeaseService leaseService, ILeaseStatusSolver leaseStatusSolver, ILookupRepository lookupRepository, IProjectRepository projectRepository)
         {
             _leasePeriodRepository = leasePeriodRepository;

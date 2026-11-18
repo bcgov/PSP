@@ -6,7 +6,6 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
-import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
@@ -70,6 +69,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       loading: loadingAcquisitionFile,
       error,
     },
+    getAcquisitionProject: { execute: retrieveAcquisitionProject },
     updateAcquisitionProperties,
     getAcquisitionProperties: {
       execute: retrieveAcquisitionFileProperties,
@@ -78,9 +78,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     getAcquisitionFileChecklist: { execute: retrieveAcquisitionFileChecklist },
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
   } = useAcquisitionProvider();
-  const {
-    getProject: { execute: getProjectFunction },
-  } = useProjectProvider();
 
   const { execute: getPropertyAssociations } = usePropertyAssociations();
 
@@ -133,7 +130,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     const retrieved = await retrieveAcquisitionFile(acquisitionFileId);
     if (exists(retrieved)) {
       if (isValidId(retrieved.projectId)) {
-        retrieved.project = await getProjectFunction(retrieved.projectId);
+        retrieved.project = await retrieveAcquisitionProject(acquisitionFileId);
       }
       // retrieve related entities (ie properties, checklist items) in parallel
       const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
@@ -151,13 +148,13 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       setFile(undefined);
     }
   }, [
+    retrieveAcquisitionFile,
     acquisitionFileId,
     retrieveAcquisitionFileProperties,
-    retrieveAcquisitionFile,
     retrieveAcquisitionFileChecklist,
     setFile,
     setStaleFile,
-    getProjectFunction,
+    retrieveAcquisitionProject,
   ]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {

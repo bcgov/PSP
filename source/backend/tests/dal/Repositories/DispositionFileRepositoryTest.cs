@@ -10,6 +10,7 @@ using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -720,6 +721,173 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().Be(true);
+        }
+        #endregion
+
+        #region TryDeleteAgreement
+        [Fact]
+        public void TryDeleteAgreement_RemovesItsNotificationsAndChildren()
+        {
+            //Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionEdit);
+            var context = helper.CreatePimsContext(user, true);
+            var notificationRepository = new NotificationRepository(context, user, NullLogger<NotificationRepository>.Instance);
+            var sequenceRepository = new Mock<ISequenceRepository>();
+            var repository = new DispositionFileRepository(context, user, NullLogger<DispositionFileRepository>.Instance, sequenceRepository.Object, notificationRepository);
+
+
+            var agreement = new PimsDispositionAgreement
+            {
+                DispositionFile = EntityHelper.CreateDispositionFile(),
+                DispositionAgreementTypeCode = "test",
+                DspAgreementStatusTypeCode = "draft",
+            };
+            context.Add(agreement);
+            context.SaveChanges();
+            var notifications = new[]
+            {
+                new PimsNotification { DispositionAgreementId = agreement.DispositionAgreementId, NotificationTypeCode = "DSP_AGMT_POSNDT" },
+                new PimsNotification { DispositionAgreementId = agreement.DispositionAgreementId, NotificationTypeCode = "DSP_AGMT_COMPTDT" },
+            };
+            foreach (var notification in notifications)
+            {
+                var notificationUser = new PimsNotificationUser { UserId = 1 };
+                notificationUser.PimsNotificationUserOutputs.Add(new PimsNotificationUserOutput { NotificationOutputTypeCode = "EMAIL" });
+                notification.PimsNotificationUsers.Add(notificationUser);
+            }
+
+            var unrelated = new PimsNotification { NotificationTypeCode = "DSP_AGMT_POSNDT" };
+            context.AddRange(notifications);
+            context.Add(unrelated);
+            context.SaveChanges();
+
+            //Verify Test Data was created
+            context.PimsNotificationUsers.Should().HaveCount(2);
+            context.PimsNotificationUserOutputs.Should().HaveCount(2);
+
+            context.ChangeTracker.Clear();
+
+            //Act
+            var result = repository.TryDeleteAgreement(agreement.DispositionFileId, agreement.DispositionAgreementId);
+            repository.CommitTransaction();
+            context.ChangeTracker.Clear();
+
+            // Assert
+            result.Should().BeTrue();
+            context.PimsDispositionAgreements.Any(a => a.DispositionAgreementId == agreement.DispositionAgreementId).Should().BeFalse();
+            context.PimsNotifications.Any(n => n.DispositionAgreementId == agreement.DispositionAgreementId).Should().BeFalse();
+            context.PimsNotifications.Select(n => n.NotificationId).Should().Equal(unrelated.NotificationId);
+            context.PimsNotificationUsers.Should().BeEmpty();
+            context.PimsNotificationUserOutputs.Should().BeEmpty();
+        }
+        #endregion
+
+        #region UpdateAgreement
+        [Theory]
+        [InlineData("AgreementDate", "DSP_AGMT_AGMTDT")]
+        [InlineData("CompletionDate", "DSP_AGMT_COMPTDT")]
+        [InlineData("TerminationDate", "DSP_AGMT_TERMDT")]
+        [InlineData("PossessionDate", "DSP_AGMT_POSNDT")]
+        public void UpdateAgreement_RemovesCompletionNotification_WhenDateCleared(string dateProperty, string notificationType)
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionEdit);
+            var context = helper.CreatePimsContext(user, true);
+
+            var notificationRepository = new NotificationRepository(
+                context,
+                user,
+                NullLogger<NotificationRepository>.Instance);
+
+            var sequenceRepository = new Mock<ISequenceRepository>();
+
+            var repository = new DispositionFileRepository(
+                context,
+                user,
+                NullLogger<DispositionFileRepository>.Instance,
+                sequenceRepository.Object,
+                notificationRepository);
+
+            var agreement = new PimsDispositionAgreement
+            {
+                DispositionFile = EntityHelper.CreateDispositionFile(),
+                DispositionAgreementTypeCode = "test",
+                DspAgreementStatusTypeCode = "draft",
+                AgreementDate = new DateOnly(2026, 11, 10),
+                CompletionDate = new DateOnly(2026, 11, 20),
+                TerminationDate = new DateOnly(2026, 11, 22),
+                PossessionDate = new DateOnly(2026, 11, 25),
+            };
+
+            context.Add(agreement);
+            context.SaveChanges();
+
+            var notifications = new[]
+            {
+                new PimsNotification
+                {
+                    DispositionAgreementId = agreement.DispositionAgreementId,
+                    NotificationTypeCode = "DSP_AGMT_AGMTDT"
+                },
+                new PimsNotification
+                {
+                    DispositionAgreementId = agreement.DispositionAgreementId,
+                    NotificationTypeCode = "DSP_AGMT_COMPTDT"
+                },
+                new PimsNotification
+                {
+                    DispositionAgreementId = agreement.DispositionAgreementId,
+                    NotificationTypeCode = "DSP_AGMT_TERMDT"
+                },
+                new PimsNotification
+                {
+                    DispositionAgreementId = agreement.DispositionAgreementId,
+                    NotificationTypeCode = "DSP_AGMT_POSNDT"
+                }
+            };
+
+            context.AddRange(notifications);
+            context.SaveChanges();
+            context.ChangeTracker.Clear();
+
+            // Create a separate object representing the updated agreement.
+            var updatedAgreement = new PimsDispositionAgreement
+            {
+                DispositionAgreementId = agreement.DispositionAgreementId,
+                DispositionFileId = agreement.DispositionFileId,
+                DispositionAgreementTypeCode = "test",
+                DspAgreementStatusTypeCode = "draft",
+                AgreementDate = new DateOnly(2026, 11, 10),
+                CompletionDate = new DateOnly(2026, 11, 20),
+                TerminationDate = new DateOnly(2026, 11, 22),
+                PossessionDate = new DateOnly(2026, 11, 25),
+            };
+
+            typeof(PimsDispositionAgreement).GetProperty(dateProperty)!.SetValue(updatedAgreement, null);
+
+            // Act
+            repository.UpdateAgreement(updatedAgreement);
+            repository.CommitTransaction();
+            context.ChangeTracker.Clear();
+
+            // The notification corresponding to the cleared date is deleted.
+            context.PimsNotifications
+                .Any(n =>
+                    n.DispositionAgreementId == agreement.DispositionAgreementId &&
+                    n.NotificationTypeCode == notificationType)
+                .Should().BeFalse();
+
+            // All three other notifications remain.
+            context.PimsNotifications
+                .Where(n => n.DispositionAgreementId == agreement.DispositionAgreementId)
+                .Select(n => n.NotificationTypeCode)
+                .Should()
+                .BeEquivalentTo(
+                    notifications
+                        .Where(n => n.NotificationTypeCode != notificationType)
+                        .Select(n => n.NotificationTypeCode));
         }
         #endregion
 

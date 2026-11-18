@@ -31,6 +31,11 @@ namespace Pims.Api.Helpers.Validators
                 nameof(NotificationTypes.NOC) => _serviceProvider.GetRequiredService<NoticeOfClaimValidator>(),
                 nameof(NotificationTypes.AGMT_SIGND) => _serviceProvider.GetRequiredService<AgreementValidator>(),
                 nameof(NotificationTypes.EXPROPH_APPEFFDT) => _serviceProvider.GetRequiredService<ExpropOwnerHistoryValidator>(),
+                nameof(NotificationTypes.DSP_AGMT_AGMTDT)
+                    or nameof(NotificationTypes.DSP_AGMT_COMPTDT)
+                    or nameof(NotificationTypes.DSP_AGMT_TERMDT)
+                    or nameof(NotificationTypes.DSP_AGMT_POSNDT)
+                        => _serviceProvider.GetRequiredService<DispositionAgreementValidator>(),
                 _ => null,
             };
         }

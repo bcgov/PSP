@@ -93,6 +93,7 @@ const ReminderContainer: React.FC<IReminderContainerProps> = ({
         leaseRenewalId: notificationSource.leaseRenewalId ?? undefined,
         expropOwnerHistoryId: notificationSource.expropOwnerHistoryId ?? undefined,
         agreementId: notificationSource.agreementId ?? undefined,
+        dispositionAgreementId: notificationSource.dispositionAgreementId ?? undefined,
       };
       await searchNotifications(criteria);
     },

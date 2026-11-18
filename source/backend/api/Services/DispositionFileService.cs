@@ -141,6 +141,7 @@ namespace Pims.Api.Services
             // validate disposition file state before proceeding with any database updates
             var currentDispositionFile = _dispositionFileRepository.GetById(id);
             ValidateFileBeforeUpdate(dispositionFile, currentDispositionFile, userOverrides);
+            currentDispositionFile.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             var isFileClosing = currentDispositionFile.DispositionFileStatusTypeCode != DispositionFileStatusTypes.COMPLETE.ToString() &&
                                 dispositionFile.DispositionFileStatusTypeCode == DispositionFileStatusTypes.COMPLETE.ToString();
@@ -237,6 +238,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+
             if (dispositionFileId != dispositionOffer.DispositionFileId || dispositionFileParent is null)
             {
                 throw new BadRequestException("Invalid dispositionFileId.");
@@ -249,6 +251,7 @@ namespace Pims.Api.Services
             }
 
             ValidateDispositionOfferStatus(dispositionFileParent, dispositionOffer);
+            dispositionFileParent.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             var newOffer = _dispositionFileRepository.AddDispositionOffer(dispositionOffer);
             _dispositionFileRepository.CommitTransaction();
@@ -262,6 +265,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+
             if (dispositionFileId != dispositionOffer.DispositionFileId || dispositionOffer.DispositionOfferId != offerId || dispositionFileParent is null)
             {
                 throw new BadRequestException("Invalid dispositionFileId.");
@@ -274,6 +278,7 @@ namespace Pims.Api.Services
             }
 
             ValidateDispositionOfferStatus(dispositionFileParent, dispositionOffer);
+            dispositionFileParent.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             var updatedOffer = _dispositionFileRepository.UpdateDispositionOffer(dispositionOffer);
             _dispositionFileRepository.CommitTransaction();
@@ -288,6 +293,8 @@ namespace Pims.Api.Services
 
             var dispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
             DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFile.Internal_Id);
+            dispositionFile.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             if (!_dispositionStatusSolver.CanEditOfferSalesValues(currentDispositionStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
@@ -318,6 +325,8 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            var currentDispositionFile = _dispositionFileRepository.GetById(dispositionSale.DispositionFileId);
+            currentDispositionFile.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
             var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(dispositionSale);
 
             _dispositionFileRepository.CommitTransaction();
@@ -337,11 +346,12 @@ namespace Pims.Api.Services
             }
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionSale.DispositionFileId);
+            dispositionFileParent.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             if (dispositionFileParent.PimsDispositionSales.Count > 0)
             {
                 throw new DuplicateEntityException("Invalid Disposition Sale. A Sale has been already created for this Disposition File");
             }
-
             _dispositionFileRepository.AddDispositionFileSale(dispositionSale);
             _dispositionFileRepository.CommitTransaction();
 
@@ -358,11 +368,12 @@ namespace Pims.Api.Services
 
         public PimsDispositionAppraisal AddDispositionFileAppraisal(long dispositionFileId, PimsDispositionAppraisal dispositionAppraisal)
         {
-            _logger.LogInformation("Adding disposition file offer to Disposition File with Id: {id}", dispositionFileId);
+            _logger.LogInformation("Adding disposition file appraisal to Disposition File with Id: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
-            if (dispositionFileId != dispositionAppraisal.DispositionFileId || dispositionFileParent is null)
+
+            if (dispositionFileParent is null || dispositionFileId != dispositionAppraisal.DispositionFileId)
             {
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
@@ -378,6 +389,8 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            dispositionFileParent.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             var newAppraisal = _dispositionFileRepository.AddDispositionFileAppraisal(dispositionAppraisal);
             _dispositionFileRepository.CommitTransaction();
 
@@ -390,6 +403,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+
             if (dispositionFileId != dispositionAppraisal.DispositionFileId || dispositionAppraisal.DispositionAppraisalId != appraisalId || dispositionFileParent is null)
             {
                 throw new BadRequestException("Invalid dispositionFileId.");
@@ -400,6 +414,7 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+            dispositionFileParent.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             var updatedAppraisal = _dispositionFileRepository.UpdateDispositionFileAppraisal(appraisalId, dispositionAppraisal);
             _dispositionFileRepository.CommitTransaction();
@@ -432,6 +447,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
+            currentDispositionFile?.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
             var currentDispositionStatus = _dispositionStatusSolver.GetCurrentDispositionStatus(currentDispositionFile?.DispositionFileStatusTypeCode);
             if (!_dispositionStatusSolver.CanEditChecklists(currentDispositionStatus))
             {
@@ -536,6 +552,7 @@ namespace Pims.Api.Services
             MatchProperties(dispositionFile, userOverrides, existingPropertyIds);
 
             ValidatePropertyRegions(dispositionFile);
+            currentDispositionFile?.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
@@ -624,6 +641,8 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, dispositionFileId);
 
             ValidateDispositionFileStatusForAgreement(dispositionFileId);
+            var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
+            currentDispositionFile.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             var newAgreement = _dispositionFileRepository.AddAgreement(dispositionAgreement);
             _dispositionFileRepository.CommitTransaction();
@@ -647,6 +666,9 @@ namespace Pims.Api.Services
 
             ValidateDispositionFileStatusForAgreement(dispositionFileId);
 
+            var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
+            currentDispositionFile.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             var updatedAgreement = _dispositionFileRepository.UpdateAgreement(dispositionAgreement);
             _dispositionFileRepository.CommitTransaction();
 
@@ -659,11 +681,18 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, dispositionFileId);
 
             ValidateDispositionFileStatusForAgreement(dispositionFileId);
+            var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
+            currentDispositionFile.ThrowIfCannotEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             var deleteResult = _dispositionFileRepository.TryDeleteAgreement(dispositionFileId, agreementId);
             _dispositionFileRepository.CommitTransaction();
 
             return deleteResult;
+        }
+
+        public bool CanEdit(PimsDispositionFile dispositionFile)
+        {
+            return dispositionFile.CanEditDispositionFile(_user, _userRepository, _projectRepository, _lookupRepository);
         }
 
         private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)

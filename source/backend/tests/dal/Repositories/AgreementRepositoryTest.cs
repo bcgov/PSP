@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
+using Microsoft.Extensions.Logging.Abstractions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -21,6 +23,50 @@ namespace Pims.Dal.Test.Repositories
         #endregion
 
         #region Tests
+
+        [Fact]
+        public void TryDeleteAgreement_RemovesItsNotificationsAndChildren()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileEdit);
+            var context = helper.CreatePimsContext(user, true);
+            var notificationRepository = new NotificationRepository(context, user, NullLogger<NotificationRepository>.Instance);
+            var repository = new AgreementRepository(context, user, NullLogger<AgreementRepository>.Instance, notificationRepository);
+            var agreement = new PimsAgreement
+            {
+                AcquisitionFile = EntityHelper.CreateAcquisitionFile(),
+                AgreementTypeCode = "test",
+                AgreementStatusTypeCode = "draft",
+            };
+            context.Add(agreement);
+            context.SaveChanges();
+            var notifications = new[]
+            {
+                new PimsNotification { AgreementId = agreement.AgreementId, NotificationTypeCode = "AGMT_POSNDT" },
+                new PimsNotification { AgreementId = agreement.AgreementId, NotificationTypeCode = "AGMT_COMPTDT" },
+            };
+            foreach (var notification in notifications)
+            {
+                var notificationUser = new PimsNotificationUser { UserId = 1 };
+                notificationUser.PimsNotificationUserOutputs.Add(new PimsNotificationUserOutput { NotificationOutputTypeCode = "EMAIL" });
+                notification.PimsNotificationUsers.Add(notificationUser);
+            }
+            var unrelated = new PimsNotification { NotificationTypeCode = "AGMT_POSNDT" };
+            context.AddRange(notifications);
+            context.Add(unrelated);
+            context.SaveChanges();
+            context.ChangeTracker.Clear();
+
+            var result = repository.TryDeleteAgreement(agreement.AcquisitionFileId, agreement.AgreementId);
+            repository.CommitTransaction();
+            context.ChangeTracker.Clear();
+
+            result.Should().BeTrue();
+            context.PimsAgreements.Any(a => a.AgreementId == agreement.AgreementId).Should().BeFalse();
+            context.PimsNotifications.Select(n => n.NotificationId).Should().Equal(unrelated.NotificationId);
+            context.PimsNotificationUsers.Should().BeEmpty();
+            context.PimsNotificationUserOutputs.Should().BeEmpty();
+        }
 
         #region SearchAgreements
         [Fact]

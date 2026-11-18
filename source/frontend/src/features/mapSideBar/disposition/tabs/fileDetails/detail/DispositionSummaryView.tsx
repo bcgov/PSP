@@ -27,7 +27,10 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
   const keycloak = useKeycloakWrapper();
   const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
   const canEditDetails = () => {
-    if (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditProperties()) {
+    if (
+      dispositionFile?.canEdit &&
+      (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditProperties())
+    ) {
       return true;
     }
     return false;
