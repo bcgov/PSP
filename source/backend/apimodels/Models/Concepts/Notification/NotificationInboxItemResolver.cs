@@ -88,10 +88,10 @@ namespace Pims.Api.Models.Concepts.Notification
                 nameof(NotificationTypes.NOC) => notification.NoticeOfClaim?.ReceivedDt.ToNullableDateTime() ?? null,
 
                 // Disposition sub-entities
-                nameof(NotificationTypes.DSP_AGMT_AGMTDT) => notification.DispositionAgreement.AgreementDate.ToNullableDateTime() ?? null,
-                nameof(NotificationTypes.DSP_AGMT_COMPTDT) => notification.DispositionAgreement.CompletionDate.ToNullableDateTime() ?? null,
-                nameof(NotificationTypes.DSP_AGMT_TERMDT) => notification.DispositionAgreement.TerminationDate.ToNullableDateTime() ?? null,
-                nameof(NotificationTypes.DSP_AGMT_POSNDT) => notification.DispositionAgreement.PossessionDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.DSP_AGMT_AGMTDT) => notification.DispositionAgreement?.AgreementDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.DSP_AGMT_COMPTDT) => notification.DispositionAgreement?.CompletionDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.DSP_AGMT_TERMDT) => notification.DispositionAgreement?.TerminationDate.ToNullableDateTime() ?? null,
+                nameof(NotificationTypes.DSP_AGMT_POSNDT) => notification.DispositionAgreement?.PossessionDate.ToNullableDateTime() ?? null,
 
                 _ => null,
             };

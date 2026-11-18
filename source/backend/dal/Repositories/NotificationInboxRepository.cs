@@ -169,7 +169,10 @@ namespace Pims.Dal.Repositories
                             .ThenInclude(n => n.ExpropOwnerHistory)
                     .Include(o => o.NotificationUser)
                         .ThenInclude(nu => nu.Notification)
-                            .ThenInclude(n => n.Agreement);
+                            .ThenInclude(n => n.Agreement)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.DispositionAgreement);
             }
 
             query = query.Where(o =>
