@@ -59,5 +59,8 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "AGMT_POSNDT")]
         AGMT_POSNDT,
+
+        [EnumMember(Value = "L_PERIOD_EXPDT")]
+        L_PERIOD_EXPDT,
     }
 }

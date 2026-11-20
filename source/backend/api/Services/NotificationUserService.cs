@@ -131,6 +131,9 @@ namespace Pims.Api.Services
                 nameof(NotificationTypes.L_INSURANCE)
                     => GetInsuranceSource(notification),
 
+                nameof(NotificationTypes.L_PERIOD_EXPDT)
+                    => GetPeriodExpirySource(notification),
+
                 nameof(NotificationTypes.L_CONSULTFN)
                     => GetConsultationSource(notification),
 
@@ -208,6 +211,23 @@ namespace Pims.Api.Services
             return $"Lease File #: {lease.LFileNo} " +
                 $"and First Nation Consultation with status: " +
                 $"{notification.LeaseConsultation.ConsultationOutcomeTypeCodeNavigation.Description}";
+        }
+
+        private static string GetPeriodExpirySource(PimsNotification notification)
+        {
+            var lease = notification.Lease;
+
+            if (lease.PimsLeaseStakeholders.Count > 0 && IsLeaseReceivable(lease))
+            {
+                var tenants = GetTenants(lease);
+
+                return $"Lease File #: {lease.LFileNo} " +
+                    $"with {tenants} as Tenants and " +
+                    $"Period end date on: {notification.LeasePeriod.PeriodExpiryDate}";
+            }
+
+            return $"Lease File #: {lease.LFileNo} " +
+                $"and Period end date on: {notification.LeasePeriod.PeriodExpiryDate}";
         }
 
         private static string GetTenants(PimsLease lease)

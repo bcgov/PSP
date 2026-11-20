@@ -21,4 +21,5 @@ export enum ApiGen_CodeTypes_NotificationTypes {
   AGMT_COMPTDT = 'AGMT_COMPTDT',
   AGMT_TERMINDT = 'AGMT_TERMINDT',
   AGMT_POSNDT = 'AGMT_POSNDT',
+  L_PERIOD_EXPDT = 'L_PERIOD_EXPDT',
 }

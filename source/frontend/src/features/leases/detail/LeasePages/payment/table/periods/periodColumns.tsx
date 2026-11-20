@@ -18,7 +18,10 @@ import {
 import { Claims } from '@/constants';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import ReminderView from '@/features/notifications/ReminderView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ISystemConstant } from '@/store/slices/systemConstants';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { prettyFormatDate } from '@/utils';
@@ -236,9 +239,21 @@ function startAndEndDate({ row: { original } }: CellProps<FormLeasePeriod, strin
       </TooltipWrapper>
     </>
   ) : (
-    stringToFragment(
-      `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
-    )
+    <StyledReminderContent>
+      {stringToFragment(
+        `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
+      )}
+      <ReminderContainer
+        keyDate={original.expiryDate}
+        keyDateLabel={'Expiry date'}
+        notificationType={ApiGen_CodeTypes_NotificationTypes.L_PERIOD_EXPDT}
+        notificationSource={{
+          leaseId: original.leaseId,
+          leasePeriodId: original.id,
+        }}
+        View={ReminderView}
+      />
+    </StyledReminderContent>
   );
 }
 
@@ -349,4 +364,11 @@ const StyledRefreshIcon = styled(IoMdRefreshCircle)`
 const StyledBreak = styled.div`
   height: 0;
   flex-basis: 100%;
+`;
+
+const StyledReminderContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.2rem;
 `;

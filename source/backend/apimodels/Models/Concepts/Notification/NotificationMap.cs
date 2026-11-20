@@ -25,6 +25,7 @@ namespace Pims.Api.Models.Concepts.Notification
                 .Map(dest => dest.AgreementId, src => src.AgreementId)
                 .Map(dest => dest.NotificationTriggerDate, src => src.NotificationTriggerDate)
                 .Map(dest => dest.NotificationMessage, src => src.NotificationMessage)
+                .Map(dest => dest.LeasePeriodId, src => src.LeasePeriodId)
                 .Inherits<Entity.IBaseAppEntity, BaseConcurrentModel>();
 
             config.NewConfig<NotificationModel, Entity.PimsNotification>()
@@ -44,6 +45,7 @@ namespace Pims.Api.Models.Concepts.Notification
                 .Map(dest => dest.LeaseRenewalId, src => src.LeaseRenewalId)
                 .Map(dest => dest.ExpropOwnerHistoryId, src => src.ExpropOwnerHistoryId)
                 .Map(dest => dest.AgreementId, src => src.AgreementId)
+                .Map(dest => dest.LeasePeriodId, src => src.LeasePeriodId)
                 .Inherits<BaseConcurrentModel, Entity.IBaseAppEntity>();
         }
     }
