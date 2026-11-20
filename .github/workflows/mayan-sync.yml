@@ -29,6 +29,10 @@ on:
 
 ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
 ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   mayan-sync:
     name: mayan-sync

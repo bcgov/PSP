@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: "30 5 14 * *" # Run this scan every sprint release cycle 14th of every month at 5:30 UTC
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   nodejs-base-image:
     name: nodejs-base-image
@@ -72,6 +76,9 @@ jobs:
           if-no-files-found: error
 
   comment_nodejs_pr:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      pull-requests: write  # Required for gh pr comment and peter-evans/create-or-update-comment to post or update PR comments
     # this action will leave a comment in response to vulnerability scans performed on cotnainer image
     if: always() && needs.nodejs-base-image.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: nodejs-base-image
@@ -198,6 +205,9 @@ jobs:
           retention-days: 3
 
   comment_nginx_pr:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      pull-requests: write  # Required for gh pr comment and peter-evans/create-or-update-comment to post or update PR comments
     # this action will leave a comment in response to vulnerability scans performed on cotnainer image
     if: always() && needs.nginx-base-image.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: nginx-base-image
@@ -327,6 +337,9 @@ jobs:
           retention-days: 3
 
   comment_app_pr:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      pull-requests: write  # Required for gh pr comment and peter-evans/create-or-update-comment to post or update PR comments
     # this action will leave a comment in response to credential scans performed on pull requests
     if: always() && needs.build_frontend.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: build_frontend
@@ -453,6 +466,9 @@ jobs:
           retention-days: 3
 
   comment_aspnet_pr:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      pull-requests: write  # Required for gh pr comment and peter-evans/create-or-update-comment to post or update PR comments
     # this action will leave a comment in response to credential scans performed on pull requests
     if: always() && needs.aspnet-runtime.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: aspnet-runtime
@@ -579,6 +595,9 @@ jobs:
           retention-days: 3
 
   comment_dotnetsdk_pr:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      pull-requests: write  # Required for gh pr comment and peter-evans/create-or-update-comment to post or update PR comments
     # this action will leave a comment in response to credential scans performed on pull requests
     if: always() && needs.dotnet-sdk.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: dotnet-sdk
@@ -706,6 +725,9 @@ jobs:
           retention-days: 3
 
   comment_api_pr:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      pull-requests: write  # Required for gh pr comment and peter-evans/create-or-update-comment to post or update PR comments
     # this action will leave a comment in response to credential scans performed on pull requests
     if: always() && needs.build_backend.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: build_backend
@@ -834,6 +856,9 @@ jobs:
           if-no-files-found: error
 
   comment_logging_pr:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      pull-requests: write  # Required for gh pr comment and peter-evans/create-or-update-comment to post or update PR comments
     # this action will leave a comment in response to Image scans performed on pull requests
     if: always() && needs.pims_logging.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: pims_logging

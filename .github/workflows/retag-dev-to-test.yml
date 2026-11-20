@@ -41,6 +41,10 @@ on:
         type: boolean
         default: true
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   ci-cd-start-notification:
     name: CI-CD Start Notification to Teams Channel
@@ -98,6 +102,9 @@ jobs:
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
   detect-dependency-changes:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      actions: read         # Required for gh run list to read the previous successful workflow run
     runs-on: ubuntu-22.04
     needs: ci-cd-start-notification
     # Notification is informational only, do not let it gate the pipeline
@@ -191,6 +198,10 @@ jobs:
           echo "deps_changed=$deps_changed" >> "$GITHUB_OUTPUT"
 
   scan-images:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      security-events: write # Required for github/codeql-action to upload SARIF results to code scanning
+      actions: read         # Required for github/codeql-action to read workflow-run metadata in private repositories
     name: Scan container images for vulnerabilities
     needs: detect-dependency-changes
     if: needs.detect-dependency-changes.outputs.deps_changed == 'true'
@@ -399,6 +410,9 @@ jobs:
   ## Terminal job. Nothing depends on this, so a notification failure cannot
   ## block deployment or test execution.
   ci-cd-end-notification:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      actions: read         # Required for martialonline/workflow-status to read workflow job results
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-22.04
     needs:

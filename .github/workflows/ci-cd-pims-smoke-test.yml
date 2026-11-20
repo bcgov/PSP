@@ -16,6 +16,10 @@ on:
             required: true
             type: string
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
     run-e2e-smoke-tests:
       name: PIMS e2e smoke tests

@@ -13,6 +13,10 @@ on:
   #pull_request:
   #  branches: [master, dev, test]
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   smoke-test:
     runs-on: ubuntu-22.04

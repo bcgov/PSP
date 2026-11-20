@@ -33,6 +33,10 @@ on:
         description: "Enter the version tag for this release in format v<major>.<minor>.<patch>.<build> or enter nothing to use the most recently tagged version"
         required: false
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   ci-cd-start-notification:
     name: CI-CD Start Notification to Teams Channel
@@ -51,6 +55,10 @@ jobs:
           timezone: America/Los_Angeles
 
   deploy:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      security-events: write # Required for github/codeql-action to upload SARIF results to code scanning
+      actions: read         # Required for github/codeql-action to read workflow-run metadata in private repositories
     name: Deploy frontend and api to OpenShift
     runs-on: ubuntu-22.04
     needs: ci-cd-start-notification

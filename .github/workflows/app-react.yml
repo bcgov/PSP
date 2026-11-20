@@ -12,9 +12,16 @@ on:
   merge_group:
     types: [checks_requested]
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   # JOB to run change detection
   check-changes:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      pull-requests: read   # Required for dorny/paths-filter to list files changed in pull requests
     runs-on: ubuntu-22.04
     # Set job outputs to values from filter step
     outputs:

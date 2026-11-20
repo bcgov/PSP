@@ -4,8 +4,15 @@ on:
   push:
     branches: [dev]
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   zap_scan:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      issues: write         # Required for zaproxy/action-full-scan to create or update scan-report issues
     runs-on: ubuntu-22.04
     name: Scan the web application
     env:
