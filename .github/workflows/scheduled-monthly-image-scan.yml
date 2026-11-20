@@ -5,6 +5,10 @@ on:
     - cron: "0 6 1 * *" # 1st of every month at 06:00 UTC
   workflow_dispatch: {}
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   scan-start-notification:
     name: Monthly Scan Start Notification
@@ -127,6 +131,9 @@ jobs:
           retention-days: 90
 
   scan-end-notification:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      actions: read         # Required for martialonline/workflow-status to read workflow job results
     name: Monthly Scan End Notification to Teams Channel
     runs-on: ubuntu-22.04
     needs: scan-deployed-and-bases

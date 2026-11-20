@@ -7,9 +7,17 @@ on:
     tags:
       - "v*"
 
+# Based on https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#defining-access-for-the-github_token-scopes
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   release:
     runs-on: ubuntu-22.04
+    # contents: write allows the action to create a release.
+    permissions:
+      contents: write       # Required for make release (gh release create) to publish GitHub releases
     steps:
       - name: Checkout code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3

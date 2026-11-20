@@ -39,6 +39,10 @@ on:
         type: boolean
         default: true
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   ci-cd-start-notification:
     name: CI-CD Start Notification to Teams Channel
@@ -208,6 +212,9 @@ jobs:
             pims-app pims-api pims-proxy pims-scheduler mayan-bcgov
 
   ci-cd-end-notification:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      actions: read         # Required for martialonline/workflow-status to read workflow job results
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-22.04
     needs: [keycloak-sync, mayan-sync, tag-release-image]

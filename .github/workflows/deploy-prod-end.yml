@@ -14,6 +14,10 @@ on:
         type: boolean
         default: true
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   maintenance-page:
     name: Hide the maintenance page
@@ -36,6 +40,9 @@ jobs:
           APPLICATION_NAME=pims-app-prod ./tools/cicd/maintenance/maintenance.sh prod off
 
   ci-cd-end-notification:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      actions: read         # Required for martialonline/workflow-status to read workflow job results
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-22.04
     needs: maintenance-page

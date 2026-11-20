@@ -30,6 +30,10 @@ env:
 on:
   workflow_dispatch:
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   ci-cd-start-notification:
     name: CI-CD Start Notification to Teams Channel
@@ -197,6 +201,9 @@ jobs:
           oc tag pims-api:uat pims-scheduler:v${VERSION}-master
 
   ci-cd-end-notification:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      actions: read         # Required for martialonline/workflow-status to read workflow job results
     if: always()
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-22.04
