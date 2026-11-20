@@ -39,5 +39,7 @@ namespace Pims.Api.Models.Concepts.Notification
         public long? AgreementId { get; set; }
 
         public long? DispositionAgreementId { get; set; }
+
+        public long? LeasePeriodId { get; set; }
     }
 }
