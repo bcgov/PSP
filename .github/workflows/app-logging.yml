@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [master, test, dev]
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   build:
     name: build-logging
@@ -43,8 +47,10 @@ jobs:
               echo "FRONTEND_APP_NAME=pims-app" >> $GITHUB_ENV
               echo "API_NAME=pims-api" >> $GITHUB_ENV
           fi
-      - name: Build the pims-logging docker-compose stack
-        run: docker-compose -f docker-compose.yml up -d
+      - name: Build the pims-logging Compose stack
+        run: |
+          docker compose version
+          docker compose -f docker-compose.yml up -d
         working-directory: ${{env.working-directory}}
       - name: Sleep for 180 seconds
         uses: jakejarvis/wait-action@919fc193e07906705e5b7a50f90ea9e74d20b2b0 #v0.1.1
@@ -68,5 +74,5 @@ jobs:
         run: docker logs pims-logging
       - name: Stop containers
         if: always()
-        run: docker-compose -f "docker-compose.yml" down
+        run: docker compose -f docker-compose.yml down
         working-directory: ${{env.working-directory}}

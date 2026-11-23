@@ -8,8 +8,16 @@ on:
     types:
       - completed
 
+# Default to source read access; grant additional permissions only in jobs that need them.
+permissions:
+  contents: read
+
 jobs:
   upload:
+    permissions:
+      contents: read        # Required for actions/checkout to read repository source
+      actions: read         # Required for actions/github-script to list and download workflow artifacts
+      pull-requests: write  # Required for actions/github-script to post coverage comments on PRs
     runs-on: ubuntu-22.04
     if: >
       github.event.workflow_run.event == 'pull_request' &&
