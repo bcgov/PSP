@@ -51,7 +51,7 @@ describe('AccessRequestContainer component', () => {
   it('makes a request when no id is provided', async () => {
     mockAxios.onGet().reply(200, getMockAccessRequest());
     const {
-      component: { getByTestId, asFragment },
+      component: { getByTestId, asFragment, findByDisplayValue },
     } = setup({});
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
@@ -59,12 +59,13 @@ describe('AccessRequestContainer component', () => {
     await waitFor(() => {
       expect(mockAxios.history.get[0].url).toBe('/access/requests');
     });
+    await findByDisplayValue('desmith@idir');
     expect(asFragment()).toMatchSnapshot();
   });
   it('makes a request based on the access request id', async () => {
     mockAxios.onGet().reply(200, getMockAccessRequest());
     const {
-      component: { getByTestId, asFragment },
+      component: { getByTestId, asFragment, findByDisplayValue },
     } = setup({ accessRequestId: 1 });
 
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
@@ -72,6 +73,7 @@ describe('AccessRequestContainer component', () => {
     await waitFor(() => {
       expect(mockAxios.history.get[0].url).toBe('/admin/access/requests/1');
     });
+    await findByDisplayValue('desmith@idir');
     expect(asFragment()).toMatchSnapshot();
   });
 

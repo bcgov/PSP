@@ -12,6 +12,7 @@ import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
+import { useNotificationRepository } from '@/hooks/repositories/useNotificationRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
@@ -59,6 +60,15 @@ const defaultLeaseWithPeriodsPayments: LeaseFormModel = {
 
 vi.mock('@/hooks/repositories/useUserInfoRepository');
 vi.mock('@/hooks/repositories/useLeasePeriodRepository');
+vi.mock('@/hooks/repositories/useNotificationRepository');
+vi.mocked(useNotificationRepository).mockReturnValue({
+  addNotification: { ...defaultRepositoryResponse, execute: vi.fn() },
+  updateNotification: { ...defaultRepositoryResponse, execute: vi.fn() },
+  deleteNotification: { ...defaultRepositoryResponse, execute: vi.fn() },
+  getNotificationById: { ...defaultRepositoryResponse, execute: vi.fn() },
+  getUserNotifications: { ...defaultRepositoryResponse, execute: vi.fn() },
+  searchNotifications: { ...defaultRepositoryResponse, execute: vi.fn(), response: [] },
+});
 vi.mocked(useLeasePeriodRepository).mockReturnValue({
   getLeasePeriods: mockGetLeasePeriods,
   updateLeasePeriod: { ...defaultRepositoryResponse },
