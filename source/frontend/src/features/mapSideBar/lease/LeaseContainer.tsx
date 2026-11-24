@@ -1,6 +1,6 @@
 import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
@@ -200,12 +200,19 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const query = useQuery();
   const history = useHistory();
+  const location = useLocation();
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const pathSolver = usePathGenerator();
 
   const activeTab = containerState.activeTab;
   const { setFullWidthSideBar, setFilePropertyLocations } = useMapStateMachine();
+
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get('tab') === LeaseFileTabNames.payments) {
+      setContainerState({ activeTab: LeaseFileTabNames.payments });
+    }
+  }, [leaseId, location.key, location.search]);
 
   const {
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },

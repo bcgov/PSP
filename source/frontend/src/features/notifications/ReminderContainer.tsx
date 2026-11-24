@@ -86,6 +86,7 @@ const ReminderContainer: React.FC<IReminderContainerProps> = ({
         researchFileId: notificationSource.researchFileId ?? undefined,
         managementFileId: notificationSource.managementFileId ?? undefined,
         leaseId: notificationSource.leaseId ?? undefined,
+        leasePeriodId: notificationSource.leasePeriodId ?? undefined,
         takeId: notificationSource.takeId ?? undefined,
         insuranceId: notificationSource.insuranceId ?? undefined,
         leaseConsultationId: notificationSource.leaseConsultationId ?? undefined,

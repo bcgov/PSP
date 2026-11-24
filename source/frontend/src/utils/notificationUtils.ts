@@ -62,9 +62,15 @@ export const getNotificationDeepLink = (
     case ApiGen_CodeTypes_NotificationTypes.L_INSURANCE:
     case ApiGen_CodeTypes_NotificationTypes.L_CONSULTFN:
     case ApiGen_CodeTypes_NotificationTypes.L_ORIG_AGMT_EXPDT:
-    case ApiGen_CodeTypes_NotificationTypes.L_PERIOD_EXPDT:
       return isValidId(notification.leaseId)
         ? DeepLinkGenerator.showFile(ApiGen_CodeTypes_FileTypes.Lease, notification.leaseId)
+        : null;
+    case ApiGen_CodeTypes_NotificationTypes.L_PERIOD_EXPDT:
+      return isValidId(notification.leaseId)
+        ? `${DeepLinkGenerator.showFile(
+            ApiGen_CodeTypes_FileTypes.Lease,
+            notification.leaseId,
+          )}?tab=payments`
         : null;
     case ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT:
     case ApiGen_CodeTypes_NotificationTypes.EXPROPH_ADVPYSVDT:

@@ -75,6 +75,10 @@ namespace Pims.Dal.Repositories
             {
                 predicate = predicate.And(n => n.LeaseId == criteria.LeaseId.Value);
             }
+            if (criteria.LeasePeriodId.HasValue)
+            {
+                predicate = predicate.And(n => n.LeasePeriodId == criteria.LeasePeriodId.Value);
+            }
             if (criteria.TakeId.HasValue)
             {
                 predicate = predicate.And(n => n.TakeId == criteria.TakeId.Value);
