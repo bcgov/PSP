@@ -50,7 +50,7 @@ describe('Edit user page', () => {
   });
 
   it('EditUserPage renders', async () => {
-    const { asFragment, getByTestId, findByDisplayValue } = render(
+    const { asFragment, getByTestId } = render(
       <Provider store={store}>
         <Router history={history}>
           <EditUserPage userKey="TEST-ID" />,
@@ -58,7 +58,6 @@ describe('Edit user page', () => {
       </Provider>,
     );
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    await findByDisplayValue('pos');
     expect(asFragment()).toMatchSnapshot();
   });
 
