@@ -57,10 +57,8 @@ namespace Pims.Api.Services
             }
 
             currentLease.ThrowIfCannotEditLeaseFile(_user, _userRepository, _projectRepository, _lookupRepository);
-            using var transaction = _leasePeriodRepository.BeginTransaction();
             _leasePeriodRepository.Delete(period.Internal_Id);
-            _leasePeriodRepository.SaveChanges();
-            transaction.Commit();
+            _leasePeriodRepository.CommitTransaction();
 
             return true;
         }

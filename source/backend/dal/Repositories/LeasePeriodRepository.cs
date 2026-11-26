@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -30,11 +29,6 @@ namespace Pims.Dal.Repositories
 
         public void Delete(long leasePeriodId)
         {
-            if (this.Context.Database.IsRelational() && this.Context.Database.CurrentTransaction == null)
-            {
-                throw new InvalidOperationException("Deleting a lease period requires an active transaction.");
-            }
-
             PimsLeasePeriod period = this.Context.PimsLeasePeriods.Find(leasePeriodId) ?? throw new KeyNotFoundException();
             var notificationIds = this.Context.PimsNotifications
                 .Where(n => n.LeasePeriodId == leasePeriodId)

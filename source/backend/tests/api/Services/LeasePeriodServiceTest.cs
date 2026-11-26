@@ -295,8 +295,6 @@ namespace Pims.Api.Test.Services
             var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit);
             var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
             leasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
-            var transaction = new Mock<IDbContextTransaction>();
-            leasePeriodRepository.Setup(x => x.BeginTransaction()).Returns(transaction.Object);
 
             SetupEditableLease(lease);
 
