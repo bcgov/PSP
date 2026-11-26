@@ -9,6 +9,7 @@ import { useAddressHelpers } from '@/features/contacts/contact/create/components
 import { hasEmail, hasPhoneNumber } from '@/features/contacts/contact/create/validation';
 import * as Styled from '@/features/contacts/contact/edit/styles';
 import OrganizationSubForm from '@/features/contacts/contact/Organization/OrganizationSubForm';
+import PersonAdditionalDetailsSections from '@/features/contacts/contact/Person/PersonAdditionalDetailsSections';
 import PersonContactDetailsSection from '@/features/contacts/contact/Person/PersonContactDetailsSection';
 import PersonContactInfoSection from '@/features/contacts/contact/Person/PersonContactInfoSection';
 import {
@@ -93,6 +94,7 @@ export const ContactCreateForm: React.FC<IContactCreateFormProps> = ({
             <PersonContactInfoSection
               isContactMethodInvalid={!!getIn(formikProps.errors, 'needsContactMethod')}
             />
+            <PersonAdditionalDetailsSections />
             <Styled.ButtonGroup>
               <Button type="button" variant="secondary" onClick={onCancel}>
                 Cancel
