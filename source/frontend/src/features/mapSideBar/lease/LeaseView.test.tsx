@@ -38,6 +38,9 @@ import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
 vi.mock('@/hooks/pims-api/useApiNotes');
+vi.mock('@/features/leases/detail/LeasePages/payment/PeriodPaymentsContainer', () => ({
+  default: () => <div>Payments content</div>,
+}));
 
 const getNotes = vi.fn().mockResolvedValue([]);
 const onClose = vi.fn();
@@ -199,6 +202,21 @@ describe('LeaseView component', () => {
   it('renders as expected', async () => {
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('clears the payments deep-link parameter when selecting another tab', async () => {
+    history.replace('/mapview/sidebar/lease/1?tab=payments&example=keep#section');
+    const { getByRole } = await setup({
+      props: {
+        containerState: { isEditing: false, activeTab: LeaseFileTabNames.payments },
+      },
+    });
+
+    await act(async () => userEvent.click(getByRole('tab', { name: 'File Details' })));
+
+    expect(setContainerState).toHaveBeenCalledWith({ activeTab: LeaseFileTabNames.fileDetails });
+    expect(history.location.search).toBe('?example=keep');
+    expect(history.location.hash).toBe('#section');
   });
 
   it('renders the underlying form', async () => {

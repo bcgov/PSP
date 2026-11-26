@@ -9,6 +9,8 @@ namespace Pims.Dal.Repositories
 {
     public class LeasePeriodRepository : BaseRepository<PimsLeasePeriod>, ILeasePeriodRepository
     {
+        private readonly INotificationRepository _notificationRepository;
+
         #region Constructors
 
         /// <summary>
@@ -17,15 +19,29 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeasePeriodRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger)
+        /// <param name="notificationRepository"></param>
+        public LeasePeriodRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
+            _notificationRepository = notificationRepository;
         }
         #endregion
 
         public void Delete(long leasePeriodId)
         {
             PimsLeasePeriod period = this.Context.PimsLeasePeriods.Find(leasePeriodId) ?? throw new KeyNotFoundException();
+            var notificationIds = this.Context.PimsNotifications
+                .Where(n => n.LeasePeriodId == leasePeriodId)
+                .Select(n => n.NotificationId)
+                .ToList();
+            if (notificationIds.Count > 0)
+            {
+                foreach (var notificationId in notificationIds)
+                {
+                    _notificationRepository.Delete(notificationId);
+                }
+            }
+
             this.Context.Remove(period);
         }
 

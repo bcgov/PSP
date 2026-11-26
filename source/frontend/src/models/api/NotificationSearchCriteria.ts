@@ -5,6 +5,7 @@ export interface Api_NotificationSearchCriteria {
   researchFileId?: number | null;
   managementFileId?: number | null;
   leaseId?: number | null;
+  leasePeriodId?: number | null;
   takeId?: number | null;
   insuranceId?: number | null;
   leaseConsultationId?: number | null;

@@ -25,4 +25,5 @@ export interface ApiGen_Concepts_Notification extends ApiGen_Base_BaseConcurrent
   expropOwnerHistoryId: number | null;
   agreementId: number | null;
   dispositionAgreementId: number | null;
+  leasePeriodId: number | null;
 }

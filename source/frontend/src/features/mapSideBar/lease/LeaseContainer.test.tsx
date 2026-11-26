@@ -101,6 +101,7 @@ describe('LeaseContainer component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
+    history.replace('/mapview/sidebar/lease/1');
 
     useLeaseDetailMock = {
       lease: getMockApiLease(),
@@ -119,6 +120,39 @@ describe('LeaseContainer component', () => {
   it('renders as expected', async () => {
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('opens the payments tab and expands the sidebar for a payments link', async () => {
+    const testMockMachine: IMapStateMachineContext = { ...mapMachineBaseMock };
+    history.replace('/mapview/sidebar/lease/1?tab=payments');
+    await setup({ mockMapMachine: testMockMachine });
+
+    expect(viewProps.containerState.activeTab).toBe(LeaseFileTabNames.payments);
+    expect(testMockMachine.setFullWidthSideBar).toHaveBeenCalledWith(true);
+  });
+
+  it('opens payments when navigating to a reminder while the lease is already open', async () => {
+    await setup();
+    await act(async () => viewProps.setContainerState({ activeTab: LeaseFileTabNames.insurance }));
+    await act(async () => history.push('/mapview/sidebar/lease/1?tab=payments'));
+
+    expect(viewProps.containerState.activeTab).toBe(LeaseFileTabNames.payments);
+  });
+
+  it('reopens payments when the same reminder link is opened again', async () => {
+    history.replace('/mapview/sidebar/lease/1?tab=payments');
+    await setup();
+    await act(async () => viewProps.setContainerState({ activeTab: LeaseFileTabNames.insurance }));
+    await act(async () => history.push('/mapview/sidebar/lease/1?tab=payments'));
+
+    expect(viewProps.containerState.activeTab).toBe(LeaseFileTabNames.payments);
+  });
+
+  it('ignores unknown tab query parameters', async () => {
+    history.replace('/mapview/sidebar/lease/1?tab=unknown');
+    await setup();
+
+    expect(viewProps.containerState.activeTab).toBeUndefined();
   });
 
   it('renders a spinner while loading', async () => {

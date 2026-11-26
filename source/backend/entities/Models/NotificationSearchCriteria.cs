@@ -33,6 +33,11 @@ namespace Pims.Dal.Entities.Models
         public long? LeaseId { get; set; }
 
         /// <summary>
+        /// get/set - The lease period id to search by.
+        /// </summary>
+        public long? LeasePeriodId { get; set; }
+
+        /// <summary>
         /// get/set - The take id to search by.
         /// </summary>
         public long? TakeId { get; set; }

@@ -231,6 +231,11 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
 
   const onSetActiveTab = (tab: LeaseFileTabNames) => {
     const previousTab = activeTab;
+    const query = new URLSearchParams(location.search);
+    if (tab !== LeaseFileTabNames.payments && query.get('tab') === LeaseFileTabNames.payments) {
+      query.delete('tab');
+      history.replace({ ...location, search: query.toString() });
+    }
     if (previousTab === LeaseFileTabNames.compensation) {
       const backUrl = location.pathname.split('/compensation-requisition')[0];
       history.push(backUrl);
