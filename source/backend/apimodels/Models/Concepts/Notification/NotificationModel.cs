@@ -37,5 +37,7 @@ namespace Pims.Api.Models.Concepts.Notification
         public long? ExpropOwnerHistoryId { get; set; }
 
         public long? AgreementId { get; set; }
+
+        public long? DispositionAgreementId { get; set; }
     }
 }

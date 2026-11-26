@@ -29,6 +29,8 @@ export interface IAgreementViewProps {
   agreements: ApiGen_Concepts_Agreement[];
   isFileFinalStatus?: boolean;
   isSection3?: boolean;
+  isAcquisition?: boolean;
+  canEdit?: boolean;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
 }
@@ -38,13 +40,30 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   agreements,
   isFileFinalStatus,
   isSection3,
+  canEdit,
   onGenerate,
   onDelete,
+  isAcquisition,
 }) => {
   const keycloak = useKeycloakWrapper();
   const history = useHistory();
   const match = useRouteMatch();
   const { setModalContent, setDisplayModal } = useModalContext();
+  const editClaim = isAcquisition ? Claims.ACQUISITION_EDIT : Claims.DISPOSITION_EDIT;
+
+  const notificationTypes = isAcquisition
+    ? {
+        agreement: ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT,
+        completion: ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT,
+        termination: ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT,
+        possession: ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT,
+      }
+    : {
+        agreement: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_AGMTDT,
+        completion: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_COMPTDT,
+        termination: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_TERMDT,
+        possession: ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_POSNDT,
+      };
 
   return (
     <StyledSummarySection>
@@ -53,14 +72,14 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
       <Section
         header={
           <SectionListHeader
-            claims={[Claims.ACQUISITION_EDIT]}
+            claims={[editClaim]}
             title="Agreements"
             addButtonText="Add Agreement"
             addButtonIcon={<FaPlus size={'2rem'} />}
             onButtonAction={() => {
               history.push(`${match.url}/add`);
             }}
-            isAddEnabled={!isFileFinalStatus}
+            isAddEnabled={!isFileFinalStatus && canEdit !== false}
             cannotAddComponent={
               <TooltipIcon toolTipId={`agreement-cannot-add-tooltip`} toolTip={cannotEditMessage} />
             }
@@ -91,7 +110,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                             </StyledAddButton>
 
-                            {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
+                            {keycloak.hasClaim(editClaim) && canEdit !== false && (
                               <>
                                 <EditButton
                                   title="Edit Agreement"
@@ -179,11 +198,18 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.agreementDate}
                       keyDateLabel="Agreement date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT}
-                      notificationSource={{
-                        acquisitionFileId: agreement.fileId,
-                        agreementId: agreement.agreementId,
-                      }}
+                      notificationType={notificationTypes.agreement}
+                      notificationSource={
+                        isAcquisition
+                          ? {
+                              acquisitionFileId: agreement.fileId,
+                              agreementId: agreement.agreementId,
+                            }
+                          : {
+                              dispositionFileId: agreement.fileId,
+                              dispositionAgreementId: agreement.agreementId,
+                            }
+                      }
                       View={ReminderView}
                     />
                   )}
@@ -201,11 +227,18 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.completionDate}
                       keyDateLabel="Completion date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT}
-                      notificationSource={{
-                        acquisitionFileId: agreement.fileId,
-                        agreementId: agreement.agreementId,
-                      }}
+                      notificationType={notificationTypes.completion}
+                      notificationSource={
+                        isAcquisition
+                          ? {
+                              acquisitionFileId: agreement.fileId,
+                              agreementId: agreement.agreementId,
+                            }
+                          : {
+                              dispositionFileId: agreement.fileId,
+                              dispositionAgreementId: agreement.agreementId,
+                            }
+                      }
                       View={ReminderView}
                     />
                   )}
@@ -218,18 +251,46 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     <ReminderContainer
                       keyDate={agreement.terminationDate}
                       keyDateLabel="Termination date"
-                      notificationType={ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT}
-                      notificationSource={{
-                        acquisitionFileId: agreement.fileId,
-                        agreementId: agreement.agreementId,
-                      }}
+                      notificationType={notificationTypes.termination}
+                      notificationSource={
+                        isAcquisition
+                          ? {
+                              acquisitionFileId: agreement.fileId,
+                              agreementId: agreement.agreementId,
+                            }
+                          : {
+                              dispositionFileId: agreement.fileId,
+                              dispositionAgreementId: agreement.agreementId,
+                            }
+                      }
                       View={ReminderView}
                     />
                   )}
                 </StyledReminderContent>
               </SectionField>
               <SectionField labelWidth={{ xs: 6 }} label="Possession date">
-                {prettyFormatDate(agreement.possessionDate)}
+                <StyledReminderContent>
+                  <StyledDate>{prettyFormatDate(agreement.possessionDate)}</StyledDate>
+                  {agreement.possessionDate && (
+                    <ReminderContainer
+                      keyDate={agreement.possessionDate}
+                      keyDateLabel="Possession date"
+                      notificationType={notificationTypes.possession}
+                      notificationSource={
+                        isAcquisition
+                          ? {
+                              acquisitionFileId: agreement.fileId,
+                              agreementId: agreement.agreementId,
+                            }
+                          : {
+                              dispositionFileId: agreement.fileId,
+                              dispositionAgreementId: agreement.agreementId,
+                            }
+                      }
+                      View={ReminderView}
+                    />
+                  )}
+                </StyledReminderContent>
               </SectionField>
 
               <StyledAgreementSubheader>Financial</StyledAgreementSubheader>
@@ -255,9 +316,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             </Section>
           </StyledAgreementBorder>
         ))}
-        {agreements.length === 0 && (
-          <p>There are no agreements indicated in this acquisition file.</p>
-        )}
+        {agreements.length === 0 && <p>There are no agreements indicated in this file.</p>}
       </Section>
     </StyledSummarySection>
   );

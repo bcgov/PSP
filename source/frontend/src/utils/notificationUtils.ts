@@ -75,6 +75,7 @@ export const getNotificationDeepLink = (
             'expropriation',
           )
         : null;
+
     case ApiGen_CodeTypes_NotificationTypes.NOC:
       // NOC applies to Acquisition or Management files; Acquisition takes precedence when both are set.
       if (isValidId(notification.acquisitionFileId)) {
@@ -91,13 +92,33 @@ export const getNotificationDeepLink = (
             'fileDetails',
           )
         : null;
-    case ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT:
-    case ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT:
-    case ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT:
+    case ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT:
       return isValidId(notification.acquisitionFileId)
         ? DeepLinkGenerator.showDetails(
             ApiGen_CodeTypes_FileTypes.Acquisition,
             notification.acquisitionFileId,
+            'fileDetails',
+          )
+        : null;
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_AGMTDT:
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_COMPTDT:
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_TERMINDT:
+    case ApiGen_CodeTypes_NotificationTypes.AGMT_POSNDT:
+      return isValidId(notification.acquisitionFileId)
+        ? DeepLinkGenerator.showDetails(
+            ApiGen_CodeTypes_FileTypes.Acquisition,
+            notification.acquisitionFileId,
+            'agreements',
+          )
+        : null;
+    case ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_AGMTDT:
+    case ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_COMPTDT:
+    case ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_POSNDT:
+    case ApiGen_CodeTypes_NotificationTypes.DSP_AGMT_TERMDT:
+      return isValidId(notification.dispositionFileId)
+        ? DeepLinkGenerator.showDetails(
+            ApiGen_CodeTypes_FileTypes.Disposition,
+            notification.dispositionFileId,
             'agreements',
           )
         : null;

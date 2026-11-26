@@ -56,5 +56,22 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "AGMT_TERMINDT")]
         AGMT_TERMINDT,
+        
+        [EnumMember(Value = "AGMT_POSNDT")]
+        AGMT_POSNDT,
+
+        [EnumMember(Value = "DSP_AGMT_AGMTDT")]
+        DSP_AGMT_AGMTDT,
+
+        [EnumMember(Value = "DSP_AGMT_COMPTDT")]
+        DSP_AGMT_COMPTDT,
+
+        [EnumMember(Value = "DSP_AGMT_POSNDT")]
+        DSP_AGMT_POSNDT,
+
+        [EnumMember(Value = "DSP_AGMT_TERMDT")]
+        DSP_AGMT_TERMDT,
+        [EnumMember(Value = "ACQ_DLVDT")]
+        ACQ_DLVDT,
     }
 }

@@ -938,13 +938,15 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocument_Disposition_Success()
+        public async Task UploadDocument_Disposition_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.DispositionEdit);
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
             var dispositionFileDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsDispositionFileDocument>>>();
+            var dispositionFileRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             documentQueueRepository.Setup(x => x.BeginTransaction()).Returns(new Mock<IDbContextTransaction>().Object);
             documentRepository.Setup(x => x.Add(It.IsAny<PimsDocument>())).Returns(new PimsDocument()
@@ -958,12 +960,17 @@ namespace Pims.Api.Test.Services
             dispositionFileDocumentRepository.Setup(x => x.AddDocument(It.IsAny<PimsDispositionFileDocument>())).Returns(new PimsDispositionFileDocument()
             {
                 DispositionFileDocumentId = 101,
-                DispositionFileId = 1,
+                DispositionFileId = 100,
                 DocumentId = 100,
             });
 
-            dispositionFileDocumentRepository.Setup(x => x.AddDocument(It.IsAny<PimsDispositionFileDocument>()))
-                .Returns(new PimsDispositionFileDocument() { DispositionFileId = 100, DocumentId = 1 });
+            dispositionFileRepository.Setup(x => x.GetById(100)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 100,
+                RegionCode = 1,
+            });
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             DocumentUploadRequest uploadRequest = new()
@@ -983,13 +990,22 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Disposition_Fail_EmptyFile()
+        public async Task UploadDocumentAsync_Disposition_Fail_EmptyFile()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.DispositionEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var dispositionFileDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsDispositionFileDocument>>>();
+            var dispositionFileRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
             documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
+            dispositionFileRepository.Setup(x => x.GetById(100)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 100,
+                RegionCode = 1,
+            });
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             DocumentUploadRequest uploadRequest = new()
@@ -1900,7 +1916,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void Delete_DispositionDocument_Success_Status_Success()
+        public async Task Delete_DispositionDocument_Success_Status_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.DispositionEdit);
@@ -1908,6 +1924,8 @@ namespace Pims.Api.Test.Services
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
             var dispositionDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsDispositionFileDocument>>>();
+            var dispositionFileRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             documentRepository.Setup(x => x.Find(It.IsAny<long>())).Returns(new PimsDocument() { DocumentId = 2, MayanId = 200 });
             documentRepository.Setup(x => x.BeginTransaction()).Returns(new Mock<IDbContextTransaction>().Object);
@@ -1925,11 +1943,19 @@ namespace Pims.Api.Test.Services
             documentQueueRepository.Setup(x => x.Delete(It.IsAny<PimsDocumentQueue>())).Returns(true);
             dispositionDocumentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsDispositionFileDocument>())).Returns(true);
             documentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsDocument>())).Returns(true);
+            dispositionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+                RegionCode = 1,
+            });
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             PimsDispositionFileDocument doc = new()
             {
                 Internal_Id = 1,
                 DocumentId = 2,
+                DispositionFileId = 1,
                 Document = new PimsDocument()
                 {
                     DocumentId = 2,
@@ -1946,7 +1972,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void Delete_DispositionDocument_Success_Status_NotFound()
+        public async Task Delete_DispositionDocument_Success_Status_NotFound()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.DispositionEdit);
@@ -1954,6 +1980,8 @@ namespace Pims.Api.Test.Services
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
             var dispositionDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsDispositionFileDocument>>>();
+            var dispositionFileRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             documentRepository.Setup(x => x.Find(It.IsAny<long>())).Returns(new PimsDocument() { DocumentId = 2, MayanId = 200 });
             documentRepository.Setup(x => x.BeginTransaction()).Returns(new Mock<IDbContextTransaction>().Object);
@@ -1971,10 +1999,17 @@ namespace Pims.Api.Test.Services
             documentQueueRepository.Setup(x => x.Delete(It.IsAny<PimsDocumentQueue>())).Returns(true);
             dispositionDocumentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsDispositionFileDocument>())).Returns(true);
             documentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsDocument>())).Returns(true);
+            dispositionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+                RegionCode = 1,
+            });
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             PimsDispositionFileDocument doc = new()
             {
                 Internal_Id = 1,
+                DispositionFileId = 1,
                 DocumentId = 2,
                 Document = new PimsDocument()
                 {

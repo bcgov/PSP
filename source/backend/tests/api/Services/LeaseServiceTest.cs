@@ -45,6 +45,80 @@ namespace Pims.Api.Test.Services
 
         #region Tests
 
+        [Theory]
+        [InlineData(true, false, true, true)]
+        [InlineData(false, true, true, true)]
+        [InlineData(true, true, true, true)]
+        [InlineData(false, false, true, false)]
+        [InlineData(true, false, false, false)]
+        [InlineData(false, true, false, false)]
+        public void GetProjectByLeaseId_ContractorAccess(bool onFileTeam, bool onProjectTeam, bool inRegion, bool allowed)
+        {
+            var service = this.CreateLeaseService(Permissions.LeaseView, Permissions.ProjectView);
+            var file = EntityHelper.CreateLease(1);
+            file.RegionCode = 1;
+            file.ProjectId = 10;
+            file.PimsLeaseLicenseTeams.Clear();
+            var contractor = EntityHelper.CreateUser("Contractor", isContractor: true);
+            contractor.PersonId = 123;
+            contractor.PimsRegionUsers.Clear();
+            contractor.PimsRegionUsers.Add(new PimsRegionUser { RegionCode = (short)(inRegion ? 1 : 2) });
+            if (onFileTeam)
+            {
+                file.PimsLeaseLicenseTeams.Add(new() { PersonId = contractor.PersonId });
+            }
+
+            var project = new PimsProject { Internal_Id = 10 };
+            if (onProjectTeam)
+            {
+                project.PimsProjectPeople.Add(new() { PersonId = contractor.PersonId });
+            }
+
+            var repository = this._helper.GetService<Mock<ILeaseRepository>>();
+            repository.Setup(x => x.GetNoTracking(1)).Returns(file);
+            repository.Setup(x => x.Get(1)).Returns(file);
+            this._helper.GetService<Mock<IUserRepository>>()
+                .Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractor);
+            this._helper.GetService<Mock<IProjectRepository>>()
+                .Setup(x => x.TryGet(10)).Returns(project);
+
+            if (allowed)
+            {
+                service.GetProjectByLeaseId(1).Should().BeSameAs(project);
+            }
+            else
+            {
+                Action act = () => service.GetProjectByLeaseId(1);
+                act.Should().Throw<NotAuthorizedException>();
+            }
+        }
+
+        [Fact]
+        public void GetProjectByLeaseId_NoPermission_Denied()
+        {
+            var service = this.CreateLeaseService();
+            Action act = () => service.GetProjectByLeaseId(1);
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetProjectByLeaseId_NoProject_ReturnsNull()
+        {
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+            var file = EntityHelper.CreateLease(1);
+            file.ProjectId = null;
+            var repository = this._helper.GetService<Mock<ILeaseRepository>>();
+            repository.Setup(x => x.GetNoTracking(1)).Returns(file);
+            repository.Setup(x => x.Get(1)).Returns(file);
+            this._helper.GetService<Mock<IUserRepository>>()
+                .Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>()))
+                .Returns(EntityHelper.CreateUser("Staff"));
+
+            service.GetProjectByLeaseId(1).Should().BeNull();
+            this._helper.GetService<Mock<IProjectRepository>>()
+                .Verify(x => x.TryGet(It.IsAny<long>()), Times.Never);
+        }
+
         #region GetPage
         [Fact]
         public void GetPage_Success()

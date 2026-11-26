@@ -113,9 +113,9 @@ namespace Pims.Api.Services
                 or nameof(NotificationTypes.AGMT_AGMTDT)
                 or nameof(NotificationTypes.AGMT_COMPTDT)
                 or nameof(NotificationTypes.AGMT_TERMINDT)
-                    => $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}",
-
-                nameof(NotificationTypes.NOC) when notification.AcquisitionFile is not null
+                or nameof(NotificationTypes.AGMT_POSNDT)
+                or nameof(NotificationTypes.ACQ_DLVDT)
+                or nameof(NotificationTypes.NOC) when notification.AcquisitionFile is not null
                     => $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}",
 
                 nameof(NotificationTypes.NOC) when notification.ManagementFile is not null
@@ -132,6 +132,12 @@ namespace Pims.Api.Services
 
                 nameof(NotificationTypes.L_CONSULTFN)
                     => GetConsultationSource(notification),
+
+                nameof(NotificationTypes.DSP_AGMT_AGMTDT)
+                or nameof(NotificationTypes.DSP_AGMT_COMPTDT)
+                or nameof(NotificationTypes.DSP_AGMT_POSNDT)
+                or nameof(NotificationTypes.DSP_AGMT_TERMDT) when notification.DispositionFile is not null
+                    => $"Disposition File #: D-{notification.DispositionFile.FileNumber}",
 
                 _ => string.Empty,
             };
@@ -218,8 +224,7 @@ namespace Pims.Api.Services
                         stakeholder.PersonId.HasValue
                             ? stakeholder.Person.GetFullName()
                             : stakeholder.Organization?.Name)
-                    .Where(name => !string.IsNullOrWhiteSpace(name))
-            );
+                    .Where(name => !string.IsNullOrWhiteSpace(name)));
         }
 
         private async Task<EmailRequest> GenerateEmailRequest(PimsNotificationUserOutput userNotification)

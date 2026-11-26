@@ -77,13 +77,24 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateNoteServiceWithPermissions(Permissions.NoteAdd);
             var dispositionFileNote = EntityHelper.CreateDispositionFileNote();
+
             var repository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsDispositionFileNote>>>();
             repository.Setup(x => x.AddNoteRelationship(It.IsAny<PimsDispositionFileNote>())).Returns(dispositionFileNote);
+
+            var dispositionFile = EntityHelper.CreateDispositionFile();
+            dispositionFile.RegionCode = 1;
+
+            var dispositionFileRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            dispositionFileRepository.Setup(x => x.GetById(dispositionFileNote.ParentId)).Returns(dispositionFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.AddDispositionFileNote(dispositionFileNote);
 
             // Assert
+            result.Should().NotBeNull();
             repository.Verify(x => x.AddNoteRelationship(It.IsAny<PimsDispositionFileNote>()), Times.Once);
         }
 

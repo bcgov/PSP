@@ -11,6 +11,8 @@ namespace Pims.Api.Services
 
         PimsAcquisitionFile GetById(long id);
 
+        PimsProject GetProjectByAcquisitionId(long acquisitionFileId);
+
         LastUpdatedByModel GetLastUpdateInformation(long acquisitionFileId);
 
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides);

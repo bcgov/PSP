@@ -61,17 +61,19 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
         header={
           <StyledSubHeader>
             <div>Appraisal and Assessment</div>
-            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && !isFileFinalStatus && (
-              <div>
-                <EditButton
-                  title="Edit Appraisal"
-                  data-testId={`appraisal-edit-btn`}
-                  onClick={() => {
-                    history.push(`${match.url}/appraisal/update`);
-                  }}
-                />
-              </div>
-            )}
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) &&
+              !isFileFinalStatus &&
+              dispositionFile?.canEdit && (
+                <div>
+                  <EditButton
+                    title="Edit Appraisal"
+                    data-testId={`appraisal-edit-btn`}
+                    onClick={() => {
+                      history.push(`${match.url}/appraisal/update`);
+                    }}
+                  />
+                </div>
+              )}
             {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && isFileFinalStatus && (
               <TooltipIcon
                 toolTipId={`${dispositionFile?.id || 0}-values-summary-cannot-edit-tooltip`}
@@ -142,7 +144,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
                 toolTip={cannotEditMessage}
               />
             }
-            isAddEnabled={!isFileFinalStatus}
+            isAddEnabled={!isFileFinalStatus && dispositionFile?.canEdit}
           />
         }
       >
@@ -166,21 +168,25 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
         header={
           <StyledSubHeader>
             <div>Sales Details</div>
-            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && !isFileFinalStatus && (
-              <EditButton
-                title="Edit Sale"
-                data-testId={`sale-edit-btn`}
-                onClick={() => {
-                  history.push(`${match.url}/sale/update`);
-                }}
-              />
-            )}
-            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && isFileFinalStatus && (
-              <TooltipIcon
-                toolTipId={`${dispositionFile?.id || 0}-sale-summary-cannot-edit-tooltip`}
-                toolTip={cannotEditMessage}
-              />
-            )}
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) &&
+              !isFileFinalStatus &&
+              dispositionFile?.canEdit && (
+                <EditButton
+                  title="Edit Sale"
+                  data-testId={`sale-edit-btn`}
+                  onClick={() => {
+                    history.push(`${match.url}/sale/update`);
+                  }}
+                />
+              )}
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) &&
+              isFileFinalStatus &&
+              dispositionFile?.canEdit && (
+                <TooltipIcon
+                  toolTipId={`${dispositionFile?.id || 0}-sale-summary-cannot-edit-tooltip`}
+                  toolTip={cannotEditMessage}
+                />
+              )}
           </StyledSubHeader>
         }
       >

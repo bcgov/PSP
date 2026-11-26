@@ -94,6 +94,7 @@ export class DispositionFormModel implements WithDispositionTeam {
       dispositionAppraisal: this.appraisal ? this.appraisal.toApi() : null,
       fileChecklistItems: this.fileChecklist.map(x => x.toApi()),
       ...getEmptyBaseAudit(this.rowVersion),
+      canEdit: false,
     };
   }
 

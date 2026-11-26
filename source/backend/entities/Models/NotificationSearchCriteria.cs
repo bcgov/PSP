@@ -66,5 +66,10 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The agreement id to search by.
         /// </summary>
         public long? AgreementId { get; set; }
+
+        /// <summary>
+        /// get/set - The disposition agreement id to search by.
+        /// </summary>
+        public long? DispositionAgreementId { get; set; }
     }
 }
