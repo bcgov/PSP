@@ -115,7 +115,6 @@ describe('AcquisitionView component', () => {
     props: IAcquisitionViewProps = { ...DEFAULT_PROPS },
     renderOptions: RenderOptions = {},
     fileOverrides: Partial<ApiGen_Concepts_AcquisitionFile> = {},
-
   ) => {
     const utils = render(
       <SideBarContextProvider
@@ -226,14 +225,14 @@ describe('AcquisitionView component', () => {
   });
 
   it('should hide Change properties when acquisitionFile.canEdit is false', async () => {
-  const { queryByTitle } = await setup(
-    { ...DEFAULT_PROPS },
-    { claims: [Claims.ACQUISITION_EDIT] },
-    { canEdit: false },
-  );
+    const { queryByTitle } = await setup(
+      { ...DEFAULT_PROPS },
+      { claims: [Claims.ACQUISITION_EDIT] },
+      { canEdit: false },
+    );
 
-  expect(queryByTitle('Change properties')).not.toBeInTheDocument();
-});
+    expect(queryByTitle('Change properties')).not.toBeInTheDocument();
+  });
 
   it('should display the notes tab if the user has permissions', async () => {
     const { getAllByText } = await setup(undefined, { claims: [Claims.NOTE_VIEW] });

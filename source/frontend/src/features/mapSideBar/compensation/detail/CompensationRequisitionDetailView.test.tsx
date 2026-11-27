@@ -29,7 +29,14 @@ import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/
 import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
 import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { act, getByText, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  getByText,
+  render,
+  RenderOptions,
+  userEvent,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {
   CompensationRequisitionDetailViewProps,
@@ -494,23 +501,23 @@ describe('Compensation Detail View Component', () => {
         canEditFile: true,
         isFileFinalStatus: false,
         compensation: {
-        ...getMockApiDefaultCompensation(),
-        isDraft: true,
-      },
+          ...getMockApiDefaultCompensation(),
+          isDraft: true,
+        },
       },
     });
     expect(getByTitle('Edit compensation requisition')).toBeVisible();
   });
 
   it('hides Edit compensation requisition when Acquisition file is read-only', async () => {
-    const {queryByTitle, getByText} = await setup({
+    const { queryByTitle, getByText } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
         canEditFile: false,
         isFileFinalStatus: false,
-         compensation: {
-        ...getMockApiDefaultCompensation(),
-        isDraft: true,
+        compensation: {
+          ...getMockApiDefaultCompensation(),
+          isDraft: true,
         },
       },
     });
@@ -520,17 +527,17 @@ describe('Compensation Detail View Component', () => {
   });
 
   it.each([12000, 0, null])(
-  'preserves total allowable compensation %s when converting form data',
-  amount => {
-    const acquisitionFile = {
-      ...mockAcquisitionFileResponse(),
-      totalAllowableCompensation: amount,
-    };
+    'preserves total allowable compensation %s when converting form data',
+    amount => {
+      const acquisitionFile = {
+        ...mockAcquisitionFileResponse(),
+        totalAllowableCompensation: amount,
+      };
 
-    const form = UpdateAcquisitionSummaryFormModel.fromApi(acquisitionFile);
-    const result = form.toApi();
+      const form = UpdateAcquisitionSummaryFormModel.fromApi(acquisitionFile);
+      const result = form.toApi();
 
-    expect(result.totalAllowableCompensation).toBe(amount);
-  },
-);
+      expect(result.totalAllowableCompensation).toBe(amount);
+    },
+  );
 });

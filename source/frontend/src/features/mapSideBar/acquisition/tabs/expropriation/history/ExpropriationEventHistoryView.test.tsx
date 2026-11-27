@@ -69,7 +69,10 @@ describe('ExpropriationEventHistoryView', () => {
 
   it('displays expropriation row buttons (update, delete), when the user has permissions', async () => {
     setup({
-      props: { eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())], canEdit: true },
+      props: {
+        eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: true,
+      },
       claims: [Claims.ACQUISITION_EDIT],
     });
 
@@ -82,7 +85,10 @@ describe('ExpropriationEventHistoryView', () => {
 
   it('does not display expropriation row buttons (update, delete), when the user canEdit is false', async () => {
     setup({
-      props: { eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())], canEdit: false },
+      props: {
+        eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: false,
+      },
       claims: [Claims.ACQUISITION_EDIT],
     });
 

@@ -11,7 +11,15 @@ import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { act, queryByTestId, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  queryByTestId,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
@@ -121,17 +129,14 @@ describe('compensation list view', () => {
   });
 
   it('does not allow adding a requisition when canEdit is false', () => {
-  const {queryByText} =setup({
-    compensationsResults: getMockApiCompensationList(),
-    claims: [
-      Claims.COMPENSATION_REQUISITION_VIEW,
-      Claims.COMPENSATION_REQUISITION_ADD,
-    ],
-    canEdit: false,
-  });
+    const { queryByText } = setup({
+      compensationsResults: getMockApiCompensationList(),
+      claims: [Claims.COMPENSATION_REQUISITION_VIEW, Claims.COMPENSATION_REQUISITION_ADD],
+      canEdit: false,
+    });
 
-  expect(queryByText('Add Requisition')).not.toBeInTheDocument();
-});
+    expect(queryByText('Add Requisition')).not.toBeInTheDocument();
+  });
 
   it('displays the calculated total for the final compensations with the subfiles', async () => {
     const mockList: ApiGen_Concepts_CompensationRequisition[] = [
@@ -315,10 +320,7 @@ describe('compensation list view', () => {
   it('displays Delete Compensation when canEdit is true', () => {
     const { queryByTestId } = setup({
       compensationsResults: getMockApiCompensationList(),
-      claims: [
-        Claims.COMPENSATION_REQUISITION_VIEW,
-        Claims.COMPENSATION_REQUISITION_DELETE,
-      ],
+      claims: [Claims.COMPENSATION_REQUISITION_VIEW, Claims.COMPENSATION_REQUISITION_DELETE],
       canEdit: true,
     });
 
@@ -352,10 +354,7 @@ describe('compensation list view', () => {
   it('hides Add Requisition when canEdit is false', () => {
     const { queryByText } = setup({
       compensationsResults: getMockApiCompensationList(),
-      claims: [
-        Claims.COMPENSATION_REQUISITION_VIEW,
-        Claims.COMPENSATION_REQUISITION_ADD,
-      ],
+      claims: [Claims.COMPENSATION_REQUISITION_VIEW, Claims.COMPENSATION_REQUISITION_ADD],
       canEdit: false,
     });
 

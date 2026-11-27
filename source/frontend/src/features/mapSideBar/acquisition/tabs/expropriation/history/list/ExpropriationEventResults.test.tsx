@@ -97,7 +97,10 @@ describe('ExpropriationEventResults', () => {
 
   it('hides the expropriation row buttons (update, delete) when canEdit is false', async () => {
     setup({
-      props: { results: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())], canEdit: false },
+      props: {
+        results: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: false,
+      },
       claims: [Claims.ACQUISITION_VIEW],
     });
 
