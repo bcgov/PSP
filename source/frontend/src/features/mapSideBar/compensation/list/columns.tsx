@@ -20,6 +20,7 @@ export function createCompensationTableColumns(
   statusSolver: IUpdateCompensationStrategy,
   onShow: (compensationId: number) => void,
   onDelete: (compensationId: number) => void,
+  canEdit = false,
 ) {
   const columns: ColumnWithProps<ApiGen_Concepts_CompensationRequisition>[] = [
     {
@@ -107,7 +108,8 @@ export function createCompensationTableColumns(
               />
             )}
             {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
-              canEditDetails(cellProps.row.original.isDraft) && (
+              canEditDetails(cellProps.row.original.isDraft) &&
+              canEdit === true && (
                 <RemoveIconButton
                   id={`compensation-delete-${cellProps.row.id}`}
                   data-testId={`compensation-delete-${cellProps.row.id}`}

@@ -54,5 +54,7 @@ namespace Pims.Api.Services
         List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter);
 
         List<PimsAcquisitionFile> GetAcquisitionSubFiles(long id);
+
+        bool CanEdit(long acquisitionFileId);
     }
 }

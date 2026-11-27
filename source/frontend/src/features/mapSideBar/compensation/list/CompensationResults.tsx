@@ -12,12 +12,18 @@ export interface ICompensationResultProps {
   statusSolver: IUpdateCompensationStrategy;
   onShow: (compensationId: number) => void;
   onDelete: (compensationId: number) => void;
+  canEdit?: boolean;
 }
 
 export function CompensationResults(props: ICompensationResultProps) {
   const location = useLocation();
   const { results, isLoading, ...rest } = props;
-  const columns = createCompensationTableColumns(props.statusSolver, props.onShow, props.onDelete);
+  const columns = createCompensationTableColumns(
+    props.statusSolver,
+    props.onShow,
+    props.onDelete,
+    props.canEdit,
+  );
 
   const isActiveRow = (entityId: number): boolean => {
     const matched = matchPath(location.pathname, {

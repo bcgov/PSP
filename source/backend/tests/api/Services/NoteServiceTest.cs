@@ -60,9 +60,20 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateNoteServiceWithPermissions(Permissions.NoteAdd);
+
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile();
+            acquisitionFile.RegionCode = 1;
+
             var acquisitionFileNote = EntityHelper.CreateAcquisitionFileNote();
+
             var repository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             repository.Setup(x => x.AddNoteRelationship(It.IsAny<PimsAcquisitionFileNote>())).Returns(acquisitionFileNote);
+
+            var acquisitionFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acquisitionFileRepository.Setup(x => x.GetById(acquisitionFileNote.ParentId)).Returns(acquisitionFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.AddAcquisitionFileNote(acquisitionFileNote);

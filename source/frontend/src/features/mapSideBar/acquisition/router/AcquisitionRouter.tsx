@@ -6,6 +6,7 @@ import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, stripTrailingSlash } from '@/utils';
@@ -38,6 +39,7 @@ export interface IAcquisitionRouterProps {
 export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
   const { path, url } = useRouteMatch();
   const agreementProvider = useAgreementProvider();
+  const { hasClaim } = useKeycloakWrapper();
 
   const { execute: postAcquisitionAgreement, loading: loadingAcquisitionAgreement } =
     agreementProvider.addAcquisitionAgreement;
@@ -46,12 +48,14 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
     return null;
   }
 
+  const canEdit = hasClaim(Claims.ACQUISITION_EDIT) && props.acquisitionFile?.canEdit === true;
+
   const isSection3 =
     props.acquisitionFile.acquisitionTypeCode.id ===
     ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3;
 
   // render edit forms
-  if (props.isEditing) {
+  if (props.isEditing && canEdit) {
     return (
       <Switch>
         <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.FILE_DETAILS}`}>
@@ -100,7 +104,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           exact
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/add`}
           customRender={() =>
-            props.acquisitionFile?.id ? (
+            canEdit && props.acquisitionFile?.id ? (
               <AddAgreementContainer
                 fileId={props.acquisitionFile?.id}
                 View={UpdateAgreementForm}
@@ -119,7 +123,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
         <AppRoute
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/:agreementId/update`}
           customRender={({ match }) =>
-            props.acquisitionFile?.id ? (
+            canEdit && props.acquisitionFile?.id ? (
               <UpdateAgreementContainer
                 fileId={props.acquisitionFile?.id}
                 agreementId={match.params.agreementId}
@@ -142,7 +146,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           exact
           path={`${stripTrailingSlash(path)}/${FileTabType.EXPROPRIATION}/add`}
           customRender={() =>
-            props.acquisitionFile?.id ? (
+            canEdit && props.acquisitionFile?.id ? (
               <AddForm8Container
                 acquisitionFileId={props.acquisitionFile?.id}
                 View={UpdateForm8Form}
@@ -156,13 +160,15 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
         />
         <AppRoute
           path={`${stripTrailingSlash(path)}/${FileTabType.EXPROPRIATION}/:form8Id`}
-          customRender={({ match }) => (
-            <UpdateForm8Container
-              form8Id={+match.params.form8Id}
-              View={UpdateForm8Form}
-              onSuccess={props.onSuccess}
-            />
-          )}
+          customRender={({ match }) =>
+            canEdit && (
+              <UpdateForm8Container
+                form8Id={+match.params.form8Id}
+                View={UpdateForm8Form}
+                onSuccess={props.onSuccess}
+              />
+            )
+          }
           claim={Claims.ACQUISITION_EDIT}
           key={'expropriation'}
           title={'Expropriation'}

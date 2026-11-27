@@ -13,14 +13,15 @@ export interface IExpropriationEventResultsProps {
   setSort: (value: TableSort<ExpropriationEventRow>) => void;
   onUpdate: (expropriationEventId: number) => void;
   onDelete: (expropriationEventId: number) => void;
+  canEdit?: boolean;
 }
 
 export const ExpropriationEventResults: React.FunctionComponent<
   IExpropriationEventResultsProps
-> = ({ results, loading, setSort, sort, onUpdate, onDelete }) => {
+> = ({ results, loading, setSort, sort, onUpdate, onDelete, canEdit }) => {
   const columns = useMemo(
-    () => getExpropriationEventColumns(onUpdate, onDelete),
-    [onUpdate, onDelete],
+    () => getExpropriationEventColumns(onUpdate, onDelete, canEdit),
+    [onUpdate, onDelete, canEdit],
   );
 
   return (

@@ -34,6 +34,7 @@ describe('ExpropriationEventHistoryView', () => {
       onAdd: vi.fn(),
       onUpdate: vi.fn(),
       onDelete: vi.fn(),
+      canEdit: true,
     };
 
     const rendered = render(
@@ -68,7 +69,10 @@ describe('ExpropriationEventHistoryView', () => {
 
   it('displays expropriation row buttons (update, delete), when the user has permissions', async () => {
     setup({
-      props: { eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())] },
+      props: {
+        eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: true,
+      },
       claims: [Claims.ACQUISITION_EDIT],
     });
 
@@ -79,11 +83,25 @@ describe('ExpropriationEventHistoryView', () => {
     expect(deleteButton).toBeVisible();
   });
 
+  it('does not display expropriation row buttons (update, delete), when the user canEdit is false', async () => {
+    setup({
+      props: {
+        eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: false,
+      },
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(screen.queryByTestId('edit-expropriation-event-0')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('delete-expropriation-event-0')).not.toBeInTheDocument();
+  });
+
   it('calls onAdd when add button is clicked', async () => {
     const onAdd = vi.fn();
     setup({
       props: {
         eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: true,
         onAdd,
       },
       claims: [Claims.ACQUISITION_EDIT],
@@ -97,11 +115,27 @@ describe('ExpropriationEventHistoryView', () => {
     expect(onAdd).toHaveBeenCalled();
   });
 
+  it('does not display Add button when canEdit is false', async () => {
+    const onAdd = vi.fn();
+    setup({
+      props: {
+        eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: false,
+        onAdd,
+      },
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(screen.queryByTestId('add-expropriation-event')).not.toBeInTheDocument();
+    expect(onAdd).not.toHaveBeenCalled();
+  });
+
   it('calls onUpdate when edit button is clicked', async () => {
     const onUpdate = vi.fn();
     setup({
       props: {
         eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: true,
         onUpdate,
       },
       claims: [Claims.ACQUISITION_EDIT],
@@ -120,6 +154,7 @@ describe('ExpropriationEventHistoryView', () => {
     setup({
       props: {
         eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: true,
         onDelete,
       },
       claims: [Claims.ACQUISITION_EDIT],

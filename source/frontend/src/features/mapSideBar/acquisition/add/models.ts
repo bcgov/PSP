@@ -75,7 +75,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   ownerRepresentative: InterestHolderForm = new InterestHolderForm(
     InterestHolderType.OWNER_REPRESENTATIVE,
   );
-  totalAllowableCompensation: number | '' = '';
+  totalAllowableCompensation: number | null = null;
   physicalFileDetails?: string = '';
   noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
@@ -154,6 +154,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       product: null,
       project: null,
       noticeOfClaim: hasNoticeOfClaim && exists(noticeOfClaim) ? [noticeOfClaim] : [],
+      canEdit: null,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -239,7 +240,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.expropiationRiskStatusType = fromTypeCodeNullable(
       model.acquisitionFileExpropiationRiskStatusTypeCode,
     );
-    newForm.totalAllowableCompensation = model.totalAllowableCompensation || '';
+    newForm.totalAllowableCompensation = model.totalAllowableCompensation ?? null;
     newForm.legacyFileNumber = model.legacyFileNumber ?? undefined;
     newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode) ?? undefined;
     newForm.acquisitionPhysFileStatusType =

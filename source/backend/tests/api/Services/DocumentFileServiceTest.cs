@@ -78,6 +78,46 @@ namespace Pims.Api.Test.Services
                 });
         }
 
+        private void SetupEditableAcquisitionFile(long acquisitionFileId = 1)
+        {
+            var acquisitionFileRepository =
+                this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            var userRepository =
+                this._helper.GetService<Mock<IUserRepository>>();
+
+            var lookupRepository =
+                this._helper.GetService<Mock<ILookupRepository>>();
+
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile();
+            acquisitionFile.RegionCode = 1;
+
+            var user = EntityHelper.CreateUser(
+                1,
+                Guid.NewGuid(),
+                "Test",
+                regionCode: 1);
+
+            acquisitionFileRepository
+                .Setup(x => x.GetById(acquisitionFileId))
+                .Returns(acquisitionFile);
+
+            userRepository
+                .Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>()))
+                .Returns(user);
+
+            lookupRepository
+                .Setup(x => x.GetAllRegions())
+                .Returns(new List<PimsRegion>
+                {
+                    new PimsRegion
+                    {
+                        Code = 4,
+                        RegionName = "Cannot determine",
+                    },
+                });
+        }
+
         [Fact]
         public void GetFileDocuments_ShouldThrowException_NotAuthorized()
         {
@@ -398,10 +438,13 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void UploadDocument_Acquisition_ShouldThrowException_InvalidExtension()
+        public async Task UploadDocument_Acquisition_ShouldThrowException_InvalidExtension()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+
+            this.SetupEditableAcquisitionFile();
+
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
 
             DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum", "test.exe") };
@@ -577,10 +620,13 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocument_Acquisition_Success()
+        public async Task UploadDocument_Acquisition_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
+
+            this.SetupEditableAcquisitionFile();
+
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
             var acquisitionFileDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsAcquisitionFileDocument>>>();
@@ -626,10 +672,11 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocument_Acquisition_Fail_EmptyFile()
+        public async Task UploadDocument_Acquisition_Fail_EmptyFile()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
+            this.SetupEditableAcquisitionFile();
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var acquisitionFileDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsAcquisitionFileDocument>>>();
             documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
@@ -1439,10 +1486,11 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void DeleteDocumentAcquisition_ShouldThrowException_NotAuthorized()
+        public async Task DeleteDocumentAcquisition_ShouldThrowException_NotAuthorized()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions();
+            this.SetupEditableAcquisitionFile();
             var acquisitionDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsAcquisitionFileDocument>>>();
 
             PimsAcquisitionFileDocument doc = new()
@@ -1502,10 +1550,11 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void DeleteDocumentAcquisition_Success_Status_Success()
+        public async Task DeleteDocumentAcquisition_Success_Status_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.AcquisitionFileEdit);
+            this.SetupEditableAcquisitionFile();
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
@@ -1531,6 +1580,7 @@ namespace Pims.Api.Test.Services
             PimsAcquisitionFileDocument doc = new()
             {
                 Internal_Id = 1,
+                AcquisitionFileId = 1,
                 DocumentId = 2,
                 Document = new PimsDocument()
                 {
@@ -1548,10 +1598,11 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void DeleteDocumentAcquisition_Success_Status_NotFound()
+        public async Task DeleteDocumentAcquisition_Success_Status_NotFound()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.AcquisitionFileEdit);
+            this.SetupEditableAcquisitionFile();
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
@@ -1577,6 +1628,7 @@ namespace Pims.Api.Test.Services
             PimsAcquisitionFileDocument doc = new()
             {
                 Internal_Id = 1,
+                AcquisitionFileId = 1,
                 DocumentId = 2,
                 Document = new PimsDocument()
                 {

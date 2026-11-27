@@ -184,6 +184,11 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// </summary>
         public IList<NoticeOfClaimModel> NoticeOfClaim { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether the current user can edit this acquisition file.
+        /// </summary>
+        public bool? CanEdit { get; set; }
+
         #endregion
     }
 }

@@ -71,5 +71,88 @@ namespace Pims.Api.Helpers.Extensions
             // Regular (non-contractor) users have access across regions
             return true;
         }
+
+        public static void ThrowIfCannotEditAcquisitionFile(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository, ILookupRepository lookupRepository)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+            ArgumentNullException.ThrowIfNull(acquisitionFile);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(
+                principal.GetUserKey());
+
+            // Check if contractor is not in team
+            if (pimsUser?.IsContractor == true)
+            {
+                if (!acquisitionFile.HasAccessToFile(pimsUser, acquisitionFile.Project))
+                {
+                    throw new ContractorNotInTeamException(
+                        "Contractor is not assigned to the Acquisition File's team or the associated Project's team");
+                }
+            }
+
+            // General edit access check
+            if (!acquisitionFile.CanEditAcquisitionFile(
+                principal,
+                userRepository,
+                projectRepository,
+                lookupRepository))
+            {
+                throw new NotAuthorizedException(
+                    "User does not have edit access to this Acquisition File");
+            }
+        }
+
+        public static bool CanEditAcquisitionFile(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository, ILookupRepository lookupRepository)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+            ArgumentNullException.ThrowIfNull(acquisitionFile);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(
+                principal.GetUserKey());
+
+            var project = acquisitionFile.Project;
+
+            var cannotDetermineRegion = lookupRepository.GetAllRegions()
+                .FirstOrDefault(x => x.RegionName == "Cannot determine");
+
+            return acquisitionFile.CanEditAcquisitionFile(
+                pimsUser,
+                project,
+                cannotDetermineRegion?.RegionCode);
+        }
+
+        private static bool CanEditAcquisitionFile(this PimsAcquisitionFile acquisitionFile, PimsUser pimsUser, PimsProject project, short? cannotDetermineRegionCode)
+        {
+            if (acquisitionFile is null || pimsUser is null)
+            {
+                return false;
+            }
+
+            var isOnAcquisitionTeam =
+                acquisitionFile.PimsAcquisitionFileTeams.Any(
+                    x => x.PersonId == pimsUser.PersonId);
+
+            var isOnProjectTeam =
+                project != null &&
+                project.PimsProjectPeople.Any(
+                    x => x.PersonId == pimsUser.PersonId);
+
+            if (pimsUser.IsContractor)
+            {
+                return (isOnAcquisitionTeam || isOnProjectTeam)
+                    && pimsUser.PimsRegionUsers.Any(
+                        ur => ur.RegionCode == acquisitionFile.RegionCode);
+            }
+
+            var isCannotDetermineRegion =
+                cannotDetermineRegionCode != null &&
+                acquisitionFile.RegionCode == cannotDetermineRegionCode;
+
+            return isCannotDetermineRegion
+                || pimsUser.PimsRegionUsers.Any(
+                    ur => ur.RegionCode == acquisitionFile.RegionCode)
+                || isOnAcquisitionTeam
+                || isOnProjectTeam;
+        }
     }
 }

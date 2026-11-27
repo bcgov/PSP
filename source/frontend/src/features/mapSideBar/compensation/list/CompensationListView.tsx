@@ -24,6 +24,7 @@ import { CompensationResults } from './CompensationResults';
 export interface ICompensationListViewProps {
   fileType: ApiGen_CodeTypes_FileTypes;
   file: ApiGen_Concepts_File;
+  canEdit?: boolean;
   compensationsResults: ApiGen_Concepts_CompensationRequisition[];
   subFilescompensations: ApiGen_Concepts_CompensationRequisition[] | null;
   isLoading: boolean;
@@ -36,6 +37,7 @@ export interface ICompensationListViewProps {
 export const CompensationListView: React.FunctionComponent<ICompensationListViewProps> = ({
   fileType,
   file,
+  canEdit,
   compensationsResults,
   subFilescompensations,
   isLoading,
@@ -100,10 +102,12 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
           <SectionListHeader
             claims={[Claims.COMPENSATION_REQUISITION_ADD]}
             title="Compensation Requisitions"
-            addButtonText="Add Requisition"
-            addButtonIcon={<FaPlus size={'2rem'} />}
-            onButtonAction={statusUpdateSolver?.canEditOrDeleteCompensation() ? onAdd : null}
-            isAddEnabled={statusUpdateSolver?.canEditOrDeleteCompensation()}
+            addButtonText={canEdit === true ? 'Add Requisition' : undefined}
+            addButtonIcon={canEdit === true ? <FaPlus size="2rem" /> : undefined}
+            onButtonAction={
+              statusUpdateSolver?.canEditOrDeleteCompensation() && canEdit ? onAdd : null
+            }
+            isAddEnabled={canEdit === true && statusUpdateSolver?.canEditOrDeleteCompensation()}
             cannotAddComponent={
               <TooltipIcon
                 toolTipId={`deposit-notes-cannot-edit-tooltip`}
@@ -125,7 +129,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
           className="summary-row"
           valueClassName="text-right d-flex justify-content-end"
         >
-          {statusUpdateSolver?.canEditOrDeleteCompensation() && (
+          {statusUpdateSolver?.canEditOrDeleteCompensation() && canEdit ? (
             <ToggleSaveInputContainer
               onSave={async (value: string) => {
                 return (await onUpdateTotalCompensation(Number(value)))?.toString() ?? '';
@@ -134,6 +138,8 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
               asCurrency
               View={ToggleSaveInputView}
             />
+          ) : (
+            <span>{formatMoney(file.totalAllowableCompensation)}</span>
           )}
         </SectionField>
         <hr />
@@ -193,6 +199,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
             history.push(`${match.url}/compensation-requisition/${compensationId}`);
           }}
           onDelete={onDelete}
+          canEdit={canEdit}
         />
       </Section>
     </>

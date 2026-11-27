@@ -229,6 +229,7 @@ namespace Pims.Api.Services
 
             acquisitionFile.ThrowMissingContractorInTeam(_user, _userRepository, _projectRepository);
             acquisitionFile.ThrowContractorLegacyFileForbidden(_user, _userRepository);
+            acquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             // validate the new acq region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -268,6 +269,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFile.Internal_Id);
+
+            // Load the existing file for authorization
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
@@ -323,6 +328,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating acquisition file properties with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFile.Internal_Id);
+
+             // Load the existing file for authorization
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
@@ -437,6 +446,10 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
+            // Load the existing file for authorization
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
             if (!_statusSolver.CanEditChecklists(currentAcquisitionStatus))
             {
@@ -482,6 +495,10 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
+            // Load the existing file for authorization
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             ValidateAcquisitionFileStatusForAgreement(acquisitionFileId);
 
             var newAgreement = _agreementRepository.AddAgreement(agreement);
@@ -518,6 +535,10 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
+            // Load the existing file for authorization
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             ValidateAcquisitionFileStatusForAgreement(acquisitionFileId);
 
             var updatedAgreement = _agreementRepository.UpdateAgreement(agreement);
@@ -530,6 +551,10 @@ namespace Pims.Api.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
+
+            // Load the existing file for authorization
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             ValidateAcquisitionFileStatusForAgreement(acquisitionFileId);
 
@@ -559,6 +584,10 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+
+             // Load the existing file for authorization
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
 
             var currentInterestHolders = _interestHolderRepository.GetInterestHoldersByAcquisitionFile(acquisitionFileId);
 
@@ -644,6 +673,9 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid acquisitionFileId.");
             }
 
+            // Load the existing file for authorization
+            acquisitionFileParent.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
             if (!_statusSolver.CanEditExpropriation(currentAcquisitionStatus))
             {
@@ -680,6 +712,22 @@ namespace Pims.Api.Services
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             return _acqFileRepository.GetAcquisitionSubFiles(id, UserContextModel.FromPimsUser(pimsUser));
+        }
+
+        public bool CanEdit(long acquisitionFileId)
+        {
+            if (!_user.HasPermission(Permissions.AcquisitionFileEdit))
+            {
+                return false;
+            }
+
+            var acquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+
+            return acquisitionFile.CanEditAcquisitionFile(
+                _user,
+                _userRepository,
+                _projectRepository,
+                _lookupRepository);
         }
 
         private void CheckFileNumberDuplicate(PimsAcquisitionFile acquisitionFile)

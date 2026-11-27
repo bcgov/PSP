@@ -32,6 +32,7 @@ describe('ExpropriationEventResults', () => {
       setSort: vi.fn(),
       onUpdate: vi.fn(),
       onDelete: vi.fn(),
+      canEdit: true,
     };
 
     const rendered = render(
@@ -84,6 +85,22 @@ describe('ExpropriationEventResults', () => {
   it('hides the expropriation row buttons (update, delete) when the user has insufficient permissions', async () => {
     setup({
       props: { results: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())] },
+      claims: [Claims.ACQUISITION_VIEW],
+    });
+
+    const editButton = await screen.queryByTestId('edit-expropriation-event-0');
+    const deleteButton = await screen.queryByTestId('delete-expropriation-event-0');
+
+    expect(editButton).toBeNull();
+    expect(deleteButton).toBeNull();
+  });
+
+  it('hides the expropriation row buttons (update, delete) when canEdit is false', async () => {
+    setup({
+      props: {
+        results: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
+        canEdit: false,
+      },
       claims: [Claims.ACQUISITION_VIEW],
     });
 

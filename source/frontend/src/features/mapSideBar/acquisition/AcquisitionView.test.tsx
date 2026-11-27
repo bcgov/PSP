@@ -28,6 +28,7 @@ import { usePropertyOperationRepository } from '@/hooks/repositories/useProperty
 import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
 import { AxiosResponse } from 'axios';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 // mock auth library
 
@@ -113,11 +114,13 @@ describe('AcquisitionView component', () => {
   const setup = async (
     props: IAcquisitionViewProps = { ...DEFAULT_PROPS },
     renderOptions: RenderOptions = {},
+    fileOverrides: Partial<ApiGen_Concepts_AcquisitionFile> = {},
   ) => {
     const utils = render(
       <SideBarContextProvider
         file={{
           ...mockAcquisitionFileResponse(),
+          ...fileOverrides,
           fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
         }}
         lastUpdatedBy={{
@@ -219,6 +222,16 @@ describe('AcquisitionView component', () => {
     await act(async () => {});
 
     expect(queryByTitle('Change properties')).toBeNull();
+  });
+
+  it('should hide Change properties when acquisitionFile.canEdit is false', async () => {
+    const { queryByTitle } = await setup(
+      { ...DEFAULT_PROPS },
+      { claims: [Claims.ACQUISITION_EDIT] },
+      { canEdit: false },
+    );
+
+    expect(queryByTitle('Change properties')).not.toBeInTheDocument();
   });
 
   it('should display the notes tab if the user has permissions', async () => {

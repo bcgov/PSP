@@ -752,5 +752,21 @@ describe('AcquisitionSummaryView component', () => {
         screen.queryByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.ACQ_DLVDT}`),
       ).not.toBeInTheDocument();
     });
+
+    it('hides the edit button when canEdit is false', async () => {
+      const { queryByTitle } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            canEdit: false,
+          },
+        },
+        { claims: [Claims.ACQUISITION_EDIT] },
+      );
+
+      await waitForEffects();
+
+      expect(queryByTitle('Edit acquisition file')).not.toBeInTheDocument();
+    });
   });
 });

@@ -53,4 +53,5 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWit
   acquisitionFileInterestHolders: ApiGen_Concepts_InterestHolder[] | null;
   compensationRequisitions: ApiGen_Concepts_CompensationRequisition[] | null;
   noticeOfClaim: ApiGen_Concepts_NoticeOfClaim[] | null;
+  canEdit: boolean | null;
 }

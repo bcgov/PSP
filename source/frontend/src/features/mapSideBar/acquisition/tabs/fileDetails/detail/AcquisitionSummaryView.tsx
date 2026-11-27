@@ -102,7 +102,9 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {hasClaim(Claims.ACQUISITION_EDIT) && canEditDetails() ? (
+        {hasClaim(Claims.ACQUISITION_EDIT) &&
+        acquisitionFile?.canEdit === true &&
+        canEditDetails() ? (
           <EditButton title="Edit acquisition file" onClick={onEdit} style={{ float: 'right' }} />
         ) : null}
         {!canEditDetails() && (

@@ -240,5 +240,6 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     fileStatusTypeCode: null,
     physicalFileDetails: null,
     noticeOfClaim: null,
+    canEdit: null,
   };
 };

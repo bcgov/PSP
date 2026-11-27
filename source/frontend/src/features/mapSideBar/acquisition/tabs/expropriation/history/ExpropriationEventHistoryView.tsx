@@ -13,6 +13,7 @@ export interface IExpropriationEventHistoryViewProps {
   isLoading?: boolean;
   eventRows: ExpropriationEventRow[];
   sort: TableSort<ExpropriationEventRow>;
+  canEdit?: boolean;
   setSort: (value: TableSort<ExpropriationEventRow>) => void;
   onAdd: () => void;
   onUpdate: (expropriationEventId: number) => void;
@@ -21,15 +22,17 @@ export interface IExpropriationEventHistoryViewProps {
 
 export const ExpropriationEventHistoryView: React.FunctionComponent<
   IExpropriationEventHistoryViewProps
-> = ({ isLoading, eventRows, sort, setSort, onAdd, onUpdate, onDelete }) => {
+> = ({ isLoading, eventRows, sort, setSort, onAdd, onUpdate, onDelete, canEdit }) => {
   return (
     <Section
       header={
         <SimpleSectionHeader title="Expropriation Date History">
-          <StyledSectionAddButton data-testid="add-expropriation-event" onClick={onAdd}>
-            <FaPlus size="2rem" />
-            &nbsp;{'Add'}
-          </StyledSectionAddButton>
+          {canEdit && (
+            <StyledSectionAddButton data-testid="add-expropriation-event" onClick={onAdd}>
+              <FaPlus size="2rem" />
+              &nbsp;{'Add'}
+            </StyledSectionAddButton>
+          )}
         </SimpleSectionHeader>
       }
       isCollapsable
@@ -42,6 +45,7 @@ export const ExpropriationEventHistoryView: React.FunctionComponent<
         onDelete={onDelete}
         sort={sort}
         setSort={setSort}
+        canEdit={canEdit}
       />
     </Section>
   );
