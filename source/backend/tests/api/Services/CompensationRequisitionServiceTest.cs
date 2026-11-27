@@ -33,23 +33,21 @@ namespace Pims.Api.Test.Services
     {
         private readonly TestHelper _helper;
 
-        public static IEnumerable<object[]> FileTypesDataNoAccess =
-            new List<object[]>
-            {
-                        new object[] { FileTypes.Acquisition, new PimsCompensationRequisition() { AcquisitionFileId = 1, LeaseId = null, }, new NotAuthorizedException() },
-                        new object[] { FileTypes.Lease, new PimsCompensationRequisition() { LeaseId = 1, AcquisitionFileId = null, }, new NotAuthorizedException() },
-                        new object[] { FileTypes.Research, new PimsCompensationRequisition(), new BadRequestException("Relationship type not valid.") },
-                        new object[] { FileTypes.Disposition, new PimsCompensationRequisition(), new BadRequestException("Relationship type not valid.") },
-            };
+        public static IEnumerable<object[]> FileTypesDataNoAccess = new List<object[]>
+        {
+            new object[] { FileTypes.Acquisition, new PimsCompensationRequisition() { AcquisitionFileId = 1, LeaseId = null, }, new NotAuthorizedException() },
+            new object[] { FileTypes.Lease, new PimsCompensationRequisition() { LeaseId = 1, AcquisitionFileId = null, }, new NotAuthorizedException() },
+            new object[] { FileTypes.Research, new PimsCompensationRequisition(), new BadRequestException("Relationship type not valid.") },
+            new object[] { FileTypes.Disposition, new PimsCompensationRequisition(), new BadRequestException("Relationship type not valid.") },
+        };
 
-        public static IEnumerable<object[]> FileTypesUpdateNoAccess =
-    new List<object[]>
-    {
-                        new object[] { FileTypes.Acquisition, new NotAuthorizedException() },
-                        new object[] { FileTypes.Lease, new NotAuthorizedException() },
-                        new object[] { FileTypes.Research, new BadRequestException("Relationship type not valid.") },
-                        new object[] { FileTypes.Disposition, new BadRequestException("Relationship type not valid.") },
-    };
+        public static IEnumerable<object[]> FileTypesUpdateNoAccess = new List<object[]>
+        {
+            new object[] { FileTypes.Acquisition, new NotAuthorizedException() },
+            new object[] { FileTypes.Lease, new NotAuthorizedException() },
+            new object[] { FileTypes.Research, new BadRequestException("Relationship type not valid.") },
+            new object[] { FileTypes.Disposition, new BadRequestException("Relationship type not valid.") },
+        };
 
         public CompensationRequisitionServiceTest()
         {
@@ -73,6 +71,11 @@ namespace Pims.Api.Test.Services
         public void GetAcquisitionProperties_Success()
         {
             // Arrange
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile();
+            acquisitionFile.RegionCode = 1;
+
+            var user = EntityHelper.CreateUser("Test",regionCode: 1);
+
             var property = EntityHelper.CreateProperty(12345);
             property.Location = new NetTopologySuite.Geometries.Point(1229480.4045231808, 463288.8298389828) { SRID = SpatialReference.BCALBERS };
 
@@ -359,12 +362,13 @@ namespace Pims.Api.Test.Services
             var acqFilerepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             var newCompensationReq = EntityHelper.CreateCompensationRequisition(1, 1);
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+            acquisitionFile.RegionCode = 1;
 
             acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
             repository.Setup(x => x.Add(It.IsAny<PimsCompensationRequisition>())).Returns(newCompensationReq);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
@@ -414,12 +418,13 @@ namespace Pims.Api.Test.Services
             var acqFilerepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             var newCompensationReq = EntityHelper.CreateCompensationRequisition(1, 1);
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+            acquisitionFile.RegionCode = 1;
 
             acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
             repository.Setup(x => x.Add(It.IsAny<PimsCompensationRequisition>())).Returns(newCompensationReq);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
@@ -501,6 +506,7 @@ namespace Pims.Api.Test.Services
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
                 new PimsAcquisitionFile()
                 {
+                    RegionCode = 1,
                     TotalAllowableCompensation = 100,
                     AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString(),
                     ProductId = 1,
@@ -525,6 +531,9 @@ namespace Pims.Api.Test.Services
                 IsDraft = false,
                 FinalizedDate = DateOnly.FromDateTime(DateTime.UtcNow),
             });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
@@ -559,6 +568,7 @@ namespace Pims.Api.Test.Services
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
+                RegionCode = 1,
                 TotalAllowableCompensation = 100,
                 AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
@@ -570,6 +580,9 @@ namespace Pims.Api.Test.Services
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
 
             // Act
@@ -604,11 +617,15 @@ namespace Pims.Api.Test.Services
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
               new PimsAcquisitionFile()
               {
-                  AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                RegionCode = 1,
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
               });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -638,8 +655,12 @@ namespace Pims.Api.Test.Services
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
               new PimsAcquisitionFile()
               {
-                  AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                RegionCode = 1,
+                AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
               });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
@@ -668,6 +689,7 @@ namespace Pims.Api.Test.Services
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
+                RegionCode = 1,
                 TotalAllowableCompensation = 100,
                 AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
@@ -680,6 +702,9 @@ namespace Pims.Api.Test.Services
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.Is<bool>(b => b == true))).Returns(true);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -709,6 +734,7 @@ namespace Pims.Api.Test.Services
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
+                RegionCode = 1,
                 TotalAllowableCompensation = 100,
                 AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
@@ -718,6 +744,9 @@ namespace Pims.Api.Test.Services
 
             repository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.Is<bool>(b => b == true))).Returns(true);
@@ -750,6 +779,7 @@ namespace Pims.Api.Test.Services
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
+                RegionCode = 1,
                 TotalAllowableCompensation = 100,
                 AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
@@ -758,6 +788,9 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
             compRepository.Setup(x => x.GetById(It.IsAny<long>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
@@ -799,9 +832,13 @@ namespace Pims.Api.Test.Services
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
+                RegionCode = 1,
                 TotalAllowableCompensation = 100,
                 AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
@@ -841,6 +878,7 @@ namespace Pims.Api.Test.Services
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
+                RegionCode = 1,
                 TotalAllowableCompensation = 300,
                 PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
                     PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
@@ -849,6 +887,9 @@ namespace Pims.Api.Test.Services
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -885,9 +926,13 @@ namespace Pims.Api.Test.Services
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
+                RegionCode = 1,
                 TotalAllowableCompensation = 100,
                 AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
@@ -926,11 +971,15 @@ namespace Pims.Api.Test.Services
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
+                RegionCode = 1,
                 TotalAllowableCompensation = 99,
                 PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
-                    PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
+                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
                 AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
@@ -958,6 +1007,7 @@ namespace Pims.Api.Test.Services
             var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             compRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true }); ;
@@ -970,11 +1020,14 @@ namespace Pims.Api.Test.Services
 
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsAcquisitionFile()
             {
+                RegionCode = 1,
                 TotalAllowableCompensation = 299,
                 PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { Internal_Id = 1,
                     PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
                 AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
             });
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);

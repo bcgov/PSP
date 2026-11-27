@@ -48,6 +48,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
+  const canEdit = hasClaim(Claims.ACQUISITION_EDIT) && acquisitionFile?.canEdit === true;
   const { setFullWidthSideBar } = useMapStateMachine();
 
   const { setStaleLastUpdatedBy, file } = useContext(SideBarContext);
@@ -80,7 +81,12 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   tabViews.push({
     content: (
-      <AcquisitionSummaryView acquisitionFile={acquisitionFile} onEdit={() => setIsEditing(true)} />
+      <AcquisitionSummaryView
+        acquisitionFile={acquisitionFile}
+        onEdit={() => {
+          if (canEdit) setIsEditing(true);
+        }}
+      />
     ),
     key: FileTabType.FILE_DETAILS,
     name: 'File Details',
@@ -91,8 +97,8 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       <ChecklistView
         apiFile={acquisitionFile}
         isFileFinalStatus={!solverStatus.canEditChecklists()}
-        showEditButton={true}
-        onEdit={() => setIsEditing(true)}
+        showEditButton={canEdit}
+        onEdit={() => setIsEditing(canEdit)}
         sectionTypeName={API.ACQUISITION_CHECKLIST_SECTION_TYPES}
         editClaim={Claims.ACQUISITION_EDIT}
         prefix="acq"
@@ -115,6 +121,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           statusSolver={solverStatus}
           isAcquisition={true}
           isSection3={isSection3}
+          canEdit={canEdit}
         />
       ),
       key: FileTabType.AGREEMENTS,
@@ -138,7 +145,9 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       content: (
         <StakeHolderContainer
           View={StakeHolderView}
-          onEdit={() => setIsEditing(true)}
+          onEdit={() => {
+            if (canEdit) setIsEditing(true);
+          }}
           acquisitionFile={acquisitionFile}
         />
       ),
@@ -173,6 +182,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           file={acquisitionFile}
           View={CompensationListView}
           statusUpdateSolver={solverStatus}
+          canEdit={acquisitionFile.canEdit === true}
         />
       ),
       key: FileTabType.COMPENSATIONS,
@@ -201,6 +211,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           fileId={acquisitionFile.id}
           relationshipType={ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles}
           onSuccess={onChildSuccess}
+          canEdit={acquisitionFile.canEdit === true}
         />
       ),
       key: FileTabType.DOCUMENTS,
@@ -216,6 +227,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           entityId={acquisitionFile?.id}
           onSuccess={onChildSuccess}
           View={NoteListView}
+          canEdit={acquisitionFile.canEdit === true}
         />
       ),
       key: FileTabType.NOTES,

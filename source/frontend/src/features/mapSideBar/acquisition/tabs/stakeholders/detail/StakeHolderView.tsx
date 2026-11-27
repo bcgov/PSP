@@ -42,7 +42,9 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />
         <StyledEditWrapper className="mr-3 my-1">
-          {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && statusSolver.canEditStakeholders() ? (
+          {keycloak.hasClaim(Claims.ACQUISITION_EDIT) &&
+          acquisitionFile?.canEdit === true &&
+          statusSolver.canEditStakeholders() ? (
             <EditButton title="Edit Interests" onClick={onEdit} style={{ float: 'right' }} />
           ) : null}
         </StyledEditWrapper>

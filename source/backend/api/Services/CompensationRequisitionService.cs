@@ -32,6 +32,8 @@ namespace Pims.Api.Services
         private readonly IOrganizationRepository _organizationRepository;
         private readonly IPersonRepository _personRepository;
         private readonly IProjectRepository _projectRepository;
+        private readonly ILookupRepository _lookupRepository;
+
 
         public CompensationRequisitionService(
             ClaimsPrincipal user,
@@ -48,7 +50,8 @@ namespace Pims.Api.Services
             IOrganizationRepository organizationRepository,
             IPersonRepository personRepository,
             IPropertyService propertyService,
-            IProjectRepository projectRepository)
+            IProjectRepository projectRepository,
+            ILookupRepository lookupRepository)
         {
             _user = user;
             _logger = logger;
@@ -65,6 +68,7 @@ namespace Pims.Api.Services
             _organizationRepository = organizationRepository;
             _personRepository = personRepository;
             _projectRepository = projectRepository;
+            _lookupRepository = lookupRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -393,6 +397,8 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, (long)compensationRequisition.AcquisitionFileId);
 
             var currentAcquisitionFile = _acqFileRepository.GetById((long)compensationRequisition.AcquisitionFileId);
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
             if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, compensationRequisition.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
             {
@@ -462,6 +468,8 @@ namespace Pims.Api.Services
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
             var currentAcquisitionFile = _acqFileRepository.GetById((long)currentCompensation.AcquisitionFileId);
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(_user, _userRepository, _projectRepository, _lookupRepository);
+
             var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
             if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
             {

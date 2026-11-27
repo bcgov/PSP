@@ -11,7 +11,7 @@ import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { act, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
+import { act, queryByTestId, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
@@ -42,6 +42,7 @@ describe('compensation list view', () => {
       <CompensationListView
         fileType={renderOptions?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         file={renderOptions?.file ?? { ...mockAcquisitionfile }}
+        canEdit={renderOptions?.canEdit ?? true}
         compensationsResults={renderOptions?.compensationsResults ?? []}
         subFilescompensations={renderOptions?.subFilescompensations ?? []}
         isLoading={false}
@@ -118,6 +119,19 @@ describe('compensation list view', () => {
       expect(getByTestId('payment-total-subfiles')).toHaveTextContent('$500.00');
     });
   });
+
+  it('does not allow adding a requisition when canEdit is false', () => {
+  const {queryByText} =setup({
+    compensationsResults: getMockApiCompensationList(),
+    claims: [
+      Claims.COMPENSATION_REQUISITION_VIEW,
+      Claims.COMPENSATION_REQUISITION_ADD,
+    ],
+    canEdit: false,
+  });
+
+  expect(queryByText('Add Requisition')).not.toBeInTheDocument();
+});
 
   it('displays the calculated total for the final compensations with the subfiles', async () => {
     const mockList: ApiGen_Concepts_CompensationRequisition[] = [
@@ -298,10 +312,33 @@ describe('compensation list view', () => {
     });
   });
 
+  it('displays Delete Compensation when canEdit is true', () => {
+    const { queryByTestId } = setup({
+      compensationsResults: getMockApiCompensationList(),
+      claims: [
+        Claims.COMPENSATION_REQUISITION_VIEW,
+        Claims.COMPENSATION_REQUISITION_DELETE,
+      ],
+      canEdit: true,
+    });
+
+    expect(queryByTestId('compensation-delete-3')).toBeVisible();
+  });
+
+  it('delete action hidden if canEdit is false', async () => {
+    const { queryByTestId } = setup({
+      compensationsResults: getMockApiCompensationList(),
+      claims: [Claims.COMPENSATION_REQUISITION_VIEW, Claims.COMPENSATION_REQUISITION_DELETE],
+      canEdit: false,
+    });
+    expect(queryByTestId('compensation-delete-3')).not.toBeInTheDocument();
+  });
+
   it('can click the Add Compensation button', async () => {
     const { getByText } = setup({
       compensationsResults: getMockApiCompensationList(),
       claims: [Claims.COMPENSATION_REQUISITION_VIEW, Claims.COMPENSATION_REQUISITION_ADD],
+      canEdit: true,
     });
 
     const addButton = getByText('Add Requisition');
@@ -310,5 +347,33 @@ describe('compensation list view', () => {
     await waitFor(() => {
       expect(onAddCompensationRequisition).toHaveBeenCalled();
     });
+  });
+
+  it('hides Add Requisition when canEdit is false', () => {
+    const { queryByText } = setup({
+      compensationsResults: getMockApiCompensationList(),
+      claims: [
+        Claims.COMPENSATION_REQUISITION_VIEW,
+        Claims.COMPENSATION_REQUISITION_ADD,
+      ],
+      canEdit: false,
+    });
+
+    expect(queryByText('Add Requisition')).not.toBeInTheDocument();
+  });
+
+  it('displays total allowable compensation when canEdit is false', () => {
+    const file = {
+      ...mockAcquisitionfile,
+      totalAllowableCompensation: 125000,
+    };
+
+    const { getByText } = setup({
+      file,
+      canEdit: false,
+      claims: [Claims.COMPENSATION_REQUISITION_VIEW],
+    });
+
+    expect(getByText('$125,000.00')).toBeVisible();
   });
 });

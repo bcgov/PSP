@@ -93,6 +93,7 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       clientConstant={clientConstant}
       onGenerate={onGenerate}
       isFileFinalStatus={!statusSolver?.canEditOrDeleteCompensation()}
+      canEditFile={file?.canEdit === true}
     />
   ) : null;
 };

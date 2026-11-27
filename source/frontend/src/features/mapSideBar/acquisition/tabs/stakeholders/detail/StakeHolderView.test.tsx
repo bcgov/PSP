@@ -10,6 +10,7 @@ import { exists } from '@/utils/utils';
 import { InterestHolderViewForm, InterestHolderViewRow } from '../update/models';
 import StakeholderOrganizer from './stakeholderOrganizer';
 import StakeHolderView, { IStakeHolderViewProps } from './StakeHolderView';
+import { Claims } from '@/constants/claims';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -178,5 +179,19 @@ describe('StakeHolderView component', () => {
     });
     expect(queryByTestId('acq-file-legacy-stakeholders')).toBeInTheDocument();
     expect(queryByTestId('acq-file-legacy-stakeholders')).toHaveTextContent('John,Doe');
+  });
+
+  it('hides the Edit button when acquisitionFile.canEdit is false', () => {
+    const { queryByText } = setup({
+      props: {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          canEdit: false,
+        },
+      },
+      claims: [Claims.ACQUISITION_EDIT],
+    });
+
+    expect(queryByText('Edit')).not.toBeInTheDocument();
   });
 });

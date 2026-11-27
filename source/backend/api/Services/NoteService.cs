@@ -28,6 +28,7 @@ namespace Pims.Api.Services
         private readonly IProjectRepository _projectRepository;
         private readonly ILeaseRepository _leaseRepository;
         private readonly IDispositionFileRepository _dispositionFileRepository;
+        private readonly IAcquisitionFileRepository _acqFileRepository;
 
 
         /// <summary>
@@ -57,6 +58,7 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             ILookupRepository lookupRepository,
             IProjectRepository projectRepository,
+            IAcquisitionFileRepository acqFileRepository,
             ILeaseRepository leaseRepository,
             IDispositionFileRepository dispositionFileRepository)
             : base(user, logger)
@@ -73,6 +75,7 @@ namespace Pims.Api.Services
             _userRepository = userRepository;
             _lookupRepository = lookupRepository;
             _projectRepository = projectRepository;
+            _acqFileRepository = acqFileRepository;
             _leaseRepository = leaseRepository;
         }
 
@@ -89,6 +92,9 @@ namespace Pims.Api.Services
             acquisitionFileNote.ThrowIfNull(nameof(acquisitionFileNote));
             Logger.LogInformation("Adding note for acquisition file with Id: {Id}", acquisitionFileNote.ParentId);
             User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileNote.ParentId) ?? throw new InvalidDataException("Invalid acquisition file");
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(User, _userRepository, _projectRepository, _lookupRepository);
 
             return AddNoteRelationship(acquisitionFileNote, _acquisitionFileNoteRepository);
         }
@@ -161,6 +167,7 @@ namespace Pims.Api.Services
 
             ThrowIfCannotEditLeaseNote(note.Internal_Id);
             ThrowIfCannotEditDispositionNote(note.Internal_Id);
+            ThrowIfCannotEditAcquisitionFileNote(note.Internal_Id);
 
             ValidateVersion(note.Internal_Id, note.ConcurrencyControlNumber);
 
@@ -191,6 +198,9 @@ namespace Pims.Api.Services
 
                 case NoteType.Disposition_File:
                     ThrowIfCannotEditDispositionNote(noteId);
+                    break;
+                case NoteType.Acquisition_File:
+                    ThrowIfCannotEditAcquisitionFileNote(noteId);
                     break;
             }
 
@@ -284,6 +294,19 @@ namespace Pims.Api.Services
             var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileNote.ParentId) ?? throw new InvalidDataException("Invalid disposition file");
 
             currentDispositionFile.ThrowIfCannotEditDispositionFile(User, _userRepository, _projectRepository, _lookupRepository);
+        }
+
+        private void ThrowIfCannotEditAcquisitionFileNote(long noteId)
+        {
+            var acquisitionFileNote = _acquisitionFileNoteRepository.GetByNoteId(noteId);
+
+            if (acquisitionFileNote == null)
+            {
+                return;
+            }
+
+            var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileNote.ParentId) ?? throw new InvalidDataException("Invalid acquisition file");
+            currentAcquisitionFile.ThrowIfCannotEditAcquisitionFile(User, _userRepository, _projectRepository, _lookupRepository);
         }
     }
 }

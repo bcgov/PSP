@@ -37,6 +37,7 @@ const reminderConfig: Partial<
 export const getExpropriationEventColumns = (
   onUpdate: (expropriationEventId: number) => void,
   onDelete: (expropriationEventId: number) => void,
+  canEdit = false,
 ): ColumnWithProps<ExpropriationEventRow>[] => {
   return [
     {
@@ -73,10 +74,10 @@ export const getExpropriationEventColumns = (
         const { hasClaim } = useKeycloakWrapper();
         const event = props.row.original;
 
-        const canEdit = hasClaim(Claims.ACQUISITION_EDIT);
+        const canEditEvent = hasClaim(Claims.ACQUISITION_EDIT) && canEdit === true;
         const config = reminderConfig[event.eventType];
 
-        if (!canEdit && !(config && event.eventDate)) {
+        if (!canEditEvent && !(config && event.eventDate)) {
           return null;
         }
 
@@ -95,7 +96,7 @@ export const getExpropriationEventColumns = (
               />
             )}
 
-            {canEdit && (
+            {canEditEvent && (
               <>
                 <EditButton
                   title="edit expropriation event"

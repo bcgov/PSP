@@ -170,7 +170,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                   <FileMenuView
                     file={file}
                     currentFilePropertyId={currentFilePropertyId}
-                    canEdit={hasClaim(Claims.ACQUISITION_EDIT)}
+                    canEdit={hasClaim(Claims.ACQUISITION_EDIT) && acquisitionFile.canEdit === true}
                     isInNonEditableState={!statusSolver.canEditProperties()}
                     onSelectFileSummary={onSelectFileSummary}
                     onSelectProperty={onSelectProperty}

@@ -17,6 +17,7 @@ import { ExpropriationEventFormModel, ExpropriationEventRow } from './models';
 export interface IExpropriationEventHistoryContainerProps {
   acquisitionFileId: number;
   View: React.FunctionComponent<IExpropriationEventHistoryViewProps>;
+  canEdit?: boolean;
   ModalView: React.FunctionComponent<IExpropriationEventModalProps>;
 }
 
@@ -29,7 +30,7 @@ interface ContainerState {
 
 export const ExpropriationEventHistoryContainer: React.FunctionComponent<
   IExpropriationEventHistoryContainerProps
-> = ({ acquisitionFileId, View, ModalView }) => {
+> = ({ acquisitionFileId, View, ModalView, canEdit }) => {
   const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>([]);
 
   const [containerState, setContainerState] = useReducer(
@@ -206,6 +207,7 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
         isLoading={loadingExpropriationEvents || loadingAcquisitionOwners || loadingInterestHolders}
         eventRows={sortedEventRows}
         sort={containerState.sort}
+        canEdit={canEdit}
         setSort={value => {
           setContainerState({ sort: value });
         }}

@@ -45,12 +45,13 @@ export class UpdateAcquisitionSummaryFormModel
   legalSurveyStatusType: string | null = null;
   takingStatuses: TakingTypeStatusModel[] = [];
   expropiationRiskStatusType: string | null = null;
-
   rowVersion?: number;
+
   // Code Tables
   fileStatusTypeCode?: string;
   acquisitionPhysFileStatusType?: string;
   acquisitionType?: string;
+
   // MOTI region
   region?: string;
   team: AcquisitionTeamFormModel[] = [];
@@ -78,6 +79,7 @@ export class UpdateAcquisitionSummaryFormModel
   otherInterestHolders: ApiGen_Concepts_InterestHolder[] = [];
   legacyStakeholders: string[] = [];
   noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
+  totalAllowableCompensation: number | null = null;
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
     const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = exists(this.noticeOfClaim)
@@ -160,8 +162,9 @@ export class UpdateAcquisitionSummaryFormModel
       legacyStakeholders: null,
       product: null,
       project: null,
-      totalAllowableCompensation: null,
+      totalAllowableCompensation: this.totalAllowableCompensation,
       noticeOfClaim: hasNoticeOfClaim && noticeOfClaim ? [noticeOfClaim] : [],
+      canEdit: null,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -236,6 +239,7 @@ export class UpdateAcquisitionSummaryFormModel
           x.interestHolderType?.id !== InterestHolderType.OWNER_REPRESENTATIVE,
       ) || [];
 
+    newForm.totalAllowableCompensation = model.totalAllowableCompensation ?? null;
     return newForm;
   }
 }

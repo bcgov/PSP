@@ -73,6 +73,7 @@ describe('ExpropriationEventHistoryContainer', () => {
   const setup = async (props: Partial<IExpropriationEventHistoryContainerProps> = {}) => {
     const defaultProps: IExpropriationEventHistoryContainerProps = {
       acquisitionFileId: 1,
+      canEdit: true,
       View: ViewMock,
       ModalView: ModalMock,
     };

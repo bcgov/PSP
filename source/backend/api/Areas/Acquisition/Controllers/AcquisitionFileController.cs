@@ -84,7 +84,10 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
             var acqFile = _acquisitionService.GetById(id);
-            return new JsonResult(_mapper.Map<AcquisitionFileModel>(acqFile));
+            var model = _mapper.Map<AcquisitionFileModel>(acqFile);
+            model.CanEdit = _acquisitionService.CanEdit(id);
+
+            return new JsonResult(model);
         }
 
         /// <summary>

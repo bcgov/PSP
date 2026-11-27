@@ -26,6 +26,7 @@ export interface ICompensationListContainerProps {
   file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   statusUpdateSolver?: IUpdateCompensationStrategy;
   View: React.FunctionComponent<React.PropsWithChildren<ICompensationListViewProps>>;
+  canEdit?: boolean;
 }
 
 /**
@@ -36,6 +37,7 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
   file,
   statusUpdateSolver,
   View,
+  canEdit,
 }: ICompensationListContainerProps) => {
   const sidebar = useContext(SideBarContext);
   const history = useHistory();
@@ -268,6 +270,7 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       fileType={fileType}
       file={file}
       statusUpdateSolver={statusUpdateSolver}
+      canEdit={canEdit}
       isLoading={resultsLoading}
       onUpdateTotalCompensation={onUpdateTotalCompensation}
       compensationsResults={fileCompensationResults}

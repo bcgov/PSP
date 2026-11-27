@@ -47,7 +47,8 @@ export const SubFileListView: React.FunctionComponent<ISubFileListViewProps> = (
             {!exists(acquisitionFile.parentAcquisitionFileId) &&
               hasClaim(Claims.ACQUISITION_ADD) &&
               !isFileFinalStatus &&
-              exists(onAdd) && (
+              exists(onAdd) &&
+              acquisitionFile.canEdit && (
                 <StyledSectionAddButton onClick={onAdd}>
                   <FaPlus size="2rem" className="mr-2" />
                   Add Sub-interest File

@@ -190,6 +190,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
         acquisitionFileId={acquisitionFile.id}
         View={ExpropriationEventHistoryView}
         ModalView={ExpropriationEventModal}
+        canEdit={acquisitionFile.canEdit === true}
       />
 
       {acquisitionFileTypeCode === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6 && (
@@ -356,7 +357,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
                 toolTip={cannotEditMessage}
               />
             }
-            isAddEnabled={!isFileFinalStatus}
+            isAddEnabled={!isFileFinalStatus && acquisitionFile.canEdit === true}
           />
         }
       >
@@ -369,6 +370,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
             onGenerate={onGenerateForm8}
             onDelete={() => form?.id && onForm8Deleted(form.id)}
             isFileFinalStatus={isFileFinalStatus}
+            canEdit={acquisitionFile.canEdit === true}
           ></ExpropriationForm8Details>
         ))}
       </Section>

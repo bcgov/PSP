@@ -29,11 +29,12 @@ import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/
 import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
 import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { act, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
+import { act, getByText, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {
   CompensationRequisitionDetailViewProps,
 } from './CompensationRequisitionDetailView';
+import { UpdateAcquisitionSummaryFormModel } from '../../acquisition/tabs/fileDetails/update/models';
 
 const setEditMode = vi.fn();
 const onGenerate = vi.fn();
@@ -60,6 +61,8 @@ describe('Compensation Detail View Component', () => {
         onGenerate={onGenerate}
         compensationLeasePayees={renderOptions?.props?.compensationLeasePayees ?? []}
         compensationAcqPayees={renderOptions?.props?.compensationAcqPayees ?? []}
+        canEditFile={renderOptions?.props?.canEditFile ?? true}
+        isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
       />,
       {
         ...renderOptions,
@@ -483,4 +486,51 @@ describe('Compensation Detail View Component', () => {
       }
     },
   );
+
+  it('shows Edit compensation requisition when Acquisition file allows editing', async () => {
+    const { getByTitle } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        canEditFile: true,
+        isFileFinalStatus: false,
+        compensation: {
+        ...getMockApiDefaultCompensation(),
+        isDraft: true,
+      },
+      },
+    });
+    expect(getByTitle('Edit compensation requisition')).toBeVisible();
+  });
+
+  it('hides Edit compensation requisition when Acquisition file is read-only', async () => {
+    const {queryByTitle, getByText} = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        canEditFile: false,
+        isFileFinalStatus: false,
+         compensation: {
+        ...getMockApiDefaultCompensation(),
+        isDraft: true,
+        },
+      },
+    });
+
+    expect(queryByTitle('Edit compensation requisition')).not.toBeInTheDocument();
+    expect(getByText('Requisition Details')).toBeVisible();
+  });
+
+  it.each([12000, 0, null])(
+  'preserves total allowable compensation %s when converting form data',
+  amount => {
+    const acquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      totalAllowableCompensation: amount,
+    };
+
+    const form = UpdateAcquisitionSummaryFormModel.fromApi(acquisitionFile);
+    const result = form.toApi();
+
+    expect(result.totalAllowableCompensation).toBe(amount);
+  },
+);
 });

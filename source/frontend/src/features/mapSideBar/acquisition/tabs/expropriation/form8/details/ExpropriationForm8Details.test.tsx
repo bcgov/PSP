@@ -32,6 +32,7 @@ describe('Form 8 Detail View component', () => {
         onDelete={onDelete}
         onGenerate={onGenerate}
         isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
+        canEdit={renderOptions.props?.canEdit ?? true}
       />,
       {
         ...renderOptions,
@@ -135,5 +136,15 @@ describe('Form 8 Detail View component', () => {
     await act(async () => userEvent.click(editButton));
 
     expect(history.location.pathname).toBe('//1');
+  });
+
+  it('hides edit and delete buttons when canEdit is false', async () => {
+    const { queryByTestId } = await setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { canEdit: false },
+    });
+
+    expect(queryByTestId('form8[0].edit-form8')).not.toBeInTheDocument();
+    expect(queryByTestId('form8[0].delete-form8')).not.toBeInTheDocument();
   });
 });

@@ -42,6 +42,7 @@ namespace Pims.Api.Services
         private readonly IProjectRepository _projectRepository;
         private readonly ILeaseRepository _leaseRepository;
         private readonly IDispositionFileRepository _dispositionFileRepository;
+        private readonly IAcquisitionFileRepository _acqFileRepository;
 
         public DocumentFileService(
             ClaimsPrincipal user,
@@ -57,6 +58,7 @@ namespace Pims.Api.Services
             IDocumentRelationshipRepository<PimsManagementFileDocument> managementFileDocumentRepository,
             IDocumentRelationshipRepository<PimsPropertyDocument> propertyDocumentRepository,
             IDocumentQueueRepository documentQueueRepository,
+            IAcquisitionFileRepository acqFileRepository,
             IUserRepository userRepository,
             ILookupRepository lookupRepository,
             IProjectRepository projectRepository,
@@ -76,6 +78,7 @@ namespace Pims.Api.Services
             _propertyDocumentRepository = propertyDocumentRepository;
             _documentQueueRepository = documentQueueRepository;
             _userRepository = userRepository;
+            _acqFileRepository = acqFileRepository;
             _lookupRepository = lookupRepository;
             _projectRepository = projectRepository;
             _leaseRepository = leaseRepository;
@@ -123,6 +126,9 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Uploading document for single acquisition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
+
+            var acquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
+            acquisitionFile.ThrowIfCannotEditAcquisitionFile(User, _userRepository, _projectRepository, _lookupRepository);
             await UploadDocument(acquisitionFileId, uploadRequest, _acquisitionFileDocumentRepository);
         }
 
@@ -200,6 +206,8 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Deleting PIMS document for single acquisition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.AcquisitionFileEdit);
+            var acquisitionFile = _acqFileRepository.GetById(acquisitionFileDocument.AcquisitionFileId);
+            acquisitionFile.ThrowIfCannotEditAcquisitionFile(User, _userRepository, _projectRepository, _lookupRepository);
             return await DeletePropertyDocumentAsync(acquisitionFileDocument, _acquisitionFileDocumentRepository);
         }
 

@@ -45,6 +45,7 @@ export interface CompensationRequisitionDetailViewProps {
   clientConstant: string;
   loading: boolean;
   isFileFinalStatus?: boolean;
+  canEditFile?: boolean;
   setEditMode: (editMode: boolean) => void;
   onGenerate: (
     fileType: ApiGen_CodeTypes_FileTypes,
@@ -65,6 +66,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   clientConstant,
   loading,
   isFileFinalStatus,
+  canEditFile,
   setEditMode,
   onGenerate,
 }) => {
@@ -158,14 +160,16 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   const userCanEditCompensationReq = (): boolean => {
     if (isFileFinalStatus) {
       return false;
-    } else if (
-      (compensation.isDraft && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)) ||
-      hasRole(Roles.SYSTEM_ADMINISTRATOR)
-    ) {
-      return true;
     }
 
-    return false;
+    if (canEditFile !== true) {
+      return false;
+    }
+
+    return (
+      (compensation.isDraft && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)) ||
+      hasRole(Roles.SYSTEM_ADMINISTRATOR)
+    );
   };
 
   const editButtonBlock = (
